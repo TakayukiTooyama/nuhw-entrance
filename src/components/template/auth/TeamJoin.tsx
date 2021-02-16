@@ -20,9 +20,9 @@ const TeamJoin: VFC = () => {
 
   return (
     <Box bg="gray.300" h="100%">
-      <Container maxW="xl" py={8}>
-        <Card align="center" p={12}>
-          <Stack spacing={8}>
+      <Container maxW="xl" py={[8, 12]}>
+        <Card py={[8, 8, 16]} innerPadding={4}>
+          <Stack spacing={8} align="center">
             <Heading as="h1" size="lg">
               チーム参加
             </Heading>
