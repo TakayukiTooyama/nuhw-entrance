@@ -23,7 +23,7 @@ const DrawerBodyItemList: VFC = () => {
       icon: FaBusAlt,
       iconColor: 'teal.500',
       name: '遠征',
-      onClick: () => Router.push('/movement'),
+      onClick: () => Router.push('/expedition'),
     },
     {
       icon: RiMoneyCnyCircleFill,

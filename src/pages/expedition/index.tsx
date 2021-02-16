@@ -23,10 +23,13 @@ const ExpeditionPage: NextPage = () => {
   const {
     data: expeditions,
     error: expeditionsError,
-  } = useCollection<Expedition>(`teams/${userInfo?.teamId}/expeditions`, {
-    orderBy: ['startDate', 'desc'],
-    parseDates: ['startDate', 'endDate', 'timeLimit'],
-  });
+  } = useCollection<Expedition>(
+    votes ? `teams/${userInfo?.teamId}/expeditions` : null,
+    {
+      orderBy: ['startDate', 'desc'],
+      parseDates: ['startDate', 'endDate', 'timeLimit'],
+    }
+  );
 
   const filteredExpeditions = expeditions?.filter((data) => {
     const tournamentNameArray = votes?.map((vote) => vote.tournamentName);

@@ -22,10 +22,13 @@ const ExpenseManagement: NextPage = () => {
   const {
     data: expeditions,
     error: expeditionsError,
-  } = useCollection<Expedition>(`teams/${userInfo?.teamId}/expeditions`, {
-    orderBy: ['startDate', 'desc'],
-    parseDates: ['startDate', 'endDate', 'timeLimit'],
-  });
+  } = useCollection<Expedition>(
+    userInfo ? `teams/${userInfo.teamId}/expeditions` : null,
+    {
+      orderBy: ['startDate', 'desc'],
+      parseDates: ['startDate', 'endDate', 'timeLimit'],
+    }
+  );
 
   expeditionsError && console.error(expeditionsError);
   return (
