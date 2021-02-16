@@ -27,7 +27,7 @@
 
 # 💚 :green_heart: テストや CI の修正・改善
 
-# 👕 :shirt: Lint エラーの修正やコードスタイルの修正
+# 🎨 :palette: Lint エラーの修正やコードスタイルの修正
 
 # 🚀 :rocket: パフォーマンス改善
 
