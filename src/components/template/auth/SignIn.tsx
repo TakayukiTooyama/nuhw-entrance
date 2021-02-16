@@ -2,7 +2,7 @@ import { Box, Container, Heading, HStack, Icon, Stack } from '@chakra-ui/react';
 import { Img } from '@chakra-ui/react';
 import { Button } from 'components/button';
 import { Card } from 'components/card';
-import { Spinner } from 'components/loading';
+import { Loading } from 'components/loading';
 import { LinkText } from 'components/text';
 import { useAuth } from 'context/Auth';
 import { useRouter } from 'next/router';
@@ -31,11 +31,11 @@ const SignIn: VFC = () => {
   return (
     <>
       {loading ? (
-        <Spinner />
+        <Loading />
       ) : (
         <Box bg="gray.300" h="100vh">
-          <Container maxW="xl" py={12}>
-            <Card py={16}>
+          <Container maxW="xl" py={[8, 12]}>
+            <Card py={[8, 8, 16]} innerPadding={4}>
               <Stack spacing={8} align="center">
                 <Heading>ENTRANCE</Heading>
                 <Img objectFit="cover" src="/Images/login.png" alt="Login" />
