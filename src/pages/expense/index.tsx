@@ -36,7 +36,7 @@ const Expense: NextPage = () => {
               </Text>
               <Img
                 maxW={['250px', '350px', '450px']}
-                src="/images/expense.png"
+                src="/Images/expense.png"
                 alt="管理"
               />
             </Box>

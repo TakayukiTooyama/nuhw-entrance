@@ -38,7 +38,7 @@ const SignIn: VFC = () => {
             <Card py={16}>
               <Stack spacing={8} align="center">
                 <Heading>ENTRANCE</Heading>
-                <Img objectFit="cover" src="/images/login.png" alt="Login" />
+                <Img objectFit="cover" src="/Images/login.png" alt="Login" />
 
                 <Button
                   maxW="300px"

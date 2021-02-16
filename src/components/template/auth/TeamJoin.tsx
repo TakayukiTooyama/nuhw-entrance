@@ -26,7 +26,7 @@ const TeamJoin: VFC = () => {
             <Heading as="h1" size="lg">
               チーム参加
             </Heading>
-            <Img objectFit="cover" src="/images/team.png" alt="Team" />
+            <Img objectFit="cover" src="/Images/team.png" alt="Team" />
             <TeamJoinForm />
           </Stack>
         </Card>

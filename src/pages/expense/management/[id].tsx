@@ -38,7 +38,7 @@ const ExpenseManagementDetail: NextPage = () => {
             </Text>
             <Img
               maxW={['250px', '350px', '450px']}
-              src="/images/no-data.png"
+              src="/Images/no-data.png"
               alt="管理"
             />
           </Box>

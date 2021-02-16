@@ -27,7 +27,7 @@ const CreateProfile: VFC = () => {
             <Heading as="h1" size="lg">
               プロフィール作成
             </Heading>
-            <Img objectFit="cover" src="/images/profile.png" alt="Profile" />
+            <Img objectFit="cover" src="/Images/profile.png" alt="Profile" />
             <CreateProfileForm />
           </Stack>
         </Card>

@@ -45,7 +45,7 @@ const ExpeditionConfirm: NextPage = () => {
             </Text>
             <Img
               maxW={['250px', '350px', '450px']}
-              src="/images/vote.png"
+              src="/Images/vote.png"
               alt="投票確認"
             />
           </Box>

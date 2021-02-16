@@ -64,7 +64,7 @@ export const Home: NextPage = () => {
             </Text>
             <Img
               maxW={['250px', '350px', '450px']}
-              src="/images/run.png"
+              src="/Images/run.png"
               alt="ランニング"
             />
           </Box>

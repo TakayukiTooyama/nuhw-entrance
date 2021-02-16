@@ -45,7 +45,7 @@ const EntryConfirm: NextPage = () => {
             </Text>
             <Img
               maxW={['250px', '350px', '450px']}
-              src="/images/confirm.png"
+              src="/Images/confirm.png"
               alt="ランニング"
             />
           </Box>

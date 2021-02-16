@@ -47,7 +47,7 @@ const ExpenseManagement: NextPage = () => {
               </Text>
               <Img
                 maxW={['250px', '350px', '450px']}
-                src="/images/create.png"
+                src="/Images/create.png"
                 alt="投票作成"
               />
             </Box>

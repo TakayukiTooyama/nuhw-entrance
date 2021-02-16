@@ -49,7 +49,7 @@ const EntryManagement: NextPage = () => {
               </Text>
               <Img
                 maxW={['250px', '350px', '450px']}
-                src="/images/management.svg"
+                src="/Images/management.svg"
                 alt="管理"
               />
             </Box>

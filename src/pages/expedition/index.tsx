@@ -57,7 +57,7 @@ const ExpeditionPage: NextPage = () => {
             </Text>
             <Img
               maxW={['250px', '350px', '450px']}
-              src="/images/expedition.png"
+              src="/Images/expedition.png"
               alt="遠征"
             />
           </Box>
