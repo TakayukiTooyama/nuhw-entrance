@@ -1,23 +1,36 @@
 import { ArrowBackIcon, HamburgerIcon } from '@chakra-ui/icons';
-import { Flex, HStack, Text, useDisclosure } from '@chakra-ui/react';
+import { Flex, Heading, HStack, Text, useDisclosure } from '@chakra-ui/react';
 import { Drawer } from 'components/drawer';
+import { useAuth } from 'context/Auth';
 import Router from 'next/router';
-import React, { VFC } from 'react';
+import React, { useEffect, VFC } from 'react';
 
 type Props = {
   prevPageLink?: string;
   prevPageTitle?: string;
 };
 
+const wrapper = {
+  justify: 'space-between',
+  align: 'center',
+  px: 4,
+  h: '50px',
+};
+
 const Header: VFC<Props> = ({ prevPageLink, prevPageTitle }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { user } = useAuth();
+
+  // userが明示的にnullの場合はサインイン画面へリダイレクト
+  useEffect(() => {
+    user === null && Router.push('/signin');
+  }, [user]);
 
   return (
     <>
-      <Flex justify="space-between" align="center" px={4} h="50px" bg="white">
-        {/* 作成画面や詳細画面に遷移したときヘッダーを変更する */}
-        {prevPageLink ? (
-          <HStack>
+      {prevPageLink ? (
+        <Flex bg="white" {...wrapper}>
+          <HStack spacing={4}>
             <ArrowBackIcon
               w={6}
               h={6}
@@ -25,12 +38,24 @@ const Header: VFC<Props> = ({ prevPageLink, prevPageTitle }) => {
             />
             <Text>{prevPageTitle}</Text>
           </HStack>
-        ) : (
-          <HamburgerIcon w={6} h={6} cursor="pointer" onClick={onOpen} />
-        )}
+        </Flex>
+      ) : (
+        <Flex bg="gray.200" {...wrapper}>
+          <HStack spacing={4}>
+            <HamburgerIcon w={6} h={6} cursor="pointer" onClick={onOpen} />
+            <Heading
+              as="h1"
+              size="md"
+              cursor="pointer"
+              onClick={() => Router.push('/')}
+            >
+              ENTRANCE
+            </Heading>
+          </HStack>
+          {/* 意見ボックスが来る */}
+        </Flex>
+      )}
 
-        {/* 意見ボックスが来る */}
-      </Flex>
       <Drawer isOpen={isOpen} onClose={onClose} />
     </>
   );

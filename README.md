@@ -1,27 +1,38 @@
-# NextJS Typescript Boilerplate
+# ENTRANCE
 
-Bootstrap a developer-friendly NextJS app configured with:
+大学スポーツを支える全て管理者に向けた管理サービス
 
-- [Typescript](https://www.typescriptlang.org/)
-- Linting with [ESLint](https://eslint.org/)
-- Formatting with [Prettier](https://prettier.io/)
-- Linting, typechecking and formatting on by default using [`husky`](https://github.com/typicode/husky) for commit hooks
-- Testing with [Jest](https://jestjs.io/) and [`react-testing-library`](https://testing-library.com/docs/react-testing-library/intro)
+## Tech Stacks
 
-## Deploy your own
+- Next.js on Vercel
+- Typescript
+- Firebase Authentication, Firestore
+- Chakra UI
+- Prettier
+- ESLint
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+# ==== Emojis ====
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-typescript-eslint-jest&project-name=with-typescript-eslint-jest&repository-name=with-typescript-eslint-jest)
+# 🐛 :bug: バグ修正
 
-## How to use
+# 👍 :+1: 機能改善
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+# ✨ :sparkles: 部分的な機能追加
 
-```bash
-npx create-next-app --example with-typescript-eslint-jest with-typescript-eslint-jest-app
-# or
-yarn create next-app --example with-typescript-eslint-jest with-typescript-eslint-jest-app
-```
+# 🎉 :tada: 盛大に祝うべき大きな機能追加
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+# ♻️ :recycle: リファクタリング
+
+# 🚿 :shower: 不要な機能・使われなくなった機能の削除
+
+# 💚 :green_heart: テストや CI の修正・改善
+
+# 👕 :shirt: Lint エラーの修正やコードスタイルの修正
+
+# 🚀 :rocket: パフォーマンス改善
+
+# 🆙 :up: 依存パッケージなどのアップデート
+
+# 🔒 :lock: 新機能の公開範囲の制限
+
+# 👮 :cop: セキュリティ関連の改善

@@ -7,15 +7,13 @@ export default class MyDocument extends Document {
     ctx: DocumentContext
   ): Promise<DocumentInitialProps> {
     const initialProps = await Document.getInitialProps(ctx);
-    return initialProps;
+    return { ...initialProps };
   }
 
   render(): JSX.Element {
     return (
       <Html lang="ja">
-        <Head>
-          <meta name="description" content="NUHW ENTRANCE" />
-        </Head>
+        <Head />
         <body>
           <ColorModeScript />
           <Main />

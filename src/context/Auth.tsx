@@ -1,29 +1,48 @@
 import { UserAuth } from 'models/users';
-import { createContext, FC, useEffect, useState } from 'react';
-import { auth } from 'utils/firebase';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { auth, provider } from 'utils/firebase';
 
 type AuthContextProps = {
-  currentUser: UserAuth | null | undefined;
+  user: UserAuth | null | undefined;
+  login: () => void;
+  logout: () => void;
 };
 
-const AuthContext = createContext<AuthContextProps>({ currentUser: undefined });
+const AuthContext = createContext<AuthContextProps>({
+  user: undefined,
+  login: () => undefined,
+  logout: () => undefined,
+});
 
-const AuthProvider: FC = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<UserAuth | null | undefined>(
-    undefined
-  );
+export const AuthProvider = ({ children }) => {
+  const auth = useProvideAuth();
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
+};
+
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
+
+const useProvideAuth = () => {
+  const [user, setUser] = useState<UserAuth | null | undefined>();
+
+  const login = () => {
+    auth.signInWithRedirect(provider);
+  };
+
+  const logout = () => {
+    auth.signOut();
+  };
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
+      setUser(user);
     });
   }, []);
 
-  return (
-    <AuthContext.Provider value={{ currentUser: currentUser }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return {
+    user,
+    login,
+    logout,
+  };
 };
-
-export { AuthContext, AuthProvider };

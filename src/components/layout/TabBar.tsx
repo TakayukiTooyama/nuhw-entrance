@@ -5,8 +5,8 @@ import { FaAddressCard, FaBusAlt } from 'react-icons/fa';
 import { RiMoneyCnyCircleFill } from 'react-icons/ri';
 
 const navList = [
-  { name: 'エントリー', icon: FaAddressCard, link: `/entry` },
-  { name: '移動方法', icon: FaBusAlt, link: `/movement` },
+  { name: 'エントリー', icon: FaAddressCard, link: `/` },
+  { name: '遠征', icon: FaBusAlt, link: `/expedition` },
   { name: '集金', icon: RiMoneyCnyCircleFill, link: `/expense` },
 ];
 
@@ -23,6 +23,7 @@ const TabBar: VFC = () => {
         borderColor="gray.100"
         zIndex="2"
         overflow="hidden"
+        bg="white"
       >
         {navList.map((item) => (
           <NavTab

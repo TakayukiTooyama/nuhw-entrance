@@ -20,14 +20,18 @@ const Layout: FC<Props> = ({
       <title>{title}</title>
     </Head>
     {prevPageLink ? (
-      <Box h="100%">
+      <Box h="100vh">
         <Header prevPageLink={prevPageLink} prevPageTitle={prevPageTitle} />
-        <main>{children}</main>
+        <Box as="main" pb="50px">
+          {children}
+        </Box>
       </Box>
     ) : (
-      <Box h="100%">
+      <Box h="100vh">
         <Header />
-        <main>{children}</main>
+        <Box as="main" pb="50px">
+          {children}
+        </Box>
         <TabBar />
       </Box>
     )}

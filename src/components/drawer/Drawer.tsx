@@ -1,7 +1,6 @@
 import {
   Drawer,
   DrawerBody,
-  DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
@@ -24,8 +23,11 @@ const BasicDrawer: VFC<Props> = ({ isOpen, onClose }) => {
       motionPreset="scale"
     >
       <DrawerOverlay>
-        <DrawerContent borderRadius="10px" maxW="280px" m={2}>
-          <DrawerCloseButton />
+        <DrawerContent
+          borderRadius="10px"
+          maxW={['220px', '220px', '300px']}
+          m={2}
+        >
           <DrawerHeader>ENTRANCE</DrawerHeader>
           <DrawerBody>
             <DrawerBodyItemList />
