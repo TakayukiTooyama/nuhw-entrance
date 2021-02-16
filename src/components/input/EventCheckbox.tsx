@@ -36,7 +36,7 @@ const EventCheckbox: VFC<Props> = ({
 
   return (
     <CheckboxGroup colorScheme="orange" value={value} {...inputProps}>
-      <Stack h="60vh" wrap="wrap">
+      <Stack h="440px" wrap="wrap">
         {checkboxOptions?.map((value) => (
           <Checkbox key={value} value={value} ref={ref}>
             {value}
