@@ -23,7 +23,7 @@ const Header: VFC<Props> = ({ prevPageLink, prevPageTitle }) => {
 
   // userが明示的にnullの場合はサインイン画面へリダイレクト
   useEffect(() => {
-    user === null && Router.push('/signin');
+    !user && Router.push('/signin');
   }, [user]);
 
   return (

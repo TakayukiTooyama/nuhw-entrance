@@ -37,7 +37,7 @@ const TeamJoinForm: VFC = () => {
         bg="pink.300"
         color="white"
         onClick={() =>
-          userJoinToTeam(user.uid, password, setIsSubmitting, setErrorMessage)
+          userJoinToTeam(user?.uid, password, setIsSubmitting, setErrorMessage)
         }
         isLoading={isSubmitting}
       />

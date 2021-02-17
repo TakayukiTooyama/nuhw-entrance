@@ -6,10 +6,13 @@ const usersRef = db.collection('users');
 const teamsRef = db.collection('teams');
 
 // 新しいユーザーの認証情報をDBに追加
-export const registerUserAuth = async (uid: string): Promise<void> => {
+export const registerUserAuth = async (
+  uid: string,
+  email: string
+): Promise<void> => {
   await usersRef
     .doc(uid)
-    .set({ uid })
+    .set({ uid, email }, { merge: true })
     .then(() => {
       Router.push('/team/join');
     });
@@ -20,7 +23,10 @@ export const registerUserAuth = async (uid: string): Promise<void> => {
   初回 → チーム参加画面
   以外 → ホーム画面
 */
-export const navigationAfterAuth = async (uid: string): Promise<void> => {
+export const navigationAfterAuth = async (
+  uid: string,
+  email: string
+): Promise<void> => {
   await usersRef
     .doc(uid)
     .get()
@@ -29,7 +35,7 @@ export const navigationAfterAuth = async (uid: string): Promise<void> => {
       if (data && data.role) {
         Router.push('/');
       } else {
-        registerUserAuth(uid);
+        registerUserAuth(uid, email);
       }
     });
 };
@@ -40,12 +46,12 @@ export const navigationAfterAuth = async (uid: string): Promise<void> => {
   チーム情報だけ入力して間違って戻ってしまった場合 → プロフィール画面に遷移
 */
 export const screenTransition = (userInfo: UserInfo): void => {
-  if (userInfo.block && userInfo.teamId) {
+  if (userInfo.teamId && userInfo.block) {
     Router.push('/');
     return;
   }
   if (!userInfo.teamId) {
-    Router.push('team/join');
+    Router.push('/team/join');
     return;
   }
   if (!userInfo.block) {
@@ -85,7 +91,7 @@ export const userJoinToTeam = async (
 // 初回ログイン時のプロフィール作成
 export const createProfile = async (
   uid: string,
-  profileData: Omit<UserInfoInForm, 'grade'>
+  profileData: Omit<UserInfoInForm, 'email' | 'grade'>
 ): Promise<void> => {
   await usersRef
     .doc(uid)

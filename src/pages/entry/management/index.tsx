@@ -1,4 +1,4 @@
-import { Box, Container, Img, Stack, Text } from '@chakra-ui/react';
+import { Box, Container, Image, Stack, Text } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
 import { Button } from 'components/button';
 import { Layout, TopHeading } from 'components/layout';
@@ -47,7 +47,7 @@ const EntryManagement: NextPage = () => {
               <Text fontSize={['16px', '18px', '20px']} mb={8}>
                 作成されたエントリーがありません。
               </Text>
-              <Img
+              <Image
                 maxW={['250px', '350px', '450px']}
                 src="/Images/management.svg"
                 alt="管理"

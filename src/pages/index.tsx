@@ -37,7 +37,7 @@ export const Home: NextPage = () => {
   */
   useEffect(() => {
     userInfo && screenTransition(userInfo);
-  }, [user, userInfo]);
+  }, [userInfo]);
 
   // 期限内の大会
   const filteredTournament = tournaments?.filter((data) => {

@@ -1,6 +1,14 @@
-export const gradeOptions = ['1年', '2年', '3年', '4年', '院1', '院2'];
+export const gradeOptions = [
+  '1年',
+  '2年',
+  '3年',
+  '4年',
+  '院1',
+  '院2',
+  'コーチ',
+];
 
-export const genderOptions = ['男性', '女性'];
+export const genderOptions = ['男', '女'];
 
 export const roleOptions = ['選手', 'マネージャー', 'コーチ', 'トレーナー'];
 
@@ -9,6 +17,7 @@ export const blockOptions = [
   '長距離',
   '投擲',
   '跳躍',
+  'マネージャー',
   'コーチ',
   'トレーナー',
 ];

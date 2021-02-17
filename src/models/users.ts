@@ -20,10 +20,19 @@ export type UserAuth = {
 // ユーザー詳細情報
 export type UserInfo = {
   name: string;
+  furigana: string;
+  email: string;
   teamId: string;
   gender: '男' | '女';
   grade: '1年' | '2年' | '3年' | '4年' | '院1' | '院2' | 'コーチ';
-  block: '短距離' | '長距離' | '投擲' | '跳躍' | 'トレーナー' | 'コーチ';
+  block:
+    | '短距離'
+    | '長距離'
+    | '投擲'
+    | '跳躍'
+    | 'マネージャー'
+    | 'トレーナー'
+    | 'コーチ';
   role: '管理者' | '選手' | 'マネージャー' | 'トレーナー' | 'コーチ';
 };
 
@@ -33,6 +42,7 @@ export type User = UserAuth & UserInfo & Pick<TimeStamp, 'createdAt'>;
 // ユーザーがエントリーした大会の情報
 export type Entry = {
   name: string;
+  furigana: string;
   gender: '男' | '女';
   grade: '1年' | '2年' | '3年' | '4年' | '院1' | '院2' | 'コーチ';
   tournamentId: string;
@@ -193,6 +203,7 @@ export type CarInfo = {
 // 移動希望投票の型
 export type Vote = {
   name: string;
+  furigana: string;
   gender: '男' | '女';
   grade: '1年' | '2年' | '3年' | '4年' | '院1' | '院2' | 'コーチ';
   tournamentId: string;

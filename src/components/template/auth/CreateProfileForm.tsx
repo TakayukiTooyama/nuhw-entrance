@@ -1,3 +1,4 @@
+/* eslint-disable no-irregular-whitespace */
 import { Stack } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormButton } from 'components/button';
@@ -12,12 +13,21 @@ import { object, SchemaOf, string } from 'yup';
 
 const schema: SchemaOf<UserInfoInForm> = object()
   .shape({
-    name: string().default('').required('氏名を入力してください。'),
+    name: string()
+      .matches(/^[ぁ-んァ-ヶー一-龠( |　)]+$/, '全角文字で入力してください。')
+      .required('氏名を入力してください。'),
+    furigana: string()
+      .matches(
+        /^[あ-ん゛゜ぁ-ぉゃ-ょー「」、( |　)]+/,
+        'ひらがなで入力してください。'
+      )
+      .required('ふりがなを入力してください。'),
   })
   .defined();
 
-const defaultValues: Omit<UserInfoInForm, 'grade'> = {
+const defaultValues: Omit<UserInfoInForm, 'email' | 'grade'> = {
   name: '',
+  furigana: '',
   gender: '男',
   role: '選手',
   block: '短距離',
@@ -25,27 +35,42 @@ const defaultValues: Omit<UserInfoInForm, 'grade'> = {
 
 const CreateProfileForm: VFC = () => {
   const { handleSubmit, control, errors, formState } = useForm<
-    Omit<UserInfoInForm, 'grade'>
+    Omit<UserInfoInForm, 'email' | 'grade'>
   >({
     defaultValues,
     resolver: yupResolver(schema),
   });
   const { user } = useAuth();
 
-  const onSubmit = (data: Omit<UserInfoInForm, 'grade'>) => {
+  const onSubmit = (data: Omit<UserInfoInForm, 'email' | 'grade'>) => {
+    // 入力した文字列は空白削除
     const profileData = {
-      name: data.name,
+      name: data.name.replace(/\s+/g, ''),
+      furigana: data.furigana.replace(/\s+/g, ''),
       gender: data.gender,
       role: data.role,
       block: data.block,
     };
-    createProfile(user.uid, profileData);
+    createProfile(user?.uid, profileData);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={8} textAlign="left">
-        <FormText label="氏名" name="name" errors={errors} control={control} />
+        <FormText
+          label="氏名"
+          name="name"
+          placeholder="新潟太郎"
+          errors={errors}
+          control={control}
+        />
+        <FormText
+          label="ふりがな"
+          name="furigana"
+          placeholder="にいがたたろう"
+          errors={errors}
+          control={control}
+        />
         <FormRadio
           label="性別"
           name="gender"
