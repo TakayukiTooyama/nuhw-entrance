@@ -113,6 +113,7 @@ const EntryFormDetail: VFC = () => {
 
     const newData: Omit<Entry, 'timeLimit'> = {
       name: userInfo.name,
+      furigana: userInfo.furigana,
       gender: userInfo.gender,
       grade: data.grade,
       tournamentId: tournamentInfo.id,
