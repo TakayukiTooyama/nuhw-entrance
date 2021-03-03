@@ -10,7 +10,7 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import type { Entry } from 'models/users';
+import type { Expense } from 'models/users';
 import React, { useMemo, VFC } from 'react';
 import {
   CellProps,
@@ -22,7 +22,7 @@ import {
 import { formatPriceNotation } from 'utils/format';
 
 type Props = {
-  entries: Omit<Entry, 'timeLimit'>[];
+  expenses: Expense[];
 };
 
 type TableData = {
@@ -31,8 +31,8 @@ type TableData = {
   expense: string;
 };
 
-const ExpenseTable: VFC<Props> = ({ entries }) => {
-  const DATA: TableData[] = entries.map((data) => {
+const ExpenseTable: VFC<Props> = ({ expenses }) => {
+  const DATA: TableData[] = expenses.map((data) => {
     return {
       gender: data.gender,
       name: data.name,

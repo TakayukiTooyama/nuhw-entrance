@@ -2,7 +2,7 @@ import { Box, Container, Stack, Text } from '@chakra-ui/react';
 import { useCollection } from '@nandorojo/swr-firestore';
 import { Layout, TopHeading } from 'components/layout';
 import { Spinner } from 'components/loading';
-import { ExpenseList } from 'components/template/expense';
+// import { ExpenseList } from 'components/template/expense';
 import { useAuth } from 'context/Auth';
 import { Entry } from 'models/users';
 import { NextPage } from 'next';
@@ -26,10 +26,10 @@ const Expense: NextPage = () => {
       <Container maxW="xl" py={12}>
         <Stack align="center" spacing={8}>
           {!entries && entries?.length !== 0 && <Spinner />}
-          {entries?.length > 0 &&
+          {/* {entries?.length > 0 &&
             entries.map((entry) => (
               <ExpenseList key={entry.id} entry={entry} />
-            ))}
+              ))} */}
           {entries?.length === 0 && (
             <Box align="center">
               <Text fontSize={['16px', '18px', '20px']} mb={8}>
