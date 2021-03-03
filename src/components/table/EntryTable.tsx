@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   Checkbox,
-  Stack,
+  Flex,
   Table,
   Tbody,
   Td,
@@ -20,6 +20,7 @@ type Props = {
 
 type TableData = {
   name: string;
+  hurigana: string;
   gender: '男' | '女';
   event: Event;
   entryRecord: string;
@@ -32,6 +33,7 @@ const EntryTable: VFC<Props> = ({ entries }) => {
       data.eventsInfo.forEach((event) => {
         tableData.push({
           name: data.name,
+          hurigana: data.furigana,
           gender: data.gender,
           event: event.name,
           entryRecord: event.entryRecord,
@@ -47,6 +49,10 @@ const EntryTable: VFC<Props> = ({ entries }) => {
     {
       Header: '氏名',
       accessor: 'name',
+    },
+    {
+      Header: 'フリガナ',
+      accessor: 'hurigana',
     },
     {
       Header: '性別',
@@ -77,7 +83,15 @@ const EntryTable: VFC<Props> = ({ entries }) => {
 
   return (
     <>
-      <Stack direction="row" spacing={4} mb={4}>
+      <Flex
+        direction="row"
+        justify="flex-start"
+        wrap="wrap"
+        w="100%"
+        maxW="384px"
+        mb={4}
+        mr="auto"
+      >
         {allColumns.map((column) => {
           if (column.id !== 'name') {
             return (
@@ -85,14 +99,23 @@ const EntryTable: VFC<Props> = ({ entries }) => {
                 defaultChecked
                 key={column.id}
                 {...column.getToggleHiddenProps()}
+                mr={4}
               >
                 {column.Header}
               </Checkbox>
             );
           }
         })}
-      </Stack>
-      <Table {...getTableProps()} variant="simple" shadow="base" size="sm">
+      </Flex>
+      <Table
+        variant="simple"
+        shadow="base"
+        size="sm"
+        maxW="640px"
+        overflowX="scroll"
+        whiteSpace="nowrap"
+        {...getTableProps()}
+      >
         <Thead bg="gray.200">
           {headerGroups.map((headerGroup) => (
             <Tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>

@@ -1,30 +1,27 @@
 import {
   AlertDialog,
   AlertDialogBody,
-  AlertDialogCloseButton,
   AlertDialogContent,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogOverlay,
   Button,
-  Text,
 } from '@chakra-ui/react';
-import React, { VFC } from 'react';
+import React, { FC } from 'react';
 
 type Props = {
-  name: string;
   isOpen: boolean;
   cancelRef: React.MutableRefObject<undefined>;
   onClose: () => void;
   onDelete: () => Promise<void>;
 };
 
-const DeleteDialog: VFC<Props> = ({
-  name,
+const DeleteDialog: FC<Props> = ({
   isOpen,
   cancelRef,
   onClose,
   onDelete,
+  children,
 }) => {
   return (
     <AlertDialog
@@ -35,19 +32,29 @@ const DeleteDialog: VFC<Props> = ({
       isCentered
     >
       <AlertDialogOverlay />
-      <AlertDialogContent>
-        <AlertDialogHeader>削除してもよろしいですか？</AlertDialogHeader>
-        <AlertDialogCloseButton />
-        <AlertDialogBody color="gray.400">
-          <Text>{name}のエントリーは削除されます。</Text>
-          <Text>期限内の大会であれば再びエントリーすることができます。</Text>
-        </AlertDialogBody>
-        <AlertDialogFooter>
-          <Button shadow="base" ref={cancelRef} onClick={onClose} mr={4}>
+      <AlertDialogContent w="95%" maxW="lg" p={4}>
+        <AlertDialogHeader textAlign="center">
+          エントリーの削除
+        </AlertDialogHeader>
+        <AlertDialogBody>{children}</AlertDialogBody>
+        <AlertDialogFooter w="100%">
+          <Button
+            w="100%"
+            shadow="base"
+            borderRadius="30px"
+            onClick={onClose}
+            mr={4}
+          >
             キャンセル
           </Button>
-          <Button shadow="base" colorScheme="red" onClick={onDelete}>
-            削除
+          <Button
+            w="100%"
+            borderRadius="30px"
+            shadow="base"
+            colorScheme="red"
+            onClick={onDelete}
+          >
+            OK
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

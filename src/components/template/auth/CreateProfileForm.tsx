@@ -1,31 +1,31 @@
 /* eslint-disable no-irregular-whitespace */
 import { Stack } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useDocument } from '@nandorojo/swr-firestore';
 import { FormButton } from 'components/button';
 import { FormRadio, FormText } from 'components/input';
 import { useAuth } from 'context/Auth';
-import { UserInfoInForm } from 'models/users';
+import { User, UserInfoInForm } from 'models/users';
+import Router from 'next/router';
 import React, { VFC } from 'react';
 import { useForm } from 'react-hook-form';
-import { createProfile } from 'utils/firestore/users';
 import { blockOptions, genderOptions, roleOptions } from 'utils/selectOptions';
 import { object, SchemaOf, string } from 'yup';
 
-const schema: SchemaOf<UserInfoInForm> = object()
+type CreateProfileInput = Omit<UserInfoInForm, 'email' | 'grade'>;
+
+const schema: SchemaOf<CreateProfileInput> = object()
   .shape({
     name: string()
-      .matches(/^[ぁ-んァ-ヶー一-龠( |　)]+$/, '全角文字で入力してください。')
+      .matches(/^[ぁ-んァ-ン一-龥(\s|　)]+$/, '全角で入力してください。')
       .required('氏名を入力してください。'),
     furigana: string()
-      .matches(
-        /^[あ-ん゛゜ぁ-ぉゃ-ょー「」、( |　)]+/,
-        'ひらがなで入力してください。'
-      )
-      .required('ふりがなを入力してください。'),
+      .matches(/^[ァ-ンヴー]+$/, '全角カタカナで入力してください。')
+      .required('フリガナを入力してください。'),
   })
   .defined();
 
-const defaultValues: Omit<UserInfoInForm, 'email' | 'grade'> = {
+const defaultValues: CreateProfileInput = {
   name: '',
   furigana: '',
   gender: '男',
@@ -34,29 +34,35 @@ const defaultValues: Omit<UserInfoInForm, 'email' | 'grade'> = {
 };
 
 const CreateProfileForm: VFC = () => {
-  const { handleSubmit, control, errors, formState } = useForm<
-    Omit<UserInfoInForm, 'email' | 'grade'>
-  >({
+  const {
+    handleSubmit,
+    control,
+    errors,
+    formState,
+  } = useForm<CreateProfileInput>({
     defaultValues,
     resolver: yupResolver(schema),
   });
   const { user } = useAuth();
+  const { set } = useDocument<User>(`users/${user?.uid}`);
 
-  const onSubmit = (data: Omit<UserInfoInForm, 'email' | 'grade'>) => {
+  const onSubmit = (data: CreateProfileInput) => {
     // 入力した文字列は空白削除
-    const profileData = {
+    const profileData: CreateProfileInput = {
       name: data.name.replace(/\s+/g, ''),
       furigana: data.furigana.replace(/\s+/g, ''),
       gender: data.gender,
       role: data.role,
       block: data.block,
     };
-    createProfile(user?.uid, profileData);
+    set(profileData, { merge: true }).then(() => {
+      Router.push('/team/join');
+    });
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={8} textAlign="left">
+      <Stack spacing={6}>
         <FormText
           label="氏名"
           name="name"
@@ -65,9 +71,9 @@ const CreateProfileForm: VFC = () => {
           control={control}
         />
         <FormText
-          label="ふりがな"
+          label="フリガナ"
           name="furigana"
-          placeholder="にいがたたろう"
+          placeholder="ニイガタタロウ"
           errors={errors}
           control={control}
         />

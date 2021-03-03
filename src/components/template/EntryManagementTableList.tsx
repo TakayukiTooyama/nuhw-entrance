@@ -1,4 +1,4 @@
-import { Heading, SimpleGrid } from '@chakra-ui/react';
+import { Heading, Stack } from '@chakra-ui/react';
 import { Document } from '@nandorojo/swr-firestore';
 import { EntryManagementTable } from 'components/template';
 import { Entry } from 'models/users';
@@ -27,7 +27,7 @@ const EntryManagementTableList: VFC<Props> = ({ entries }) => {
   return (
     <>
       <Heading mb={12}>{entries[0]?.tournamentName}</Heading>
-      <SimpleGrid columns={[1, 1, 2, 4]} spacingX={8} spacingY={8}>
+      <Stack>
         {tables.map((data) => (
           <EntryManagementTable
             key={data.grade}
@@ -35,7 +35,7 @@ const EntryManagementTableList: VFC<Props> = ({ entries }) => {
             grade={data.grade}
           />
         ))}
-      </SimpleGrid>
+      </Stack>
     </>
   );
 };

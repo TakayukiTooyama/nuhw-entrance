@@ -1,9 +1,8 @@
-import { TeamInfo, UserInfo, UserInfoInForm } from 'models/users';
+import { UserInfo } from 'models/users';
 import Router from 'next/router';
 import { db } from 'utils/firebase';
 
 const usersRef = db.collection('users');
-const teamsRef = db.collection('teams');
 
 // 新しいユーザーの認証情報をDBに追加
 export const registerUserAuth = async (
@@ -14,7 +13,7 @@ export const registerUserAuth = async (
     .doc(uid)
     .set({ uid, email }, { merge: true })
     .then(() => {
-      Router.push('/team/join');
+      Router.push('/team/profile');
     });
 };
 
@@ -32,7 +31,7 @@ export const navigationAfterAuth = async (
     .get()
     .then((doc) => {
       const data = doc.data() as UserInfo;
-      if (data && data.role) {
+      if (data && data.teamId) {
         Router.push('/');
       } else {
         registerUserAuth(uid, email);
@@ -46,57 +45,15 @@ export const navigationAfterAuth = async (
   チーム情報だけ入力して間違って戻ってしまった場合 → プロフィール画面に遷移
 */
 export const screenTransition = (userInfo: UserInfo): void => {
-  if (userInfo.teamId && userInfo.block) {
+  if (userInfo.block && userInfo.teamId) {
     Router.push('/');
     return;
   }
-  if (!userInfo.teamId) {
+  if (userInfo && !userInfo.block) {
+    Router.push('/team/profile');
+  }
+  if (userInfo.block && !userInfo.teamId) {
     Router.push('/team/join');
     return;
   }
-  if (!userInfo.block) {
-    Router.push('/team/profile');
-  }
-};
-
-// 新しいユーザーの認証情報をDBに追加
-export const userJoinToTeam = async (
-  uid: string,
-  password: string,
-  setSubmitting: (isSubmitting: boolean) => void,
-  setErrorMessage: React.Dispatch<React.SetStateAction<string>>
-) => {
-  setSubmitting(true);
-  setErrorMessage('');
-
-  await teamsRef
-    .doc('Vwn4SWU3FsqSbqIU7mKy')
-    .get()
-    .then(async (doc) => {
-      const data = doc.data() as TeamInfo;
-      if (data.password === password) {
-        await usersRef
-          .doc(uid)
-          .set({ teamId: 'Vwn4SWU3FsqSbqIU7mKy' }, { merge: true })
-          .then(() => {
-            Router.push('/team/profile');
-          });
-      } else {
-        setSubmitting(false);
-        setErrorMessage('パスワードが間違っています');
-      }
-    });
-};
-
-// 初回ログイン時のプロフィール作成
-export const createProfile = async (
-  uid: string,
-  profileData: Omit<UserInfoInForm, 'email' | 'grade'>
-): Promise<void> => {
-  await usersRef
-    .doc(uid)
-    .set(profileData, { merge: true })
-    .then(() => {
-      Router.push('/');
-    });
 };

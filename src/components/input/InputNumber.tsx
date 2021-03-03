@@ -11,7 +11,7 @@ type Props = NumberInputProps & {
   value: string;
   label?: string;
   unit?: string;
-  setValue: (valueAsString: string) => void;
+  setValue?: (valueAsString: string) => void;
 };
 
 const InputNumber: VFC<Props> = ({
@@ -20,20 +20,19 @@ const InputNumber: VFC<Props> = ({
   unit,
   setValue,
   ...props
-}) => {
-  return (
-    <HStack>
-      <Text>{label}</Text>
-      <NumberInput
-        {...props}
-        value={value}
-        onChange={(valueAsString) => setValue(valueAsString)}
-      >
-        <NumberInputField />
-      </NumberInput>
-      <Text>{unit}</Text>
-    </HStack>
-  );
-};
+}) => (
+  <HStack>
+    {label && <Text>{label}</Text>}
+    <NumberInput
+      {...props}
+      bg="white"
+      value={value}
+      onChange={(valueAsString) => setValue(valueAsString)}
+    >
+      <NumberInputField autoFocus />
+    </NumberInput>
+    {unit && <Text>{unit}</Text>}
+  </HStack>
+);
 
 export default InputNumber;

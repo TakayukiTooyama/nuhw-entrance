@@ -1,17 +1,15 @@
-import {
-  Editable,
-  EditableInput,
-  EditablePreview,
-  HStack,
-  Stack,
-  Text,
-} from '@chakra-ui/react';
+import { Box, HStack, SimpleGrid, Stack, Text } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
 import { FormButton } from 'components/button';
 import { Card } from 'components/card';
 import { FormLabel } from 'components/form';
 import { FormHeading } from 'components/heading';
-import { EventCheckbox, FormControl, FormRadio } from 'components/input';
+import {
+  EventCheckbox,
+  FormControl,
+  FormRadio,
+  InputNumber,
+} from 'components/input';
 import { useAuth } from 'context/Auth';
 import {
   Entry,
@@ -21,25 +19,24 @@ import {
   UserInfo,
 } from 'models/users';
 import Router, { useRouter } from 'next/router';
-import React, { useState, VFC } from 'react';
+import React, { useEffect, useState, VFC } from 'react';
 import { useForm } from 'react-hook-form';
 import { FirebaseTimestamp } from 'utils/firebase';
 import { gradeOptions } from 'utils/selectOptions';
 
+const defaultValues: EntryFormInput = {
+  grade: '1年',
+  events: [],
+};
+
 const inputStyle = {
   w: '100%',
   h: '40px',
-  maxW: '145px',
+  lineHeight: '38px',
   border: '1px solid',
   borderColor: 'gray.200',
   borderRadius: '5px',
   bg: 'white',
-  m: 0,
-};
-
-const defaultValues: EntryFormInput = {
-  grade: '1年',
-  events: [],
 };
 
 const EntryFormDetail: VFC = () => {
@@ -54,20 +51,23 @@ const EntryFormDetail: VFC = () => {
       parseDates: ['startDate', 'endDate', 'timeLimit'],
     }
   );
-  const { add } = useCollection<Omit<Entry, 'timeLimit'>>(
+  const { add: EntryAdd } = useCollection<Omit<Entry, 'timeLimit'>>(
     `users/${user?.uid}/entries`
   );
+  // const { add: ExpenseAdd } = useCollection<Omit<Expense, 'collectionDate'>>(
+  //   `users/${user?.uid}/expenses`
+  // );
 
-  const { handleSubmit, formState, control } = useForm<EntryFormInput>({
+  const { handleSubmit, watch, formState, control } = useForm<EntryFormInput>({
     defaultValues,
   });
+  const watctEvents = watch('events');
 
   const [entryRecord, setEntryRecord] = useState('');
   const [eventsInfo, setEventsInfo] = useState<EventInfo[]>([]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEntryRecord(e.target.value);
-  };
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isEdit, setIsEdit] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const updateEntryRecord = (index: number) => {
     const selectedIndex = eventsInfo.findIndex((event) => event.id === index);
@@ -77,10 +77,11 @@ const EntryFormDetail: VFC = () => {
       entryRecord,
     };
     setEventsInfo(newEventsInfo);
+    setIsEdit(false);
   };
 
   const keyPressUpdateEntryRecord = (
-    e: React.KeyboardEvent<HTMLInputElement>,
+    e: React.KeyboardEvent<HTMLDivElement>,
     index: number
   ) => {
     if (e.key === 'Enter') {
@@ -89,6 +90,18 @@ const EntryFormDetail: VFC = () => {
   };
 
   const addEntry = (data: EntryFormInput) => {
+    const existsEntryRecord = eventsInfo.some(
+      (event) => !event.entryRecord || event.entryRecord === ''
+    );
+    if (existsEntryRecord) {
+      setErrorMessage('自己ベストが入力されていません。');
+      return;
+    }
+    if (!data.events.length) {
+      setErrorMessage('種目が選択されていません。');
+      return;
+    }
+
     const newEventsInfo: EventInfo[] = [];
     eventsInfo.forEach((event) => {
       data.events.forEach((name) => {
@@ -108,10 +121,11 @@ const EntryFormDetail: VFC = () => {
       });
     });
 
-    const expenseArray = newEventsInfo.map((data) => data.expense);
-    const totalExpenses = expenseArray.reduce((acc, cur) => acc + cur);
+    // const expenseArray = newEventsInfo.map((data) => data.expense);
+    // const totalExpenses =
+    //   expenseArray.length > 0 && expenseArray.reduce((acc, cur) => acc + cur);
 
-    const newData: Omit<Entry, 'timeLimit'> = {
+    const newEntryData: Omit<Entry, 'timeLimit'> = {
       name: userInfo.name,
       furigana: userInfo.furigana,
       gender: userInfo.gender,
@@ -121,19 +135,39 @@ const EntryFormDetail: VFC = () => {
       startDate: tournamentInfo.startDate,
       endDate: tournamentInfo.endDate,
       eventsInfo: newEventsInfo,
-      expense: tournamentInfo.expense,
-      totalExpenses,
-      isPayment: false,
       addedAt: FirebaseTimestamp.now(),
     };
-    add(newData).then(() => Router.push('/'));
+
+    // const newExpenseData: Omit<Expense, 'collectionDate'> = {
+    //   expense: tournamentInfo.expense,
+    //   totalExpenses,
+    //   isPayment: false,
+    //   ...newEntryData,
+    // };
+
+    EntryAdd(newEntryData).then(() => {
+      // ExpenseAdd(newExpenseData).then(() => {
+      Router.push('/');
+    });
+    // });
   };
+
+  // 編集への切り替え(Recordクリック時の処理)
+  const handleClick = (id: number, value: string) => {
+    setEntryRecord(value);
+    setSelectedIndex(id);
+    setIsEdit(true);
+  };
+
+  useEffect(() => {
+    setErrorMessage('');
+  }, [entryRecord, watctEvents]);
 
   return (
     <>
       <FormHeading title="エントリーフォーム" />
       <form onSubmit={handleSubmit(addEntry)}>
-        <Stack spacing={12}>
+        <Stack spacing={8}>
           <FormRadio
             name="grade"
             label="①学年"
@@ -152,40 +186,62 @@ const EntryFormDetail: VFC = () => {
 
           <Stack>
             <FormLabel label="③自己ベスト" />
-            {eventsInfo?.length ? (
-              eventsInfo.map((item) => (
-                <Card key={item.id} bg="gray.50">
-                  <Text mb={2}>{item.name}</Text>
-                  <HStack spacing={4}>
-                    <Text w="36px">記録</Text>
-                    <Editable w="100%" m={0}>
-                      <EditablePreview
-                        px={2}
-                        lineHeight="32px"
-                        {...inputStyle}
-                        display="inline-block"
-                      />
-                      <EditableInput
-                        px={2}
-                        onChange={handleChange}
-                        onBlur={() => updateEntryRecord(item.id)}
-                        onKeyDown={(e) => keyPressUpdateEntryRecord(e, item.id)}
-                        {...inputStyle}
-                      />
-                    </Editable>
-                  </HStack>
-                </Card>
-              ))
-            ) : (
-              <Text>選択された種目がまだありません。</Text>
-            )}
+            <Card bg="gray.50" innerPadding={4}>
+              {eventsInfo?.length > 0 ? (
+                <SimpleGrid columns={[1, 2]} columnGap={4} rowGap={6}>
+                  {eventsInfo.map((item) => (
+                    <Box key={item.id}>
+                      <Text mb={1} fontWeight="bold">
+                        {item.name}
+                      </Text>
+                      <HStack>
+                        <Text minW="36px">記録</Text>
+                        <Box w="100%">
+                          {isEdit && selectedIndex === item.id ? (
+                            <InputNumber
+                              w="100%"
+                              bg="white"
+                              value={entryRecord}
+                              setValue={setEntryRecord}
+                              inputMode="decimal"
+                              onBlur={() => updateEntryRecord(item.id)}
+                              onKeyDown={(e) =>
+                                keyPressUpdateEntryRecord(e, item.id)
+                              }
+                            />
+                          ) : (
+                            <Box
+                              px={4}
+                              bg="white"
+                              onClick={() =>
+                                handleClick(item.id, item.entryRecord)
+                              }
+                              {...inputStyle}
+                            >
+                              {item.entryRecord}
+                            </Box>
+                          )}
+                        </Box>
+                      </HStack>
+                    </Box>
+                  ))}
+                </SimpleGrid>
+              ) : (
+                <Text>選択された種目がまだありません。</Text>
+              )}
+            </Card>
           </Stack>
 
-          <FormButton
-            label="送信"
-            colorScheme="teal"
-            isLoading={formState.isSubmitting}
-          />
+          <Stack align="center">
+            <FormButton
+              label="送信"
+              colorScheme="teal"
+              isLoading={formState.isSubmitting}
+            />
+            <Text color="red.300" fontWeight="bold">
+              {errorMessage}
+            </Text>
+          </Stack>
         </Stack>
       </form>
     </>

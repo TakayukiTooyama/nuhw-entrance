@@ -1,13 +1,13 @@
-import { Text } from '@chakra-ui/react';
+import { Text, TextProps } from '@chakra-ui/react';
 import React, { VFC } from 'react';
 
-type Props = {
+type Props = TextProps & {
   label: string;
 };
 
-const FormLabel: VFC<Props> = ({ label }) => {
+const FormLabel: VFC<Props> = ({ label, ...props }) => {
   return (
-    <Text fontSize="20px" fontWeight="bold">
+    <Text fontWeight="bold" {...props}>
       {label}
     </Text>
   );

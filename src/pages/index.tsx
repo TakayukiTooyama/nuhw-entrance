@@ -1,4 +1,4 @@
-import { Box, Container, Img, Text } from '@chakra-ui/react';
+import { Box, Container, Text } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
 import { Layout, TopHeading } from 'components/layout';
 import { Spinner } from 'components/loading';
@@ -6,6 +6,7 @@ import { EntryList } from 'components/template';
 import { useAuth } from 'context/Auth';
 import { Entry, Tournament, User } from 'models/users';
 import { NextPage } from 'next';
+import Image from 'next/image';
 import { useEffect } from 'react';
 import { screenTransition } from 'utils/firestore/users';
 
@@ -57,13 +58,14 @@ export const Home: NextPage = () => {
         {filteredTournament?.length > 0 && (
           <EntryList tournaments={filteredTournament} />
         )}
-        {filteredTournament?.length == 0 && (
+        {filteredTournament?.length === 0 && (
           <Box align="center">
             <Text fontSize={['16px', '18px', '20px']} mb={12}>
               エントリーできる大会がありません。
             </Text>
-            <Img
-              maxW={['250px', '350px', '450px']}
+            <Image
+              width={300}
+              height={200}
               src="/Images/run.png"
               alt="ランニング"
             />

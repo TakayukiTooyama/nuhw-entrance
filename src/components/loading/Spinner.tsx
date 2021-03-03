@@ -3,9 +3,9 @@ import React, { VFC } from 'react';
 
 type Props = SpinnerProps;
 
-const BasicSpinner: VFC<Props> = ({ size = 'xl', ...props }) => (
+const BasicSpinner: VFC<Props> = ({ size = 'lg', ...props }) => (
   <Box align="center">
-    <Spinner size={size} {...props} />
+    <Spinner size={size} {...props} color="gray.400" />
   </Box>
 );
 

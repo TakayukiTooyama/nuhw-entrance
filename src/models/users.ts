@@ -51,10 +51,14 @@ export type Entry = {
   endDate: Date;
   timeLimit: Date;
   eventsInfo: EventInfo[];
-  expense: Expense;
+} & Pick<TimeStamp, 'addedAt'>;
+
+export type Expense = Omit<Entry, 'timeLimit'> & {
+  expense: EventExpense;
   totalExpenses: number;
   isPayment: boolean;
-} & Pick<TimeStamp, 'addedAt'>;
+  collectionDate: Date;
+};
 
 //=============================
 // チーム情報
@@ -64,7 +68,7 @@ export type Entry = {
 export type TeamInfo = {
   name: string;
   password: string;
-} & Pick<TimeStamp, 'createdAt' | 'updatedAt'>;
+};
 
 //==============================
 // 大会エントリー
@@ -77,7 +81,7 @@ export type Tournament = {
   endDate: Date;
   timeLimit: Date;
   events: Event[];
-  expense: Expense;
+  expense: EventExpense;
 } & Pick<TimeStamp, 'createdAt' | 'updatedAt'>;
 
 // 大会種目情報
@@ -119,7 +123,7 @@ export type Event =
   | '4×400リレー';
 
 //個人種目と団体種目それぞれの金額
-export type Expense = {
+export type EventExpense = {
   individual: number;
   group: number;
 };
@@ -129,6 +133,11 @@ export type Expense = {
 //==============================
 // フォームでのユーザー詳細情報
 export type UserInfoInForm = Omit<UserInfo, 'teamId'>;
+
+// フォームでのチーム詳細情報
+export type TeamInfoInForm = TeamInfo & {
+  passwordConfirmation: string;
+};
 
 // 初回ログイン時のプロフィール作成入力項目
 export type CreateProfileFormInput = Omit<UserInfo, 'grade' | 'teamId'> &

@@ -9,11 +9,13 @@ type Props = {
   onClick: () => void;
 };
 
-const DrawerBodyItem: VFC<Props> = ({ name, icon, iconColor, onClick }) => (
-  <HStack spacing={4} onClick={onClick} cursor="pointer">
-    <Icon as={icon} w={6} h={6} color={iconColor} />
-    <Text fontSize={{ md: '20px' }}>{name}</Text>
-  </HStack>
-);
+const DrawerBodyItem: VFC<Props> = ({ name, icon, iconColor, onClick }) => {
+  return (
+    <HStack spacing={4} onClick={onClick} cursor="pointer">
+      <Icon as={icon} w={6} h={6} color={iconColor} />
+      <Text fontSize={{ md: '20px' }}>{name}</Text>
+    </HStack>
+  );
+};
 
 export default DrawerBodyItem;

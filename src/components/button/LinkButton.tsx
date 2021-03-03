@@ -16,9 +16,9 @@ const LinkButton: VFC<Props> = ({
 }) => (
   <Link href={link} passHref>
     <Button
-      shadow="base"
-      bg={currentPage ? 'orange.400' : 'white'}
       w="100%"
+      shadow="base"
+      colorScheme={currentPage ? 'orange' : 'gray'}
       {...props}
     >
       {label}

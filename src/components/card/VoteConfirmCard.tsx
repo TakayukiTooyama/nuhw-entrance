@@ -1,5 +1,5 @@
 import { Text, useDisclosure, useToast } from '@chakra-ui/react';
-import { Document, useDocument } from '@nandorojo/swr-firestore';
+import { Document, fuego } from '@nandorojo/swr-firestore';
 import { ConfirmCard } from 'components/card';
 import { useAuth } from 'context/Auth';
 import { Vote } from 'models/users';
@@ -13,24 +13,23 @@ const VoteConfirmCard: VFC<Props> = ({ data }) => {
   const { user } = useAuth();
   const toast = useToast();
 
-  const { deleteDocument } = useDocument(
-    `/users/${user?.uid}/votes/${data.id}`
-  );
-
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const voteDelete = async () => {
-    await deleteDocument().then(() => {
-      onClose();
-      toast({
-        title: '成功',
-        description: '投票を削除しました。',
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-        position: 'bottom',
+    await fuego.db
+      .doc(`/users/${user?.uid}/votes/${data.id}`)
+      .delete()
+      .then(() => {
+        onClose();
+        toast({
+          title: '成功',
+          description: '投票を削除しました。',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'bottom',
+        });
       });
-    });
   };
 
   return (

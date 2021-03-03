@@ -3,20 +3,28 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  InputGroup,
   InputProps,
 } from '@chakra-ui/react';
 import { ErrorMessage } from '@hookform/error-message';
-import React, { VFC } from 'react';
+import React, { FC } from 'react';
 import { Control, FieldErrors, useController } from 'react-hook-form';
 
 type Props = InputProps & {
   name: string;
-  label: string;
+  label?: string;
   control: Control;
   errors: FieldErrors;
 };
 
-const FormText: VFC<Props> = ({ label, name, control, errors, ...props }) => {
+const FormText: FC<Props> = ({
+  label,
+  name,
+  control,
+  errors,
+  children,
+  ...props
+}) => {
   const {
     field: { ref, ...inputProps },
     meta: { invalid, isTouched },
@@ -28,10 +36,15 @@ const FormText: VFC<Props> = ({ label, name, control, errors, ...props }) => {
 
   return (
     <FormControl isInvalid={invalid && isTouched}>
-      <FormLabel htmlFor={name} fontSize="20px" fontWeight="bold">
-        {label}
-      </FormLabel>
-      <Input name={name} ref={ref} {...inputProps} {...props} />
+      {label && (
+        <FormLabel htmlFor={name} fontWeight="bold">
+          {label}
+        </FormLabel>
+      )}
+      <InputGroup>
+        <Input name={name} ref={ref} {...inputProps} {...props} />
+        {children}
+      </InputGroup>
       <ErrorMessage
         errors={errors}
         name={name}

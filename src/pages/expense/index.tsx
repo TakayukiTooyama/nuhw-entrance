@@ -1,4 +1,4 @@
-import { Box, Container, Img, Stack, Text } from '@chakra-ui/react';
+import { Box, Container, Stack, Text } from '@chakra-ui/react';
 import { useCollection } from '@nandorojo/swr-firestore';
 import { Layout, TopHeading } from 'components/layout';
 import { Spinner } from 'components/loading';
@@ -6,6 +6,7 @@ import { ExpenseList } from 'components/template/expense';
 import { useAuth } from 'context/Auth';
 import { Entry } from 'models/users';
 import { NextPage } from 'next';
+import Image from 'next/image';
 import React from 'react';
 
 const Expense: NextPage = () => {
@@ -29,13 +30,14 @@ const Expense: NextPage = () => {
             entries.map((entry) => (
               <ExpenseList key={entry.id} entry={entry} />
             ))}
-          {entries?.length == 0 && (
+          {entries?.length === 0 && (
             <Box align="center">
               <Text fontSize={['16px', '18px', '20px']} mb={8}>
                 集金を行う大会がありません。
               </Text>
-              <Img
-                maxW={['250px', '350px', '450px']}
+              <Image
+                width={300}
+                height={200}
                 src="/Images/expense.png"
                 alt="管理"
               />

@@ -7,7 +7,7 @@ type Props = {
 
 const FormHeading: VFC<Props> = ({ title }) => {
   return (
-    <Box pt={4} pb={16} align="center">
+    <Box pb={12} align="center">
       <Heading as="h1" size="lg">
         {title}
       </Heading>

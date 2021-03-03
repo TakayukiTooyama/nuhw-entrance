@@ -1,4 +1,4 @@
-import { Box, Container, Img, Stack, Text } from '@chakra-ui/react';
+import { Box, Container, Stack, Text } from '@chakra-ui/react';
 import { useCollection } from '@nandorojo/swr-firestore';
 import { Layout, TopHeading } from 'components/layout';
 import { Spinner } from 'components/loading';
@@ -6,6 +6,7 @@ import { EntryConfirmList } from 'components/template';
 import { useAuth } from 'context/Auth';
 import { Entry } from 'models/users';
 import { NextPage } from 'next';
+import Image from 'next/image';
 import React from 'react';
 
 const linkData = [
@@ -19,6 +20,7 @@ const EntryConfirm: NextPage = () => {
   const { data: entries, error: entriesError } = useCollection<Entry>(
     `users/${user?.uid}/entries`,
     {
+      listen: true,
       orderBy: ['startDate', 'desc'],
       parseDates: ['startDate', 'endDate', 'timeLimit'],
     }
@@ -38,13 +40,14 @@ const EntryConfirm: NextPage = () => {
             </Text>
           </Stack>
         )}
-        {entries?.length == 0 && (
+        {entries?.length === 0 && (
           <Box>
             <Text fontSize={['16px', '18px', '20px']} mb={12}>
               エントリー済みの大会がありません。
             </Text>
-            <Img
-              maxW={['250px', '350px', '450px']}
+            <Image
+              width={300}
+              height={300}
               src="/Images/confirm.png"
               alt="ランニング"
             />

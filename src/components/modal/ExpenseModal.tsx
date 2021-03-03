@@ -18,18 +18,18 @@ import {
   Tr,
 } from '@chakra-ui/react';
 import { CardTextSchedule } from 'components/text';
-import { Entry } from 'models/users';
+import { Expense } from 'models/users';
 import React, { VFC } from 'react';
 import { formatPriceNotation, formatWeekdayNotation } from 'utils/format';
 
 type Props = {
-  entry: Entry;
+  expense: Expense;
   isOpen: boolean;
   onClose: () => void;
 };
 
-const ExpenseModal: VFC<Props> = ({ isOpen, onClose, entry }) => {
-  const priceArray = entry.eventsInfo.map((data) => {
+const ExpenseModal: VFC<Props> = ({ isOpen, onClose, expense }) => {
+  const priceArray = expense.eventsInfo.map((data) => {
     return data.expense;
   });
   const totalPrice = priceArray.reduce((acc, cur) => acc + cur);
@@ -41,20 +41,20 @@ const ExpenseModal: VFC<Props> = ({ isOpen, onClose, entry }) => {
         <Box px={6}>
           <CardTextSchedule
             color="gray.400"
-            startDate={formatWeekdayNotation(entry.startDate)}
-            endDate={formatWeekdayNotation(entry.endDate)}
+            startDate={formatWeekdayNotation(expense.startDate)}
+            endDate={formatWeekdayNotation(expense.endDate)}
           />
           <Heading as="h2" size="lg" mb={4}>
-            {entry.tournamentName}
+            {expense.tournamentName}
           </Heading>
           <Divider />
         </Box>
         <ModalCloseButton />
         <ModalBody>
           <HStack spacing={4} py={4} justify="center" fontSize="20px">
-            <Text>{entry.grade}</Text>
+            <Text>{expense.grade}</Text>
             <Text>/</Text>
-            <Text>{entry.name}</Text>
+            <Text>{expense.name}</Text>
           </HStack>
           <Table
             variant="simple"
@@ -69,7 +69,7 @@ const ExpenseModal: VFC<Props> = ({ isOpen, onClose, entry }) => {
               </Tr>
             </Thead>
             <Tbody>
-              {entry.eventsInfo.map((data) => {
+              {expense.eventsInfo.map((data) => {
                 return (
                   <Tr key={data.name}>
                     <Td>{data.name}</Td>

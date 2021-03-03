@@ -3,23 +3,23 @@ import { Card } from 'components/card';
 import {
   CardTextHeading,
   CardTextSchedule,
-  CardTextTimeLimit,
+  // CardTextTimeLimit,
 } from 'components/text';
-import { Entry } from 'models/users';
+import { Expense } from 'models/users';
 import { useRouter } from 'next/router';
 import React, { VFC } from 'react';
 import {
   formatPriceNotation,
-  formatTimeLimitNotation,
+  // formatTimeLimitNotation,
   formatWeekdayNotation,
 } from 'utils/format';
 
 type Props = {
-  entry: Entry;
+  expense: Expense;
   onClick: () => void;
 };
 
-const ExpenseManagementCard: VFC<Props> = ({ entry, onClick }) => {
+const ExpenseManagementCard: VFC<Props> = ({ expense, onClick }) => {
   const router = useRouter();
   const path = router.asPath.split('/')[2];
 
@@ -27,10 +27,10 @@ const ExpenseManagementCard: VFC<Props> = ({ entry, onClick }) => {
     <Card onClick={onClick} cursor="pointer" bg="gray.50" innerPadding={4}>
       <CardTextSchedule
         color="gray.400"
-        startDate={formatWeekdayNotation(entry.startDate)}
-        endDate={formatWeekdayNotation(entry.endDate)}
+        startDate={formatWeekdayNotation(expense.startDate)}
+        endDate={formatWeekdayNotation(expense.endDate)}
       />
-      <CardTextHeading text={entry.tournamentName} />
+      <CardTextHeading text={expense.tournamentName} />
       <HStack
         spacing={4}
         my={6}
@@ -44,17 +44,19 @@ const ExpenseManagementCard: VFC<Props> = ({ entry, onClick }) => {
           <>
             <Text>
               個人種目
-              {formatPriceNotation(entry.expense.individual)}
+              {formatPriceNotation(expense.expense.individual)}
             </Text>
-            <Text>団体種目{formatPriceNotation(entry.expense.group)}</Text>
+            <Text>団体種目{formatPriceNotation(expense.expense.group)}</Text>
           </>
         ) : (
-          <Text>エントリー費：{formatPriceNotation(entry.totalExpenses)}</Text>
+          <Text>
+            エントリー費：{formatPriceNotation(expense.totalExpenses)}
+          </Text>
         )}
       </HStack>
-      <CardTextTimeLimit
-        text={`【集金日】 ${formatTimeLimitNotation(entry.timeLimit)}`}
-      />
+      {/* <CardTextTimeLimit
+        text={`【集金日】 ${formatTimeLimitNotation(expense.timeLimit)}`}
+      /> */}
     </Card>
   );
 };

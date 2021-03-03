@@ -1,4 +1,4 @@
-import { Box, Container, Image, Stack, Text } from '@chakra-ui/react';
+import { Box, Container, Stack, Text } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
 import { Button } from 'components/button';
 import { Layout, TopHeading } from 'components/layout';
@@ -7,6 +7,7 @@ import { EntryManagementList } from 'components/template';
 import { useAuth } from 'context/Auth';
 import { Tournament, User } from 'models/users';
 import { NextPage } from 'next';
+import Image from 'next/image';
 import Router from 'next/router';
 import React from 'react';
 
@@ -18,19 +19,15 @@ const linkData = [
 const EntryManagement: NextPage = () => {
   const { user } = useAuth();
 
-  const { data: userInfo } = useDocument<User>(
-    user ? `users/${user.uid}` : null
-  );
+  const { data: userInfo } = useDocument<User>(`users/${user?.uid}`);
   const {
     data: tournaments,
     error: tournamentsError,
-  } = useCollection<Tournament>(
-    userInfo ? `teams/${userInfo.teamId}/tournaments` : null,
-    {
-      orderBy: ['startDate', 'desc'],
-      parseDates: ['startDate', 'endDate', 'timeLimit'],
-    }
-  );
+  } = useCollection<Tournament>(`teams/${userInfo?.teamId}/tournaments`, {
+    orderBy: ['startDate', 'desc'],
+    parseDates: ['startDate', 'endDate', 'timeLimit'],
+    listen: true,
+  });
 
   tournamentsError && console.error(tournamentsError);
   return (
@@ -39,19 +36,20 @@ const EntryManagement: NextPage = () => {
       <Container maxW="xl" py={12}>
         <Stack align="center" spacing={8}>
           {!tournaments && tournaments?.length !== 0 && <Spinner />}
-          {tournaments?.length > 0 && (
-            <EntryManagementList tournaments={tournaments} />
-          )}
-          {tournaments?.length == 0 && (
+          {tournaments?.length > 0 &&
+            tournaments.map((data) => (
+              <EntryManagementList
+                key={data.id}
+                tournament={data}
+                userInfo={userInfo}
+              />
+            ))}
+          {tournaments?.length === 0 && (
             <Box textAlign="center">
               <Text fontSize={['16px', '18px', '20px']} mb={8}>
                 作成されたエントリーがありません。
               </Text>
-              <Image
-                maxW={['250px', '350px', '450px']}
-                src="/Images/management.svg"
-                alt="管理"
-              />
+              <Image width={300} height={200} src="/Images/management.svg" />
             </Box>
           )}
           {tournaments && (

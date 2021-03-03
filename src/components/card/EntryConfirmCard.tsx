@@ -13,7 +13,7 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
-import { Document, useDocument } from '@nandorojo/swr-firestore';
+import { Document, fuego } from '@nandorojo/swr-firestore';
 import { Card } from 'components/card';
 import { DeleteDialog } from 'components/dialog';
 import { CardTextSchedule } from 'components/text';
@@ -26,40 +26,42 @@ type Props = BoxProps & {
   data: Document<Entry>;
 };
 
-const EntryConfirmCard: VFC<Props> = ({ data, ...props }) => {
+const ConfirmCard: VFC<Props> = ({ data, ...props }) => {
   const { user } = useAuth();
   const toast = useToast();
-
-  const { deleteDocument } = useDocument(
-    `/users/${user?.uid}/entries/${data.id}`
-  );
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
 
   const entryDelete = async () => {
-    await deleteDocument().then(() => {
-      onClose();
-      toast({
-        title: '成功',
-        description: 'エントリーを削除しました。',
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-        position: 'bottom',
+    await fuego.db
+      .doc(`users/${user.uid}/entries/${data.id}`)
+      .delete()
+      .then(() => {
+        onClose();
+        toast({
+          title: '成功',
+          description: 'エントリーを削除しました。',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'bottom',
+        });
       });
-    });
   };
 
   return (
     <>
       <DeleteDialog
-        name={data.tournamentName}
         isOpen={isOpen}
         cancelRef={cancelRef}
         onClose={onClose}
         onDelete={entryDelete}
-      />
+      >
+        <Text>
+          {data.tournamentName}のエントリーを完全に削除してもよろしいですか？
+        </Text>
+      </DeleteDialog>
       <Card innerPadding={4} {...props}>
         <Stack>
           <Flex alignItems="center" justify="space-between">
@@ -68,6 +70,7 @@ const EntryConfirmCard: VFC<Props> = ({ data, ...props }) => {
             </Heading>
             <IconButton
               aria-label="deleteIcon"
+              size="sm"
               bg="red.300"
               shadow="inner"
               icon={<DeleteIcon />}
@@ -89,7 +92,7 @@ const EntryConfirmCard: VFC<Props> = ({ data, ...props }) => {
           </HStack>
           <Flex wrap="wrap">
             {data.eventsInfo.map((event, idx) => (
-              <HStack key={event.id} mr={12} mb={4}>
+              <HStack key={event.id} mr={6} mb={4}>
                 <Box>
                   <Text>{`種目${idx + 1}`}</Text>
                   <Text>記録</Text>
@@ -108,4 +111,4 @@ const EntryConfirmCard: VFC<Props> = ({ data, ...props }) => {
   );
 };
 
-export default EntryConfirmCard;
+export default ConfirmCard;

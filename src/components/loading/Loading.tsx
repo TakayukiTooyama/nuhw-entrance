@@ -15,10 +15,11 @@ const Container = styled.div`
   left: 50%;
   top: 50%;
   margin-left: -50px;
-  margin-top: -10px;
+  margin-top: -50px;
   text-align: center;
   font-family: Arial;
   font-weight: bold;
+  font-size: 20px;
   span {
     display: block;
     background: #000;
@@ -42,7 +43,7 @@ const Loading: VFC = () => {
       <span></span>
       <span></span>
       <span></span>
-      <p>LOADING</p>
+      <p>Loading...</p>
     </Container>
   );
 };

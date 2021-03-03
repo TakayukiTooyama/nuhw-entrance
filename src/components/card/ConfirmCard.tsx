@@ -38,7 +38,6 @@ const ConfirmCard: FC<Props> = ({
   return (
     <>
       <DeleteDialog
-        name={data.tournamentName}
         isOpen={isOpen}
         cancelRef={cancelRef}
         onClose={onClose}

@@ -1,4 +1,4 @@
-import { Box, Img, Text } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
 import { Layout } from 'components/layout';
 import { Spinner } from 'components/loading';
@@ -6,6 +6,7 @@ import { VoteManagementTableList } from 'components/template/expedition';
 import { useAuth } from 'context/Auth';
 import { Expedition, User, Vote } from 'models/users';
 import { NextPage } from 'next';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -55,13 +56,14 @@ const ExpeditionManagementDetail: NextPage = () => {
         {votes?.length > 0 && (
           <VoteManagementTableList votes={votes} rideLabels={rideLabels} />
         )}
-        {votes?.length == 0 && (
+        {votes?.length === 0 && (
           <Box>
             <Text fontSize={['16px', '18px', '20px']} mb={12}>
               まだ投票されていません。
             </Text>
-            <Img
-              maxW={['250px', '350px', '450px']}
+            <Image
+              width={300}
+              height={200}
               src="/Images/no-data.png"
               alt="管理"
             />

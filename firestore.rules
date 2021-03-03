@@ -1,40 +1,81 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    function isAuth() {
+
+    // users
+    match /users/{userID} {
+      allow get: if isAuthenticated()
+                  && isUserAuthenticated(userID)
+                  && request.auth.token.firebase.sign_in_provider == 'google.com';
+      allow list: if isAuthenticated()
+                  && isAdmin(request.auth.uid)
+      allow create;
+      allow update: if isAuthenticated()
+                    && (isAdmin(request.auth.uid) || isUserAuthenticated(userID));
+      allow delete: if isAuthenticated()
+                    && isUserAuthenticated(userID);
+
+      match /entries/{entryID} {
+        allow read: if isAuthenticated()
+                    && isUserAuthenticated(userID);
+        allow create: if isAuthenticated()
+                      && isUserAuthenticated(userID)
+        allow delete: if isAuthenticated()
+                      && isUserAuthenticated(userID)
+      }
+      match /votes/{voteID} {
+        allow read, write: if true;
+      }
+      match /expenses/{expenseID} {
+        allow read, write: if true;
+      }
+    }
+
+    // teams
+    match /teams/{teamID} {
+      allow get: if isAuthenticated()
+                  && getData(documentPath(['users', request.auth.uid])).teamId == teamID;
+      allow list: if isAuthenticated();
+      allow create: if isAuthenticated();
+
+      match /tournaments/{tournamentID} {
+        allow read, write: if isAuthenticated();
+      }
+      match /expeditions/{expeditionID} {
+        allow read, write: if true;
+      }
+    }
+
+    match /{path=**}/entries/{entryID} {
+      allow read: if isAuthenticated()
+                  && isAdmin(request.auth.uid);
+    }
+
+    match /{path=**}/votes/{voteID} {
+      allow read: if isAuthenticated()
+                  && isAdmin(request.auth.uid);
+    }
+
+
+    // helper functions
+    function isAdmin(uid) {
+      return getData(documentPath(['users', uid])).role == '管理者';
+    }
+
+    function documentPath(paths) {
+      return path([['databases', database, 'documents'].join('/'), paths.join('/')].join('/'));
+    }
+
+    function isAuthenticated() {
       return request.auth != null;
     }
-    match /users/{userId} {
-      allow read, write: if true;
 
-      match /entries/{entryId} {
-        allow read, write: if true;
-      }
-      match /votes/{voteId} {
-        allow read, write: if true;
-      }
+    function isUserAuthenticated(userID) {
+      return request.auth.uid == userID;
     }
 
-    match /teams/{teamId} {
-      allow read, write: if true;
-
-      match /tournaments/{tournamentId} {
-        allow read, write: if true;
-      }
-      match /expeditions/{expeditionId} {
-        allow read, write: if true;
-      }
-    }
-
-    match /events/{eventId} {
-      allow read, write: if true;
-    }
-
-    match /{path=**}/entries/{entryId} {
-      allow read, write: if true;
-    }
-    match /{path=**}/votes/{voteId} {
-      allow read, write: if true;
+    function getData(path) {
+      return get(path).data;
     }
   }
 }

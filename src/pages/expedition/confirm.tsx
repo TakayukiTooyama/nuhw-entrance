@@ -1,4 +1,4 @@
-import { Box, Container, Img, Stack, Text } from '@chakra-ui/react';
+import { Box, Container, Stack, Text } from '@chakra-ui/react';
 import { useCollection } from '@nandorojo/swr-firestore';
 import { Layout, TopHeading } from 'components/layout';
 import { Spinner } from 'components/loading';
@@ -6,6 +6,7 @@ import { VoteConfirmList } from 'components/template/expedition';
 import { useAuth } from 'context/Auth';
 import { Vote } from 'models/users';
 import { NextPage } from 'next';
+import Image from 'next/image';
 import React from 'react';
 
 const linkData = [
@@ -21,6 +22,7 @@ const ExpeditionConfirm: NextPage = () => {
     {
       orderBy: ['startDate', 'desc'],
       parseDates: ['startDate', 'endDate', 'timeLimit'],
+      listen: true,
     }
   );
 
@@ -38,13 +40,14 @@ const ExpeditionConfirm: NextPage = () => {
             </Text>
           </Stack>
         )}
-        {votes?.length == 0 && (
+        {votes?.length === 0 && (
           <Box>
             <Text fontSize={['16px', '18px', '20px']} mb={12}>
               投票されていません。
             </Text>
-            <Img
-              maxW={['250px', '350px', '450px']}
+            <Image
+              width={300}
+              height={200}
               src="/Images/vote.png"
               alt="投票確認"
             />

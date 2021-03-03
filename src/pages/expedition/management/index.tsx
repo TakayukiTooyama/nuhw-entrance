@@ -1,4 +1,4 @@
-import { Box, Container, Img, Stack, Text } from '@chakra-ui/react';
+import { Box, Container, Stack, Text } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
 import { Button } from 'components/button';
 import { Layout, TopHeading } from 'components/layout';
@@ -7,6 +7,7 @@ import { ExpeditionManagementList } from 'components/template/expedition';
 import { useAuth } from 'context/Auth';
 import { Expedition, User } from 'models/users';
 import { NextPage } from 'next';
+import Image from 'next/image';
 import Router from 'next/router';
 import React from 'react';
 
@@ -40,13 +41,14 @@ const ExpenseManagement: NextPage = () => {
           {expeditions?.length > 0 && (
             <ExpeditionManagementList expeditions={expeditions} />
           )}
-          {expeditions?.length == 0 && (
-            <Box textAlign="center">
+          {expeditions?.length === 0 && (
+            <Box align="center">
               <Text fontSize={['16px', '18px', '20px']} mb={8}>
                 作成された投票がありません。
               </Text>
-              <Img
-                maxW={['250px', '350px', '450px']}
+              <Image
+                width={300}
+                height={200}
                 src="/Images/create.png"
                 alt="投票作成"
               />

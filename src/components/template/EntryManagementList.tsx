@@ -1,24 +1,53 @@
-import { Stack } from '@chakra-ui/react';
-import { Document } from '@nandorojo/swr-firestore';
+import { Text, useDisclosure, useToast } from '@chakra-ui/react';
+import { Document, fuego } from '@nandorojo/swr-firestore';
 import { TimeLimitCard } from 'components/card';
-import { Tournament } from 'models/users';
-import React, { VFC } from 'react';
+import { DeleteDialog } from 'components/dialog';
+import { Tournament, UserInfo } from 'models/users';
+import React, { useRef, VFC } from 'react';
 
 type Props = {
-  tournaments: Document<Tournament>[];
+  tournament: Document<Tournament>;
+  userInfo: UserInfo;
 };
 
-const EntryManagementList: VFC<Props> = ({ tournaments }) => {
+const EntryManagementList: VFC<Props> = ({ tournament, userInfo }) => {
+  const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
+
+  const createdEntryDelete = async () => {
+    await fuego.db
+      .doc(`teams/${userInfo?.teamId}/tournaments/${tournament.id}`)
+      .delete()
+      .then(() => {
+        onClose();
+        toast({
+          title: '成功',
+          description: 'エントリーを削除しました。',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'bottom',
+        });
+      });
+  };
+
   return (
-    <Stack spacing={4} w="100%">
-      {tournaments.map((data) => (
-        <TimeLimitCard
-          key={data.tournamentName}
-          data={data}
-          link={`/entry/management/${data.id}`}
-        />
-      ))}
-    </Stack>
+    <>
+      <DeleteDialog
+        isOpen={isOpen}
+        cancelRef={cancelRef}
+        onClose={onClose}
+        onDelete={createdEntryDelete}
+      >
+        <Text>{tournament.tournamentName}のエントリーは削除されます。</Text>
+      </DeleteDialog>
+      <TimeLimitCard
+        data={tournament}
+        link={`/entry/management/${tournament.id}`}
+        onOpen={onOpen}
+      />
+    </>
   );
 };
 

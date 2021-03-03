@@ -21,9 +21,7 @@ const FormInputWrapper: FC<Props> = ({
 }) => {
   return (
     <FormControl isInvalid={isInvalid} {...props} w="100%">
-      <FormLabel fontSize="20px" fontWeight="bold">
-        {label}
-      </FormLabel>
+      <FormLabel fontWeight="bold">{label}</FormLabel>
       {children}
       <FormErrorMessage>{isInvalid && errorMessage}</FormErrorMessage>
     </FormControl>

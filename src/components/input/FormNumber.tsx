@@ -33,7 +33,9 @@ const FormNumber: VFC<Props> = ({ name, control, label, unit }) => {
   return (
     <FormControl id={name}>
       <HStack>
-        <FormLabel>{label}</FormLabel>
+        <FormLabel m={0} minW="65px">
+          {label}
+        </FormLabel>
         <NumberInput>
           <NumberInputField ref={ref} {...inputProps} />
         </NumberInput>

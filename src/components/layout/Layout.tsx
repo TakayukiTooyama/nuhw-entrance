@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import { Header, TabBar } from 'components/layout';
+import { Header } from 'components/layout';
 import Head from 'next/head';
 import React, { FC } from 'react';
 
@@ -32,7 +32,7 @@ const Layout: FC<Props> = ({
         <Box as="main" pb="50px">
           {children}
         </Box>
-        <TabBar />
+        {/* <TabBar /> */}
       </Box>
     )}
   </>

@@ -90,7 +90,7 @@ const CreateEntryForm: VFC = () => {
       <FormHeading title="エントリーフォーム作成" />
       <form onSubmit={handleSubmit(createEntryForm)}>
         {/* 大会名 */}
-        <Stack spacing={16}>
+        <Stack spacing={8}>
           <FormText
             label="①大会名"
             name="name"
@@ -171,7 +171,7 @@ const CreateEntryForm: VFC = () => {
           </Stack>
 
           {/* エントリー種目 */}
-          <Stack spacing={8}>
+          <Stack spacing={4}>
             <FormLabel label="⑤エントリー種目" />
             <Button label="全ての種目を選択" onClick={allInput} />
             <EventCheckbox
