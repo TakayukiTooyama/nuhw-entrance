@@ -52,7 +52,10 @@ const EntryFormDetail: VFC = () => {
     }
   );
   const { add: EntryAdd } = useCollection<Omit<Entry, 'timeLimit'>>(
-    `users/${user?.uid}/entries`
+    `users/${user?.uid}/entries`,
+    {
+      listen: true,
+    }
   );
   // const { add: ExpenseAdd } = useCollection<Omit<Expense, 'collectionDate'>>(
   //   `users/${user?.uid}/expenses`

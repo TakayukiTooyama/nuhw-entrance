@@ -18,11 +18,11 @@ const EntryConfirm: NextPage = () => {
   const { user } = useAuth();
 
   const { data: entries, error: entriesError } = useCollection<Entry>(
-    `users/${user?.uid}/entries`,
+    user ? `users/${user?.uid}/entries` : null,
     {
-      listen: true,
       orderBy: ['startDate', 'desc'],
       parseDates: ['startDate', 'endDate', 'timeLimit'],
+      listen: true,
     }
   );
 
@@ -35,7 +35,7 @@ const EntryConfirm: NextPage = () => {
         {entries?.length > 0 && (
           <Stack spacing={8}>
             <EntryConfirmList entries={entries} />
-            <Text textAlign="left" color="gray.400">
+            <Text textAlign="left" color="gray.400" px={4}>
               ※エントリーを変更したい場合は、一度削除し、再びエントリーしてください。
             </Text>
           </Stack>

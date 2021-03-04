@@ -39,7 +39,7 @@ const TimeLimitCard: FC<Props> = ({
       cursor="pointer"
       pos="relative"
     >
-      <Flex justify="space-between" align="center">
+      <Flex justify="space-between" align="center" h="32px">
         <CardTextSchedule
           startDate={formatWeekdayNotation(data.startDate)}
           endDate={formatWeekdayNotation(data.endDate)}

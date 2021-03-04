@@ -23,11 +23,14 @@ const EntryManagement: NextPage = () => {
   const {
     data: tournaments,
     error: tournamentsError,
-  } = useCollection<Tournament>(`teams/${userInfo?.teamId}/tournaments`, {
-    orderBy: ['startDate', 'desc'],
-    parseDates: ['startDate', 'endDate', 'timeLimit'],
-    listen: true,
-  });
+  } = useCollection<Tournament>(
+    userInfo ? `teams/${userInfo.teamId}/tournaments` : null,
+    {
+      orderBy: ['startDate', 'desc'],
+      parseDates: ['startDate', 'endDate', 'timeLimit'],
+      listen: true,
+    }
+  );
 
   tournamentsError && console.error(tournamentsError);
   return (

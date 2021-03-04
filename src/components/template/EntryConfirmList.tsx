@@ -9,18 +9,16 @@ type Props = {
   entries: Document<Entry>[];
 };
 
-const EntryConfirmList: VFC<Props> = ({ entries }) => {
-  return (
-    <Stack align="centr" spacing={4}>
-      {entries ? (
-        entries.map((data) => (
-          <EntryConfirmCard key={data.tournamentId} data={data} />
-        ))
-      ) : (
-        <Spinner />
-      )}
-    </Stack>
-  );
-};
+const EntryConfirmList: VFC<Props> = ({ entries }) => (
+  <Stack align="centr" spacing={4}>
+    {entries ? (
+      entries.map((data) => (
+        <EntryConfirmCard key={data.tournamentId} data={data} />
+      ))
+    ) : (
+      <Spinner />
+    )}
+  </Stack>
+);
 
 export default EntryConfirmList;

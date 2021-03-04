@@ -17,10 +17,10 @@ type CreateProfileInput = Omit<UserInfoInForm, 'email' | 'grade'>;
 const schema: SchemaOf<CreateProfileInput> = object()
   .shape({
     name: string()
-      .matches(/^[ぁ-んァ-ン一-龥(\s|　)]+$/, '全角で入力してください。')
+      .matches(/^[ぁ-んァ-ンヴー-龥(\s|　)]+$/, '全角で入力してください。')
       .required('氏名を入力してください。'),
     furigana: string()
-      .matches(/^[ァ-ンヴー]+$/, '全角カタカナで入力してください。')
+      .matches(/^[ァ-ンヴー(\s|　)]+$/, '全角カタカナで入力してください。')
       .required('フリガナを入力してください。'),
   })
   .defined();

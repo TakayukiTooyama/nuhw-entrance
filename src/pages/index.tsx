@@ -18,9 +18,14 @@ const linkData = [
 export const Home: NextPage = () => {
   const { user } = useAuth();
 
-  const { data: userInfo } = useDocument<User>(`users/${user?.uid}`);
+  const { data: userInfo } = useDocument<User>(
+    user ? `users/${user?.uid}` : null
+  );
 
-  const { data: entries } = useCollection<Entry>(`users/${user?.uid}/entries`);
+  const { data: entries } = useCollection<Entry>(
+    user ? `users/${user?.uid}/entries` : null
+  );
+
   const {
     data: tournaments,
     error: tournamentsError,
