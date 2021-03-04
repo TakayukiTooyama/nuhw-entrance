@@ -1,5 +1,5 @@
 import { DeleteIcon } from '@chakra-ui/icons';
-import { Box, BoxProps, Flex, IconButton, Stack } from '@chakra-ui/react';
+import { BoxProps, Flex, IconButton, Stack } from '@chakra-ui/react';
 import {
   CardTextHeading,
   CardTextSchedule,
@@ -10,6 +10,7 @@ import Router, { useRouter } from 'next/router';
 import React, { FC } from 'react';
 import { TiWarning } from 'react-icons/ti';
 import { formatTimeLimitNotation, formatWeekdayNotation } from 'utils/format';
+import { MotionBox } from 'utils/motion';
 
 type Props = BoxProps & {
   data: Tournament | Entry | Expedition;
@@ -28,7 +29,7 @@ const TimeLimitCard: FC<Props> = ({
   const path = router.asPath.split('/')[2];
 
   return (
-    <Box
+    <MotionBox
       py={4}
       px={4}
       w="100%"
@@ -38,6 +39,8 @@ const TimeLimitCard: FC<Props> = ({
       {...props}
       cursor="pointer"
       pos="relative"
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
     >
       <Flex justify="space-between" align="center" h="32px">
         <CardTextSchedule
@@ -63,7 +66,7 @@ const TimeLimitCard: FC<Props> = ({
           text={`${formatTimeLimitNotation(data.timeLimit)} まで`}
         />
       </Stack>
-    </Box>
+    </MotionBox>
   );
 };
 

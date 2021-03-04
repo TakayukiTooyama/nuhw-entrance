@@ -2,6 +2,7 @@ import { List } from '@chakra-ui/react';
 import { useDocument } from '@nandorojo/swr-firestore';
 import { DrawerBodyItem } from 'components/drawer';
 import { useAuth } from 'context/Auth';
+import { motion } from 'framer-motion';
 import { User } from 'models/users';
 import Router from 'next/router';
 import React, { VFC } from 'react';
@@ -9,6 +10,17 @@ import { BiLogOut } from 'react-icons/bi';
 import { FaAddressCard } from 'react-icons/fa';
 import { FcManager } from 'react-icons/fc';
 import { GrContact } from 'react-icons/gr';
+
+const MotionList = motion.custom(List);
+
+const variants = {
+  open: {
+    transition: { staggerChildren: 0.07, delayChildren: 0.2 },
+  },
+  closed: {
+    transition: { staggerChildren: 0.05, staggerDirection: -1 },
+  },
+};
 
 const DrawerBodyItemList: VFC = () => {
   const { logout } = useAuth();
@@ -55,7 +67,7 @@ const DrawerBodyItemList: VFC = () => {
   ];
 
   return (
-    <List spacing={4}>
+    <MotionList spacing={4} variants={variants}>
       {bodyItemList.map((item) => {
         if (item.name === '管理者引き継ぎ' && userInfo?.role !== '管理者') {
           return false;
@@ -70,7 +82,7 @@ const DrawerBodyItemList: VFC = () => {
           />
         );
       })}
-    </List>
+    </MotionList>
   );
 };
 

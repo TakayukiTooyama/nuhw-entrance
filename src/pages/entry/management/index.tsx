@@ -37,16 +37,14 @@ const EntryManagement: NextPage = () => {
     <Layout title="エントリー管理">
       <TopHeading title="エントリー管理" linkData={linkData} />
       <Container maxW="xl" py={12}>
-        <Stack align="center" spacing={8}>
+        <Stack align="center" spacing={4}>
           {!tournaments && tournaments?.length !== 0 && <Spinner />}
-          {tournaments?.length > 0 &&
-            tournaments.map((data) => (
-              <EntryManagementList
-                key={data.id}
-                tournament={data}
-                userInfo={userInfo}
-              />
-            ))}
+          {tournaments?.length > 0 && (
+            <EntryManagementList
+              userInfo={userInfo}
+              tournaments={tournaments}
+            />
+          )}
           {tournaments?.length === 0 && (
             <Box textAlign="center">
               <Text fontSize={['16px', '18px', '20px']} mb={8}>
