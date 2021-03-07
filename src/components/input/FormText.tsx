@@ -37,7 +37,7 @@ const FormText: FC<Props> = ({
   return (
     <FormControl isInvalid={invalid && isTouched}>
       {label && (
-        <FormLabel htmlFor={name} fontWeight="bold">
+        <FormLabel htmlFor={name} fontSize="18px" fontWeight="bold">
           {label}
         </FormLabel>
       )}

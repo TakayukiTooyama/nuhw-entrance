@@ -1,9 +1,9 @@
 import { List } from '@chakra-ui/react';
 import { Document } from '@nandorojo/swr-firestore';
 import { EntryManagementListItem } from 'components/template';
-import { motion } from 'framer-motion';
 import { Tournament, UserInfo } from 'models/users';
 import React, { VFC } from 'react';
+import { MotionBox } from 'utils/motion';
 import { listVariants } from 'utils/variants';
 
 type Props = {
@@ -11,12 +11,12 @@ type Props = {
   userInfo: UserInfo;
 };
 
-const MotionList = motion.custom(List);
-
 const EntryManagementList: VFC<Props> = ({ tournaments, userInfo }) => {
   return (
-    <MotionList
+    <MotionBox
       w="100%"
+      spacing={6}
+      as={List}
       variants={listVariants}
       initial="closed"
       animate="open"
@@ -28,7 +28,7 @@ const EntryManagementList: VFC<Props> = ({ tournaments, userInfo }) => {
           userInfo={userInfo}
         />
       ))}
-    </MotionList>
+    </MotionBox>
   );
 };
 

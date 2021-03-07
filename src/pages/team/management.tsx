@@ -7,7 +7,7 @@ import React from 'react';
 const TeamManagement: NextPage = () => (
   <Layout title="引き継ぎ">
     <TopHeading title="引き継ぎ" />
-    <Container maxW="lg" py={12}>
+    <Container maxW="lg" py={8}>
       <Inheritance />
     </Container>
     <TabBar />

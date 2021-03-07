@@ -11,7 +11,7 @@ const VoteFormPage: NextPage = () => {
       prevPageLink="/expedition"
       prevPageTitle="移動希望投票"
     >
-      <Container maxW="xl" py={12}>
+      <Container maxW="xl" py={8}>
         <VoteForm />
       </Container>
     </Layout>

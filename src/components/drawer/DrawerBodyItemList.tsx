@@ -7,9 +7,10 @@ import { User } from 'models/users';
 import Router from 'next/router';
 import React, { VFC } from 'react';
 import { BiLogOut } from 'react-icons/bi';
-import { FaAddressCard } from 'react-icons/fa';
+import { FaAddressCard, FaBusAlt } from 'react-icons/fa';
 import { FcManager } from 'react-icons/fc';
 import { GrContact } from 'react-icons/gr';
+// import { RiMoneyCnyCircleFill } from 'react-icons/ri';
 
 const MotionList = motion.custom(List);
 
@@ -36,22 +37,22 @@ const DrawerBodyItemList: VFC = () => {
       onClick: () => Router.push('/'),
     },
     {
-      icon: FcManager,
-      name: '管理者引き継ぎ',
-      onClick: () => Router.push('/team/management'),
+      icon: FaBusAlt,
+      iconColor: 'teal.500',
+      name: '遠征',
+      onClick: () => Router.push('/expedition'),
     },
-    // {
-    //   icon: FaBusAlt,
-    //   iconColor: 'teal.500',
-    //   name: '遠征',
-    //   onClick: () => Router.push('/expedition'),
-    // },
     // {
     //   icon: RiMoneyCnyCircleFill,
     //   iconColor: 'yellow.400',
     //   name: '集金',
     //   onClick: () => Router.push('/expense'),
     // },
+    {
+      icon: FcManager,
+      name: '管理者引き継ぎ',
+      onClick: () => Router.push('/team/management'),
+    },
     {
       icon: GrContact,
       iconColor: 'gray.500',

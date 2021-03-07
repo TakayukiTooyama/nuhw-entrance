@@ -2,12 +2,14 @@ import { Box } from '@chakra-ui/react';
 import { NavTab } from 'components/layout';
 import React, { VFC } from 'react';
 import { FaAddressCard, FaBusAlt } from 'react-icons/fa';
-import { RiMoneyCnyCircleFill } from 'react-icons/ri';
+import { GiClothes } from 'react-icons/gi';
+// import { RiMoneyCnyCircleFill } from 'react-icons/ri';
 
 const navList = [
   { name: 'エントリー', icon: FaAddressCard, link: `/` },
   { name: '遠征', icon: FaBusAlt, link: `/expedition` },
-  { name: '集金', icon: RiMoneyCnyCircleFill, link: `/expense` },
+  // { name: '集金', icon: RiMoneyCnyCircleFill, link: `/expense` },
+  { name: '用具・ユニ', icon: GiClothes, link: `/clubtool` },
 ];
 
 const TabBar: VFC = () => {

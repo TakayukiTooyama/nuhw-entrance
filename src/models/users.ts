@@ -129,52 +129,7 @@ export type EventExpense = {
 };
 
 //==============================
-// フォーム
-//==============================
-// フォームでのユーザー詳細情報
-export type UserInfoInForm = Omit<UserInfo, 'teamId'>;
-
-// フォームでのチーム詳細情報
-export type TeamInfoInForm = TeamInfo & {
-  passwordConfirmation: string;
-};
-
-// 初回ログイン時のプロフィール作成入力項目
-export type CreateProfileFormInput = Omit<UserInfo, 'grade' | 'teamId'> &
-  Pick<TimeStamp, 'createdAt'>;
-
-// ユーザーによるエントリーフォームの入力項目
-export type EntryFormInput = {
-  grade: '1年' | '2年' | '3年' | '4年' | '院1' | '院2' | 'コーチ';
-  events: Event[];
-};
-
-// 管理者によるエントリーフォーム作成時の入力項目
-export type CreateEntryFormInput = {
-  name: string;
-  individualExpense: number;
-  groupExpense: number;
-  startDate: Date;
-  endDate: Date;
-  timeLimit: Date;
-  events: Event[];
-};
-
-export type VoteFormInput = {
-  grade: '1年' | '2年' | '3年' | '4年' | '院1' | '院2' | 'コーチ';
-  rideInfo: '';
-};
-
-export type CreateVoteFormInput = {
-  name: string;
-  day: string;
-  course: '行き' | '帰り';
-  timeLimit: Date;
-};
-
-//==============================
-// 大会会場やホテルに向かう交通手段を
-// 選手に投票で決めてもらう
+// 遠征
 //==============================
 
 // 管理者が作った遠征時の移動方法
@@ -224,6 +179,88 @@ export type Vote = {
   busInfo: BusInfo | '';
   carInfo: CarInfo | '';
 };
+
+//==============================
+// フォーム
+//==============================
+// フォームでのユーザー詳細情報
+export type UserInfoInForm = Omit<UserInfo, 'teamId'>;
+
+// フォームでのチーム詳細情報
+export type TeamInfoInForm = TeamInfo & {
+  passwordConfirmation: string;
+};
+
+// 初回ログイン時のプロフィール作成入力項目
+export type CreateProfileFormInput = Omit<UserInfo, 'grade' | 'teamId'> &
+  Pick<TimeStamp, 'createdAt'>;
+
+// ユーザーによるエントリーフォームの入力項目
+export type EntryFormInput = {
+  grade: '1年' | '2年' | '3年' | '4年' | '院1' | '院2' | 'コーチ';
+  events: Event[];
+};
+
+// 管理者によるエントリーフォーム作成時の入力項目
+export type CreateEntryFormInput = {
+  name: string;
+  individualExpense: number;
+  groupExpense: number;
+  startDate: Date;
+  endDate: Date;
+  timeLimit: Date;
+  events: Event[];
+};
+
+export type VoteFormInput = {
+  grade: '1年' | '2年' | '3年' | '4年' | '院1' | '院2' | 'コーチ';
+  rideInfo: '';
+};
+
+export type CreateVoteFormInput = {
+  name: string;
+  day: string;
+  course: '行き' | '帰り';
+  timeLimit: Date;
+};
+
+//==============================
+// 用具・ユニフォーム
+//==============================
+export type LinkContent = {
+  id: string;
+  link: string;
+  name: string;
+  image: string;
+};
+
+// 採寸結果を入力する項目
+export type MeasurementFormInput = {
+  name: string;
+  uniforms: string[];
+};
+
+// ユニフォームの詳細情報
+export type UniformsInfo = {
+  id: number;
+  name: string;
+  size: string;
+  price: number;
+};
+
+// ユニフォームの種類
+export type Uniforms =
+  | 'WB上'
+  | 'WB下'
+  | 'ジャージ上'
+  | 'ジャージ下'
+  | 'ランシャツ'
+  | 'ランパ'
+  | 'タイツ(白)'
+  | 'ポロシャツ'
+  | 'ハーフパンツ'
+  | '紺ピンクTシャツ'
+  | '水色Tシャツ';
 
 //==============================
 // タイムスタンプ

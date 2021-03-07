@@ -7,7 +7,7 @@ type Props = TextProps & {
 
 const FormLabel: VFC<Props> = ({ label, ...props }) => {
   return (
-    <Text fontWeight="bold" {...props}>
+    <Text fontSize="18px" fontWeight="bold" {...props}>
       {label}
     </Text>
   );

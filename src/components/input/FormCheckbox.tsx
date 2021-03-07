@@ -1,10 +1,10 @@
 import { Checkbox, CheckboxGroup, Stack } from '@chakra-ui/react';
-import { Event } from 'models/users';
+import { Event, Uniforms } from 'models/users';
 import React, { VFC } from 'react';
 import { Control, useController } from 'react-hook-form';
 
 type Props = {
-  name: Event;
+  name: Event & Uniforms;
   control: Control;
   checkboxOptions: string[];
 };

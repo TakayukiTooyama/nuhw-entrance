@@ -1,7 +1,7 @@
 import { Box, Container, Stack, Text } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
 import { Button } from 'components/button';
-import { Layout, TopHeading } from 'components/layout';
+import { Layout, TabBar, TopHeading } from 'components/layout';
 import { Spinner } from 'components/loading';
 import { EntryManagementList } from 'components/template';
 import { useAuth } from 'context/Auth';
@@ -13,7 +13,7 @@ import React from 'react';
 
 const linkData = [
   { label: '大会一覧', link: '/' },
-  { label: 'エントリー済', link: '/entry/confirm' },
+  { label: '確認', link: '/entry/confirm' },
 ];
 
 const EntryManagement: NextPage = () => {
@@ -36,7 +36,7 @@ const EntryManagement: NextPage = () => {
   return (
     <Layout title="エントリー管理">
       <TopHeading title="エントリー管理" linkData={linkData} />
-      <Container maxW="xl" py={12}>
+      <Container maxW="xl" py={8}>
         <Stack align="center" spacing={4}>
           {!tournaments && tournaments?.length !== 0 && <Spinner />}
           {tournaments?.length > 0 && (
@@ -62,6 +62,7 @@ const EntryManagement: NextPage = () => {
           )}
         </Stack>
       </Container>
+      <TabBar />
     </Layout>
   );
 };

@@ -1,7 +1,7 @@
 import { Box, Container, Stack, Text } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
 import { Button } from 'components/button';
-import { Layout, TopHeading } from 'components/layout';
+import { Layout, TabBar, TopHeading } from 'components/layout';
 import { Spinner } from 'components/loading';
 import { ExpeditionManagementList } from 'components/template/expedition';
 import { useAuth } from 'context/Auth';
@@ -12,8 +12,8 @@ import Router from 'next/router';
 import React from 'react';
 
 const linkData = [
-  { label: '移動希望投票', link: '/expedition' },
-  { label: '投票確認', link: '/expedition/confirm' },
+  { label: '投票', link: '/expedition' },
+  { label: '確認', link: '/expedition/confirm' },
 ];
 
 const ExpenseManagement: NextPage = () => {
@@ -28,6 +28,7 @@ const ExpenseManagement: NextPage = () => {
     {
       orderBy: ['startDate', 'desc'],
       parseDates: ['startDate', 'endDate', 'timeLimit'],
+      listen: true,
     }
   );
 
@@ -35,11 +36,14 @@ const ExpenseManagement: NextPage = () => {
   return (
     <Layout title="投票管理">
       <TopHeading title="投票管理" linkData={linkData} />
-      <Container maxW="xl" py={12}>
-        <Stack align="center" spacing={8}>
+      <Container maxW="xl" py={8}>
+        <Stack align="center" spacing={6}>
           {!expeditions && expeditions?.length !== 0 && <Spinner />}
           {expeditions?.length > 0 && (
-            <ExpeditionManagementList expeditions={expeditions} />
+            <ExpeditionManagementList
+              expeditions={expeditions}
+              userInfo={userInfo}
+            />
           )}
           {expeditions?.length === 0 && (
             <Box align="center">
@@ -47,8 +51,8 @@ const ExpenseManagement: NextPage = () => {
                 作成された投票がありません。
               </Text>
               <Image
-                width={300}
-                height={200}
+                width={350}
+                height={250}
                 src="/Images/create.png"
                 alt="投票作成"
               />
@@ -63,6 +67,7 @@ const ExpenseManagement: NextPage = () => {
           )}
         </Stack>
       </Container>
+      <TabBar />
     </Layout>
   );
 };

@@ -15,7 +15,7 @@ const BasicCard: FC<Props> = ({
   ...props
 }) => {
   return (
-    <Box w="100%" shadow="base" bg="white" borderRadius="10px" {...props}>
+    <Box w="100%" shadow="base" borderRadius="16px" {...props}>
       <Box maxW={innerWidth} align={align} p={innerPadding}>
         {children}
       </Box>

@@ -1,6 +1,6 @@
 import { Box, Container, Text } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
-import { Layout, TopHeading } from 'components/layout';
+import { Layout, TabBar, TopHeading } from 'components/layout';
 import { Spinner } from 'components/loading';
 import { ExpeditionList } from 'components/template/expedition';
 import { useAuth } from 'context/Auth';
@@ -10,8 +10,8 @@ import Image from 'next/image';
 import React from 'react';
 
 const linkData = [
-  { label: '移動希望投票', link: '/expedition' },
-  { label: '投票確認', link: '/expedition/confirm' },
+  { label: '投票', link: '/expedition' },
+  { label: '確認', link: '/expedition/confirm' },
 ];
 
 const ExpeditionPage: NextPage = () => {
@@ -44,7 +44,7 @@ const ExpeditionPage: NextPage = () => {
   return (
     <Layout title="遠征">
       <TopHeading title="移動希望投票" linkData={linkData} />
-      <Container maxW="xl" py={12}>
+      <Container maxW="xl" py={8}>
         {!filteredExpeditions && filteredExpeditions?.length !== 0 && (
           <Spinner />
         )}
@@ -57,14 +57,15 @@ const ExpeditionPage: NextPage = () => {
               移動希望投票がありません。
             </Text>
             <Image
-              width={300}
-              height={200}
+              width={350}
+              height={250}
               src="/Images/create.png"
               alt="遠征"
             />
           </Box>
         )}
       </Container>
+      <TabBar />
     </Layout>
   );
 };

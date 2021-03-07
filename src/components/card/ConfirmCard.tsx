@@ -1,80 +1,58 @@
-import { DeleteIcon } from '@chakra-ui/icons';
+import { CalendarIcon, DeleteIcon } from '@chakra-ui/icons';
 import {
-  Box,
   BoxProps,
   Divider,
   Flex,
   Heading,
   HStack,
+  Icon,
   IconButton,
   Stack,
   Text,
 } from '@chakra-ui/react';
 import { Card } from 'components/card';
-import { DeleteDialog } from 'components/dialog';
 import { CardTextSchedule } from 'components/text';
-import React, { FC, useRef } from 'react';
+import React, { FC } from 'react';
+import { IoIosSchool } from 'react-icons/io';
 import { formatWeekdayNotation } from 'utils/format';
 
 type Props = BoxProps & {
-  isOpen: boolean;
-  onClose: () => void;
   onOpen: () => void;
   data: any;
-  onDelete: () => Promise<void>;
 };
 
-const ConfirmCard: FC<Props> = ({
-  isOpen,
-  onClose,
-  onOpen,
-  data,
-  onDelete,
-  children,
-  ...props
-}) => {
-  const cancelRef = useRef();
-
-  return (
-    <>
-      <DeleteDialog
-        isOpen={isOpen}
-        cancelRef={cancelRef}
-        onClose={onClose}
-        onDelete={onDelete}
-      />
-      <Card innerPadding={4} {...props}>
-        <Stack>
-          <Flex alignItems="center" justify="space-between">
-            <Heading as="h2" size="lg" isTruncated>
-              {data.tournamentName}
-            </Heading>
-            <IconButton
-              aria-label="deleteIcon"
-              bg="red.300"
-              shadow="inner"
-              icon={<DeleteIcon />}
-              onClick={onOpen}
-            />
-          </Flex>
-          <Divider colorScheme="red" />
-          <CardTextSchedule
-            color="gray.400"
-            startDate={formatWeekdayNotation(data.startDate)}
-            endDate={formatWeekdayNotation(data.endDate)}
-          />
-        </Stack>
-        <Box mb={6} />
-        <Stack spacing={4}>
-          <HStack>
-            <Text spacing={4}>学年</Text>
-            <Text>{data.grade}</Text>
-          </HStack>
-        </Stack>
-        {children}
-      </Card>
-    </>
-  );
-};
+const ConfirmCard: FC<Props> = ({ onOpen, data, children, ...props }) => (
+  <Card innerPadding={4} {...props}>
+    <Stack mb={4} spacing={1}>
+      <Flex alignItems="center" justify="space-between">
+        <Heading as="h2" size="lg" isTruncated>
+          {data.tournamentName}
+        </Heading>
+        <IconButton
+          bg="red.300"
+          aria-label="deleteIcon"
+          size="sm"
+          shadow="inner"
+          icon={<DeleteIcon />}
+          onClick={onOpen}
+        />
+      </Flex>
+      <Divider />
+      <HStack color="gray.500" align="center" pl={2}>
+        <CalendarIcon />
+        <CardTextSchedule
+          startDate={formatWeekdayNotation(data.startDate)}
+          endDate={formatWeekdayNotation(data.endDate)}
+        />
+      </HStack>
+      <HStack spacing={1} color="gray.500" pl={2}>
+        <Icon as={IoIosSchool} w={5} h={5} />
+        <Text spacing={4}>学年</Text>
+        <Text>{data.grade}</Text>
+      </HStack>
+    </Stack>
+    {children}
+  </Card>
+);
 
 export default ConfirmCard;

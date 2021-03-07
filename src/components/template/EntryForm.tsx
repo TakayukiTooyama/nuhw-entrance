@@ -173,12 +173,12 @@ const EntryFormDetail: VFC = () => {
         <Stack spacing={8}>
           <FormRadio
             name="grade"
-            label="①学年"
+            label="1. 学年"
             radioOptions={gradeOptions}
             control={control}
           />
 
-          <FormControl label="②エントリー種目">
+          <FormControl label="2. エントリー種目">
             <EventCheckbox
               name="events"
               control={control}
@@ -188,7 +188,7 @@ const EntryFormDetail: VFC = () => {
           </FormControl>
 
           <Stack>
-            <FormLabel label="③自己ベスト" />
+            <FormLabel label="3. 自己ベスト" />
             <Card bg="gray.50" innerPadding={4}>
               {eventsInfo?.length > 0 ? (
                 <SimpleGrid columns={[1, 2]} columnGap={4} rowGap={6}>

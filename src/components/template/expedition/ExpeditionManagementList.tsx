@@ -1,26 +1,32 @@
-import { Stack, Text } from '@chakra-ui/react';
+import { List } from '@chakra-ui/react';
 import { Document } from '@nandorojo/swr-firestore';
-import { TimeLimitCard } from 'components/card';
-import { Expedition } from 'models/users';
+import { ExpeditionManagementListItem } from 'components/template/expedition';
+import { Expedition, UserInfo } from 'models/users';
 import React, { VFC } from 'react';
+import { MotionBox } from 'utils/motion';
+import { listVariants } from 'utils/variants';
 
 type Props = {
   expeditions: Document<Expedition>[];
+  userInfo: UserInfo;
 };
-const ExpeditionManagementList: VFC<Props> = ({ expeditions }) => {
-  return (
-    <Stack spacing={4} w="100%">
-      {expeditions.map((data) => (
-        <TimeLimitCard
-          key={data.id}
-          data={data}
-          link={`/expedition/management/${data.id}`}
-        >
-          <Text>{`${data.day}日目 / ${data.course}`}</Text>
-        </TimeLimitCard>
-      ))}
-    </Stack>
-  );
-};
+const ExpeditionManagementList: VFC<Props> = ({ expeditions, userInfo }) => (
+  <MotionBox
+    as={List}
+    w="100%"
+    spacing={6}
+    variants={listVariants}
+    initial="closed"
+    animate="open"
+  >
+    {expeditions.map((data) => (
+      <ExpeditionManagementListItem
+        key={data.id}
+        expedition={data}
+        userInfo={userInfo}
+      />
+    ))}
+  </MotionBox>
+);
 
 export default ExpeditionManagementList;

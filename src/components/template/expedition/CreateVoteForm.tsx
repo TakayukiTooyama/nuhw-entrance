@@ -126,11 +126,11 @@ const CreateVoteForm: VFC = () => {
     <>
       <FormHeading title="希望投票作成" />
       <form onSubmit={handleSubmit(addVote)}>
-        <Stack spacing={12}>
+        <Stack spacing={8}>
           <FormSelect
             placeholder="大会を選択してください"
             name="name"
-            label="大会名"
+            label="1. 大会名"
             selectOptions={filteredTournament?.map(
               (data) => data.tournamentName
             )}
@@ -138,7 +138,7 @@ const CreateVoteForm: VFC = () => {
           />
           <HStack>
             <FormPinNumber
-              label="②大会何日目"
+              label="2. 大会何日目"
               name="day"
               control={control}
               unit="日目"
@@ -146,14 +146,14 @@ const CreateVoteForm: VFC = () => {
           </HStack>
 
           <FormRadio
-            label="③コース"
+            label="3. コース"
             name="course"
             radioOptions={courseOptions}
             control={control}
           />
 
           <Stack spacing={4}>
-            <FormLabel label="④バス" />
+            <FormLabel label="4. バス" />
             {busInfo &&
               busInfo.map((data) => (
                 <Card key={`${data.turn}/${data.busNumber}`}>
@@ -188,7 +188,7 @@ const CreateVoteForm: VFC = () => {
           </Stack>
 
           <Stack spacing={4}>
-            <FormLabel label="⑤車" />
+            <FormLabel label="5. 車" />
             {carInfo &&
               carInfo.map((data) => (
                 <Card key={data.carName}>
@@ -205,7 +205,7 @@ const CreateVoteForm: VFC = () => {
             )}
           </Stack>
 
-          <FormControl mt={12} label="⑥投票期限">
+          <FormControl mt={12} label="6. 投票期限">
             <Controller
               control={control}
               name="timeLimit"

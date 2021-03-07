@@ -31,7 +31,7 @@ const InputPinNumber: VFC<Props> = ({ label, name, control, unit }) => {
 
   return (
     <FormControl>
-      <FormLabel fontSize="20px" fontWeight="bold">
+      <FormLabel fontSize="18px" fontWeight="bold">
         {label}
       </FormLabel>
       <HStack>

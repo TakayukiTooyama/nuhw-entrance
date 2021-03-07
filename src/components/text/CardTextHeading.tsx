@@ -1,13 +1,13 @@
-import { Text } from '@chakra-ui/react';
+import { Text, TextProps } from '@chakra-ui/react';
 import React, { VFC } from 'react';
 
-type Props = {
+type Props = TextProps & {
   text: string;
 };
 
-const CardTextHeading: VFC<Props> = ({ text }) => {
+const CardTextHeading: VFC<Props> = ({ text, ...props }) => {
   return (
-    <Text isTruncated fontSize="xl" fontWeight="bold">
+    <Text isTruncated fontSize="xl" fontWeight="bold" {...props}>
       {text}
     </Text>
   );

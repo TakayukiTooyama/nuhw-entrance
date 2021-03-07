@@ -11,7 +11,7 @@ const EntryFormPage: NextPage = () => {
       prevPageLink="/"
       prevPageTitle="大会一覧"
     >
-      <Container maxW="xl" py={12}>
+      <Container maxW="xl" py={8}>
         <EntryForm />
       </Container>
     </Layout>

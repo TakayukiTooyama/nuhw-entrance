@@ -33,7 +33,9 @@ const FormRadio: VFC<Props> = ({ name, label, radioOptions, control }) => {
 
   return (
     <Stack>
-      <Text fontWeight="bold">{label}</Text>
+      <Text fontSize="18px" fontWeight="bold">
+        {label}
+      </Text>
       <RadioGroup ref={ref} {...inputProps}>
         <Flex wrap="wrap">
           {radioOptions?.map((value) => (

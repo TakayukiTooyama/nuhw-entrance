@@ -27,7 +27,12 @@ const VoteManagementTableList: VFC<Props> = ({ votes, rideLabels }) => {
   return (
     <>
       <Heading mb={12}>{votes[0]?.tournamentName}</Heading>
-      <SimpleGrid columns={[1, 1, 2, 4]} spacingX={8} spacingY={8}>
+      <SimpleGrid
+        maxW={['md', 'md', '100%']}
+        columns={[1, 1, 2]}
+        spacingX={8}
+        spacingY={8}
+      >
         {tables.map((data) => (
           <VoteManagementTable
             key={data.label}

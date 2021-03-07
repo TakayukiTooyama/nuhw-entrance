@@ -1,6 +1,6 @@
 import { Box, Container, Text } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
-import { Layout, TopHeading } from 'components/layout';
+import { Layout, TabBar, TopHeading } from 'components/layout';
 import { Spinner } from 'components/loading';
 import { EntryList } from 'components/template';
 import { useAuth } from 'context/Auth';
@@ -12,7 +12,7 @@ import { screenTransition } from 'utils/firestore/users';
 
 const linkData = [
   { label: '大会一覧', link: '/' },
-  { label: 'エントリー済', link: '/entry/confirm' },
+  { label: '確認', link: '/entry/confirm' },
 ];
 
 export const Home: NextPage = () => {
@@ -58,7 +58,7 @@ export const Home: NextPage = () => {
   return (
     <Layout title="Home">
       <TopHeading title="エントリー" linkData={linkData} />
-      <Container maxW="xl" py={12}>
+      <Container maxW="xl" py={8}>
         {!filteredTournament && filteredTournament?.length !== 0 && <Spinner />}
         {filteredTournament?.length > 0 && (
           <EntryList tournaments={filteredTournament} />
@@ -69,14 +69,15 @@ export const Home: NextPage = () => {
               エントリーできる大会がありません。
             </Text>
             <Image
-              width={300}
-              height={200}
+              width={350}
+              height={250}
               src="/Images/run.png"
               alt="ランニング"
             />
           </Box>
         )}
       </Container>
+      <TabBar />
     </Layout>
   );
 };

@@ -17,7 +17,7 @@ const InputText: VFC<Props> = ({ placeholder, rightElement, ...props }) => {
   return (
     <InputGroup>
       <Input placeholder={placeholder} {...props} />
-      <InputRightElement children={rightElement} />
+      {rightElement && <InputRightElement children={rightElement} />}
     </InputGroup>
   );
 };

@@ -31,7 +31,7 @@ const FormSelect: VFC<Props> = ({
 
   return (
     <Stack>
-      <Text fontSize="20px" fontWeight="bold">
+      <Text fontSize="18px" fontWeight="bold">
         {label}
       </Text>
       <Select

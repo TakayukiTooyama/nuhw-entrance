@@ -10,6 +10,7 @@ import {
 import React, { FC } from 'react';
 
 type Props = {
+  title?: string;
   isOpen: boolean;
   cancelRef: React.MutableRefObject<undefined>;
   onClose: () => void;
@@ -17,6 +18,7 @@ type Props = {
 };
 
 const DeleteDialog: FC<Props> = ({
+  title = 'エントリー',
   isOpen,
   cancelRef,
   onClose,
@@ -33,9 +35,7 @@ const DeleteDialog: FC<Props> = ({
     >
       <AlertDialogOverlay />
       <AlertDialogContent w="95%" maxW="lg" p={4}>
-        <AlertDialogHeader textAlign="center">
-          エントリーの削除
-        </AlertDialogHeader>
+        <AlertDialogHeader textAlign="center">{title}削除</AlertDialogHeader>
         <AlertDialogBody>{children}</AlertDialogBody>
         <AlertDialogFooter w="100%">
           <Button

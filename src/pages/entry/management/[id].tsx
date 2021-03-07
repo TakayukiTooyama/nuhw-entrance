@@ -29,7 +29,7 @@ const EntryManagementDetail: NextPage = () => {
       prevPageLink="/entry/management"
       prevPageTitle="エントリー管理一覧"
     >
-      <Container maxW="2xl" py={12} align="center">
+      <Container maxW="2xl" py={8} align="center">
         {!entries && entries?.length !== 0 && <Spinner />}
         {entries?.length > 0 && <EntryManagementTableList entries={entries} />}
         {entries?.length === 0 && (

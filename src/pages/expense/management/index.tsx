@@ -1,8 +1,7 @@
 import { Box, Container, Stack, Text } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
-import { Layout, TopHeading } from 'components/layout';
+import { Layout, TabBar, TopHeading } from 'components/layout';
 import { Spinner } from 'components/loading';
-import { ExpenseList } from 'components/template/expense';
 import { useAuth } from 'context/Auth';
 import { Expense, Tournament, User } from 'models/users';
 import { NextPage } from 'next';
@@ -16,12 +15,12 @@ const ExpenseManagement: NextPage = () => {
 
   const { data: userInfo } = useDocument<User>(`users/${user?.uid}`);
 
-  const { data: tounaments } = useCollection<Tournament>(
+  const { data: tournaments } = useCollection<Tournament>(
     `teams/${userInfo?.teamId}/tournaments`
   );
 
   const { data: expenses, error: expensesError } = useCollection<Expense>(
-    tounaments ? `users/${user?.uid}/expenses` : null,
+    tournaments ? `users/${user?.uid}/expenses` : null,
     {
       orderBy: ['startDate', 'asc'],
       parseDates: ['startDate', 'endDate'],
@@ -32,19 +31,15 @@ const ExpenseManagement: NextPage = () => {
   return (
     <Layout title="集金">
       <TopHeading title="大会集金" linkData={linkData} />
-      <Container maxW="xl" py={12}>
+      <Container maxW="xl" py={8}>
         <Stack align="center" spacing={8}>
-          {!expenses && expenses?.length !== 0 && <Spinner />}
-          {expenses?.length > 0 && (
-            <>
-              {expenses.map((expense) => (
-                <ExpenseList key={expense.id} expense={expense} />
-              ))}
-              {/* {tounaments.map((entry) => (
-                <ExpenseList key={entry.id} entry={entry} />
-              ))} */}
-            </>
-          )}
+          {!tournaments &&
+            tournaments?.length !== 0 &&
+            !expenses &&
+            expenses?.length !== 0 && <Spinner />}
+          {/* {tournaments?.length && expenses?.length > 0 && (
+            <ExpenseList expenses={expenses} />
+          )} */}
 
           {expenses?.length === 0 && (
             <Box align="center">
@@ -61,6 +56,7 @@ const ExpenseManagement: NextPage = () => {
           )}
         </Stack>
       </Container>
+      <TabBar />
     </Layout>
   );
 };

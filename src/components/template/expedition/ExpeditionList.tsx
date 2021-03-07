@@ -1,8 +1,10 @@
-import { Stack, Text } from '@chakra-ui/react';
+import { List, ListItem, Text } from '@chakra-ui/react';
 import { Document } from '@nandorojo/swr-firestore';
 import { TimeLimitCard } from 'components/card';
 import { Expedition } from 'models/users';
 import React, { VFC } from 'react';
+import { MotionBox } from 'utils/motion';
+import { listItemVariants, listVariants } from 'utils/variants';
 
 type Props = {
   expeditions: Document<Expedition>[];
@@ -10,17 +12,24 @@ type Props = {
 
 const ExpeditionList: VFC<Props> = ({ expeditions }) => {
   return (
-    <Stack spacing={4}>
+    <MotionBox
+      as={List}
+      spacing={6}
+      variants={listVariants}
+      initial="closed"
+      animate="open"
+    >
       {expeditions.map((data) => (
-        <TimeLimitCard
-          key={data.id}
-          data={data}
-          link={`/expedition/${data.id}`}
-        >
-          <Text>{`${data.day}日目 / ${data.course}`}</Text>
-        </TimeLimitCard>
+        <MotionBox as={ListItem} key={data.id} variants={listItemVariants}>
+          <TimeLimitCard data={data} link={`/expedition/${data.id}`}>
+            <Text
+              fontWeight="bold"
+              align="center"
+            >{`${data.day}日目 / ${data.course}`}</Text>
+          </TimeLimitCard>
+        </MotionBox>
       ))}
-    </Stack>
+    </MotionBox>
   );
 };
 

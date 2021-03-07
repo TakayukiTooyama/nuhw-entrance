@@ -29,7 +29,7 @@ const ExpenseManagementDetail: NextPage = () => {
       prevPageLink="/expense/management"
       prevPageTitle="大会集金"
     >
-      <Box px={[4, 12]} py={12} align="center">
+      <Box px={[4, 12]} py={8} align="center">
         {!entries && entries?.length !== 0 && <Spinner />}
         {entries?.length > 0 && <EntryManagementTableList entries={entries} />}
         {entries?.length === 0 && (

@@ -1,6 +1,6 @@
 import { Box, Container, Stack, Text } from '@chakra-ui/react';
 import { useCollection } from '@nandorojo/swr-firestore';
-import { Layout, TopHeading } from 'components/layout';
+import { Layout, TabBar, TopHeading } from 'components/layout';
 import { Spinner } from 'components/loading';
 // import { ExpenseList } from 'components/template/expense';
 import { useAuth } from 'context/Auth';
@@ -23,7 +23,7 @@ const Expense: NextPage = () => {
   return (
     <Layout title="集金">
       <TopHeading title="大会集金" />
-      <Container maxW="xl" py={12}>
+      <Container maxW="xl" py={8}>
         <Stack align="center" spacing={8}>
           {!entries && entries?.length !== 0 && <Spinner />}
           {/* {entries?.length > 0 &&
@@ -45,6 +45,7 @@ const Expense: NextPage = () => {
           )}
         </Stack>
       </Container>
+      <TabBar />
     </Layout>
   );
 };

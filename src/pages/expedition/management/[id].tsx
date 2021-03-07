@@ -51,7 +51,7 @@ const ExpeditionManagementDetail: NextPage = () => {
       prevPageLink="/expedition/management"
       prevPageTitle="投票管理"
     >
-      <Box px={[4, 12]} py={12} align="center">
+      <Box px={[4, 12]} py={8} align="center">
         {!votes && votes?.length !== 0 && <Spinner />}
         {votes?.length > 0 && (
           <VoteManagementTableList votes={votes} rideLabels={rideLabels} />
@@ -63,7 +63,7 @@ const ExpeditionManagementDetail: NextPage = () => {
             </Text>
             <Image
               width={300}
-              height={200}
+              height={250}
               src="/Images/no-data.png"
               alt="管理"
             />

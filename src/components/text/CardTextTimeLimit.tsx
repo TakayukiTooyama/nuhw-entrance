@@ -1,18 +1,16 @@
-import { HStack, Icon, Text } from '@chakra-ui/react';
+import { Flex, FlexProps, Text } from '@chakra-ui/react';
 import React, { VFC } from 'react';
-import { IconType } from 'react-icons';
 
-type Props = {
-  icon?: IconType;
+type Props = FlexProps & {
   text: string;
 };
 
-const CardTextTimeLimit: VFC<Props> = ({ icon, text }) => {
+const CardTextTimeLimit: VFC<Props> = ({ text, ...props }) => {
   return (
-    <HStack color="red.400" justify="flex-end">
-      {icon && <Icon as={icon} w={4} h={4} />}
-      <Text fontWeight="bold">{text}</Text>
-    </HStack>
+    <Flex color="red.400" fontWeight="bold" {...props}>
+      <Text>【期限】</Text>
+      <Text>{text}</Text>
+    </Flex>
   );
 };
 

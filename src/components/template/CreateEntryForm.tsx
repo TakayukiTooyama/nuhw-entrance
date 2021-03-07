@@ -92,14 +92,14 @@ const CreateEntryForm: VFC = () => {
         {/* 大会名 */}
         <Stack spacing={8}>
           <FormText
-            label="①大会名"
+            label="1. 大会名"
             name="name"
             control={control}
             errors={errors}
           />
 
           {/* 大会日程 */}
-          <FormControl label="②大会日程">
+          <FormControl label="2. 大会日程">
             <Stack direction={['column', 'row']} spacing={4}>
               <Box>
                 <Text ml={2}>開催日</Text>
@@ -139,7 +139,7 @@ const CreateEntryForm: VFC = () => {
           </FormControl>
 
           {/* エントリー期限 */}
-          <FormControl mt={12} label="③エントリー期限">
+          <FormControl mt={12} label="3. エントリー期限">
             <Controller
               control={control}
               name="timeLimit"
@@ -155,7 +155,7 @@ const CreateEntryForm: VFC = () => {
 
           {/* エントリー費 */}
           <Stack>
-            <FormLabel label="④エントリー費" />
+            <FormLabel label="4. エントリー費" />
             <FormNumber
               label="個人種目"
               name="individualExpense"
@@ -172,7 +172,7 @@ const CreateEntryForm: VFC = () => {
 
           {/* エントリー種目 */}
           <Stack spacing={4}>
-            <FormLabel label="⑤エントリー種目" />
+            <FormLabel label="5. エントリー種目" />
             <Button label="全ての種目を選択" onClick={allInput} />
             <EventCheckbox
               name="events"

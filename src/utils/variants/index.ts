@@ -16,7 +16,7 @@ export const listItemVariants = {
     },
   },
   closed: {
-    y: 30,
+    y: 10,
     opacity: 0,
     transition: {
       y: { stiffness: 1000 },

@@ -1,13 +1,13 @@
-import { Box, Heading } from '@chakra-ui/react';
+import { Box, BoxProps, Heading } from '@chakra-ui/react';
 import React, { VFC } from 'react';
 
-type Props = {
+type Props = BoxProps & {
   title: string;
 };
 
-const FormHeading: VFC<Props> = ({ title }) => {
+const FormHeading: VFC<Props> = ({ title, ...props }) => {
   return (
-    <Box pb={12} align="center">
+    <Box pb={12} align="center" {...props}>
       <Heading as="h1" size="lg">
         {title}
       </Heading>

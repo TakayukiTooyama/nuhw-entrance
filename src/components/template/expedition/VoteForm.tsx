@@ -1,4 +1,4 @@
-import { Divider, Heading, HStack, Stack, Text } from '@chakra-ui/react';
+import { HStack, Stack, Text } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
 import { FormButton } from 'components/button';
 import { FormHeading } from 'components/heading';
@@ -77,40 +77,40 @@ const VoteForm: VFC = () => {
 
   return (
     <>
-      <FormHeading title="移動希望投票" />
       {expedition ? (
-        <form onSubmit={handleSubmit(addVote)}>
-          <Stack>
-            <Heading as="h2">{expedition.tournamentName}</Heading>
-            <Divider />
-            <HStack>
-              <Text>{expedition.day}日目</Text>
-              <Text>/</Text>
-              <Text>{expedition.course}</Text>
-            </HStack>
-          </Stack>
-          <Stack spacing={8}>
-            <FormRadio
-              name="grade"
-              label="学年"
-              radioOptions={gradeOptions}
-              control={control}
-            />
+        <>
+          <FormHeading title={expedition.tournamentName} pb={1} />
+          <form onSubmit={handleSubmit(addVote)}>
+            <Stack align="center" mb={8}>
+              <HStack justify="center" fontWeight="bold">
+                <Text>{expedition.day}日目</Text>
+                <Text>/</Text>
+                <Text>{expedition.course}</Text>
+              </HStack>
+            </Stack>
+            <Stack spacing={8}>
+              <FormRadio
+                name="grade"
+                label="1. 学年"
+                radioOptions={gradeOptions}
+                control={control}
+              />
 
-            <FormRadio
-              name="rideInfo"
-              label="移動手段"
-              radioOptions={rideOptions}
-              control={control}
-            />
+              <FormRadio
+                name="rideInfo"
+                label="2. 移動手段"
+                radioOptions={rideOptions}
+                control={control}
+              />
 
-            <FormButton
-              label="送信"
-              colorScheme="teal"
-              isLoading={formState.isSubmitting}
-            />
-          </Stack>
-        </form>
+              <FormButton
+                label="送信"
+                colorScheme="teal"
+                isLoading={formState.isSubmitting}
+              />
+            </Stack>
+          </form>
+        </>
       ) : (
         <Spinner />
       )}

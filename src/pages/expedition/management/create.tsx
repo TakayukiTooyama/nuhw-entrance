@@ -11,7 +11,7 @@ const EntryCreate: NextPage = () => {
       prevPageTitle="投票管理"
       prevPageLink="/expedition/management"
     >
-      <Container maxW="xl" py={12}>
+      <Container maxW="xl" py={8}>
         <CreateVoteForm />
       </Container>
     </Layout>

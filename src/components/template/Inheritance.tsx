@@ -51,7 +51,7 @@ const Inheritance: VFC = () => {
             value={email}
             bg="white"
             type="email"
-            placeholder="引き継ぎ(追加)したい人のGmail"
+            placeholder="･････@nuhw.ac.jp"
             onChange={(e) => setEmail(e.target.value)}
           />
           <Text color="red.300" textAlign="center">
