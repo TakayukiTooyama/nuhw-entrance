@@ -52,7 +52,7 @@ const EntryManagement: NextPage = () => {
           {(tournamentsError || tournaments?.length === 0) && (
             <Box>
               <Text mb={8}>作成されたエントリーがありません。</Text>
-              <Image width={350} height={250} src="/Images/run.svg" />
+              <Image width={350} height={250} src="/Images/run.png" />
             </Box>
           )}
           {tournaments && (

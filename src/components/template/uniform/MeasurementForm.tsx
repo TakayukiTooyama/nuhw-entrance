@@ -59,7 +59,6 @@ const defaultValues: MeasurementFormInput = {
   jerseyDown: '選択',
   runningShirt: '選択',
   runningPants: '選択',
-  halfPants: '選択',
   whiteTights: '選択',
   poloShirt: '選択',
   navyPinkTshirt: '選択',
@@ -151,7 +150,7 @@ const MeasurementForm: VFC<Props> = ({ title, userInfo }) => {
             <Flex direction={['column', 'row']} key={item.name} shadow="base">
               <Box w={['100%', '40%']}>
                 <Image
-                  src="/images/no-image.png"
+                  src={item.image}
                   layout="responsive"
                   objectFit="cover"
                   width="100%"

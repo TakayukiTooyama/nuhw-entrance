@@ -18,7 +18,6 @@ type TableData = {
   jerseyDown: string;
   runningShirt: string;
   runningPants: string;
-  halfPants: string;
   whiteTights: string;
   poloShirt: string;
   navyPinkTshirt: string;
@@ -35,11 +34,10 @@ const UniformManagementTable: VFC<Props> = ({ orders, genderToggle }) => {
       jerseyDown: data.order[3].size,
       runningShirt: data.order[4].size,
       runningPants: data.order[5].size,
-      halfPants: data.order[6].size,
-      whiteTights: data.order[7].size,
-      poloShirt: data.order[8].size,
-      navyPinkTshirt: data.order[9].size,
-      lightBlueTshirt: data.order[10].size,
+      whiteTights: data.order[6].size,
+      poloShirt: data.order[7].size,
+      navyPinkTshirt: data.order[8].size,
+      lightBlueTshirt: data.order[9].size,
     };
   });
 
@@ -51,7 +49,6 @@ const UniformManagementTable: VFC<Props> = ({ orders, genderToggle }) => {
     { Header: 'ジャージ下', accessor: 'jerseyDown' },
     { Header: 'ランシャツ', accessor: 'runningShirt' },
     { Header: 'ランパン', accessor: 'runningPants' },
-    { Header: 'ハーフパンツ', accessor: 'halfPants' },
     { Header: 'タイツ(白)', accessor: 'whiteTights' },
     { Header: 'ポロシャツ', accessor: 'poloShirt' },
     { Header: '紺ピンクT', accessor: 'navyPinkTshirt' },

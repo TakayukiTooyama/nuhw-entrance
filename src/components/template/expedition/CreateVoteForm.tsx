@@ -57,7 +57,7 @@ const CreateVoteForm: VFC = () => {
     (data) => data.endDate > new Date()
   );
 
-  const { handleSubmit, formState, control } = useForm<CreateVoteFormInput>({
+  const { getValues, formState, control } = useForm<CreateVoteFormInput>({
     defaultValues,
   });
 
@@ -80,20 +80,21 @@ const CreateVoteForm: VFC = () => {
   // 車情報の編集切り替え
   const [isCarInfoEdit, setIsCarInfoEdit] = useState(false);
 
-  const addVote = (data: CreateVoteFormInput) => {
+  const addVote = () => {
+    const values = getValues();
     const selectTournament = filteredTournament?.filter(
-      (tournament) => tournament.tournamentName === data.name
+      (tournament) => tournament.tournamentName === values.name
     );
     const newVote: Expedition = {
       tournamentId: selectTournament[0].id,
-      tournamentName: data.name,
+      tournamentName: values.name,
       startDate: selectTournament[0].startDate,
       endDate: selectTournament[0].endDate,
-      day: data.day,
-      course: data.course,
+      day: values.day,
+      course: values.course,
       busInfo: busInfo,
       carInfo: carInfo,
-      timeLimit: data.timeLimit,
+      timeLimit: values.timeLimit,
     };
     add(newVote).then(() => {
       Router.push('/expedition/management');
@@ -138,7 +139,7 @@ const CreateVoteForm: VFC = () => {
   return (
     <>
       <FormHeading title="希望投票作成" />
-      <form onSubmit={handleSubmit(addVote)}>
+      <form>
         <Stack spacing={8}>
           <FormSelect
             placeholder="大会を選択してください"
@@ -275,6 +276,8 @@ const CreateVoteForm: VFC = () => {
           <FormButton
             label="作成"
             colorScheme="teal"
+            type="button"
+            onClick={addVote}
             isLoading={formState.isSubmitting}
           />
         </Stack>

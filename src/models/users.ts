@@ -253,7 +253,6 @@ export type MeasurementFormInput = {
   jerseyDown: OrderSize;
   runningShirt: OrderSize;
   runningPants: OrderSize;
-  halfPants: OrderSize;
   whiteTights: OrderSize;
   poloShirt: OrderSize;
   navyPinkTshirt: OrderSize;
@@ -288,7 +287,6 @@ export type Uniform =
   | 'ジャージ下'
   | 'ランシャツ'
   | 'ランパン'
-  | 'ハーフパンツ'
   | 'タイツ(白)'
   | 'ポロシャツ'
   | '紺ピンクTシャツ'
@@ -301,7 +299,6 @@ export type UniformId =
   | 'jerseyDown'
   | 'runningShirt'
   | 'runningPants'
-  | 'halfPants'
   | 'whiteTights'
   | 'poloShirt'
   | 'navyPinkTshirt'
