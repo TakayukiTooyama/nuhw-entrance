@@ -52,11 +52,9 @@ const UniformManagementList: VFC<Props> = ({ uniforms, userInfo }) => {
           ))}
         </MotionBox>
       ) : (
-        <Box textAlign="center">
-          <Text fontSize={['16px', '18px', '20px']} mb={8}>
-            何も作成されていません。
-          </Text>
-          <Image width={400} height={300} src="/Images/walking.png" />
+        <Box align="center">
+          <Text mb={8}>何も作成されていません。</Text>
+          <Image width={350} height={250} src="/Images/walking.png" />
         </Box>
       )}
       {inputToggle ? (

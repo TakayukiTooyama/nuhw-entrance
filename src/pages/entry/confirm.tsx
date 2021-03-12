@@ -39,12 +39,10 @@ const EntryConfirm: NextPage = () => {
         {entries?.length > 0 && <EntryConfirmList entries={entries} />}
         {entries?.length === 0 && (
           <Box>
-            <Text fontSize={['16px', '18px', '20px']} mb={12}>
-              エントリー済みの大会がありません。
-            </Text>
+            <Text mb={8}>エントリー済みの大会がありません。</Text>
             <Image
-              width={300}
-              height={300}
+              width={350}
+              height={250}
               src="/Images/confirm.png"
               alt="ランニング"
             />

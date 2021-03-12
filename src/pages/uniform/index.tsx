@@ -1,4 +1,4 @@
-import { Container, Stack, Text } from '@chakra-ui/react';
+import { Box, Container, Stack, Text } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
 import { UniformTimeLimitCard } from 'components/card';
 import { Layout, TabBar, TopHeading } from 'components/layout';
@@ -69,10 +69,15 @@ const UniformPage: NextPage = () => {
                 />
               </MotionBox>
             ) : (
-              <Stack align="center">
-                <Text mb={8}>現在採寸は行われていません。</Text>
-                <Image width={400} height={300} src="/Images/walking.png" />
-              </Stack>
+              <Box align="center">
+                <Text mb={4}>現在採寸は行われていません。</Text>
+                <Image
+                  width={350}
+                  height={250}
+                  src="/Images/walking.png"
+                  alt="休憩"
+                />
+              </Box>
             )}
           </>
         )}

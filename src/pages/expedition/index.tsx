@@ -48,16 +48,14 @@ const ExpeditionPage: NextPage = () => {
         linkData={linkData}
         adminLink="/expedition/management"
       />
-      <Container maxW="xl" py={8}>
+      <Container maxW="xl" py={8} align="center">
         {!filteredExpeditions && <Spinner />}
         {filteredExpeditions?.length > 0 && (
           <ExpeditionList expeditions={filteredExpeditions} />
         )}
         {(expeditionsError || filteredExpeditions?.length === 0) && (
-          <Box align="center">
-            <Text fontSize={['16px', '18px', '20px']} mb={8}>
-              移動希望投票がありません。
-            </Text>
+          <Box>
+            <Text mb={8}>移動希望投票がありません。</Text>
             <Image
               width={350}
               height={250}

@@ -58,16 +58,14 @@ export const Home: NextPage = () => {
   return (
     <Layout title="Home">
       <TopHeading title="エントリー" linkData={linkData} />
-      <Container maxW="xl" py={8}>
+      <Container maxW="xl" py={8} align="center">
         {!filteredTournament && <Spinner />}
         {filteredTournament?.length > 0 && (
           <EntryList tournaments={filteredTournament} />
         )}
         {(tournamentsError || filteredTournament?.length === 0) && (
-          <Box align="center">
-            <Text fontSize={['16px', '18px', '20px']} mb={12}>
-              エントリーできる大会がありません。
-            </Text>
+          <Box>
+            <Text mb={8}>エントリーできる大会がありません。</Text>
             <Image
               width={350}
               height={250}

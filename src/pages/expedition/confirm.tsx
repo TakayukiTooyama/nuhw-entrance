@@ -39,12 +39,10 @@ const ExpeditionConfirm: NextPage = () => {
         {votes?.length > 0 && <VoteConfirmList votes={votes} />}
         {(votesError || votes?.length === 0) && (
           <Box>
-            <Text fontSize={['16px', '18px', '20px']} mb={12}>
-              投票されていません。
-            </Text>
+            <Text mb={8}>投票されていません。</Text>
             <Image
-              width={300}
-              height={200}
+              width={350}
+              height={250}
               src="/Images/vote.png"
               alt="投票確認"
             />

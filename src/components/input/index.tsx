@@ -1,5 +1,4 @@
 export { default as EventCheckbox } from './EventCheckbox';
-export { default as FormCheckbox } from './FormCheckbox';
 export { default as FormControl } from './FormControl';
 export { default as FormNumber } from './FormNumber';
 export { default as FormPinNumber } from './FormPinNumber';

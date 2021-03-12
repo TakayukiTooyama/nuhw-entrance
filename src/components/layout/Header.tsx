@@ -49,7 +49,7 @@ const Header: VFC<Props> = ({ prevPageLink, prevPageTitle }) => {
               cursor="pointer"
               onClick={() => Router.push('/')}
             >
-              ENTRANCE
+              NTRANCE
             </Heading>
           </HStack>
           {/* 意見ボックスが来る */}

@@ -1,4 +1,4 @@
-import { Container, Stack, Text } from '@chakra-ui/react';
+import { Box, Container, Text } from '@chakra-ui/react';
 import { useCollection } from '@nandorojo/swr-firestore';
 import { Layout, TabBar, TopHeading } from 'components/layout';
 import { Spinner } from 'components/loading';
@@ -33,19 +33,19 @@ const UniformConfirm: NextPage = () => {
         linkData={linkData}
         adminLink="/uniform/management"
       />
-      <Container maxW="xl" py={8}>
+      <Container maxW="xl" py={8} align="center">
         {!orders && <Spinner />}
         {orders?.length > 0 && <UniformConfirmList orders={orders} />}
         {orders?.length === 0 && (
-          <Stack align="center">
-            <Text mb={4}>まだ注文がありません。</Text>
+          <Box>
+            <Text mb={8}>まだ注文がありません。</Text>
             <Image
-              width={300}
+              width={350}
               height={250}
               src="/Images/order.png"
               alt="発注"
             />
-          </Stack>
+          </Box>
         )}
       </Container>
       <TabBar />

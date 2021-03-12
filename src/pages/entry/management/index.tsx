@@ -40,7 +40,7 @@ const EntryManagement: NextPage = () => {
         linkData={linkData}
         adminLink="/entry/management"
       />
-      <Container maxW="xl" py={8}>
+      <Container maxW="xl" py={8} align="center">
         <Stack align="center" spacing={4}>
           {!tournaments && <Spinner />}
           {tournaments?.length > 0 && (
@@ -50,11 +50,9 @@ const EntryManagement: NextPage = () => {
             />
           )}
           {(tournamentsError || tournaments?.length === 0) && (
-            <Box textAlign="center">
-              <Text fontSize={['16px', '18px', '20px']} mb={8}>
-                作成されたエントリーがありません。
-              </Text>
-              <Image width={300} height={200} src="/Images/management.svg" />
+            <Box>
+              <Text mb={8}>作成されたエントリーがありません。</Text>
+              <Image width={350} height={250} src="/Images/run.svg" />
             </Box>
           )}
           {tournaments && (
