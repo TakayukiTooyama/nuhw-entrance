@@ -9,7 +9,7 @@ const navList = [
   { name: 'エントリー', icon: FaAddressCard, link: `/` },
   { name: '遠征', icon: FaBusAlt, link: `/expedition` },
   // { name: '集金', icon: RiMoneyCnyCircleFill, link: `/expense` },
-  { name: '用具・ユニ', icon: GiClothes, link: `/clubtool` },
+  { name: 'ユニフォーム', icon: GiClothes, link: `/uniform` },
 ];
 
 const TabBar: VFC = () => {

@@ -1,13 +1,9 @@
 import { Select, SelectProps, Stack, Text } from '@chakra-ui/react';
 import React, { VFC } from 'react';
-import { Control, FieldName, useController } from 'react-hook-form';
-
-type Name = {
-  name: string;
-};
+import { Control, useController } from 'react-hook-form';
 
 type Props = SelectProps & {
-  name: FieldName<Name>;
+  name: string;
   label: string;
   selectOptions: string[];
   control: Control;
@@ -31,17 +27,17 @@ const FormSelect: VFC<Props> = ({
 
   return (
     <Stack>
-      <Text fontSize="18px" fontWeight="bold">
+      <Text ml={1} fontSize={['16px', '18px']} fontWeight="bold">
         {label}
       </Text>
       <Select
+        bg="white"
+        size="lg"
         placeholder={placeholder}
         ref={ref}
         {...inputProps}
         {...props}
-        size="lg"
       >
-        {/* あとでkeyにidxを入れるのを変更する */}
         {selectOptions?.map((value) => (
           <option key={value} value={value}>
             {value}

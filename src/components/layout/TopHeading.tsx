@@ -10,9 +10,10 @@ import React, { VFC } from 'react';
 type Props = {
   title: string;
   linkData?: { label: string; link: string }[];
+  adminLink?: string;
 };
 
-const TopHeading: VFC<Props> = ({ title, linkData }) => {
+const TopHeading: VFC<Props> = ({ title, linkData, adminLink }) => {
   const { user } = useAuth();
   const { data: userInfo } = useDocument<UserInfo>(`users/${user?.uid}`);
   const router = useRouter();
@@ -23,13 +24,13 @@ const TopHeading: VFC<Props> = ({ title, linkData }) => {
     <Box bg="gray.200">
       <Box align="center" pt={8} pb={4}>
         <Heading pb={4}>{title}</Heading>
-        {currentPath !== '/team/management' && currentPath !== '/clubtool' && (
+        {currentPath !== '/team/management' && (
           <ButtonGroup w="90%" maxW="md" pb={4}>
             {userInfo?.role === '管理者' && (
               <LinkButton
                 label="管理"
-                link={path === '' ? '/entry/management' : `/${path}/management`}
-                currentPage={`/${path}/management` === currentPath}
+                link={path === '' ? '/entry/management' : adminLink}
+                currentPage={adminLink === currentPath}
               />
             )}
             {linkData?.map((item) => (

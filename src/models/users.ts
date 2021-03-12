@@ -234,33 +234,78 @@ export type LinkContent = {
   image: string;
 };
 
+export type OrderSize =
+  | '選択'
+  | 'S'
+  | 'M'
+  | 'L'
+  | 'O(XL)'
+  | 'XO(2XL)'
+  | '2XO(3XL)'
+  | '3XO(4XL)'
+  | '4XO(5XL)';
+
 // 採寸結果を入力する項目
 export type MeasurementFormInput = {
-  name: string;
-  uniforms: string[];
+  windBreakerUp: OrderSize;
+  windBreakerDown: OrderSize;
+  jerseyUp: OrderSize;
+  jerseyDown: OrderSize;
+  runningShirt: OrderSize;
+  runningPants: OrderSize;
+  halfPants: OrderSize;
+  whiteTights: OrderSize;
+  poloShirt: OrderSize;
+  navyPinkTshirt: OrderSize;
+  lightBlueTshirt: OrderSize;
 };
 
-// ユニフォームの詳細情報
-export type UniformsInfo = {
+// ユニフォーム管理リストの詳細情報
+export type UniformCardInfo = {
+  name: string;
+  timeLimit: Date;
+} & Pick<TimeStamp, 'createdAt'>;
+
+// 発注済のユニフォーム情報(スプレッドシートに送るデータ)
+export type Order = {
   id: number;
   name: string;
-  size: string;
-  price: number;
+  size: OrderSize | '';
 };
+export type UniformInfo = {
+  title: string;
+  name: string;
+  gender: '男' | '女';
+  order: Order[];
+  orderDate: string;
+} & Pick<TimeStamp, 'addedAt'>;
 
 // ユニフォームの種類
-export type Uniforms =
-  | 'WB上'
-  | 'WB下'
+export type Uniform =
+  | 'ウィンドブレーカー上'
+  | 'ウィンドブレーカー下'
   | 'ジャージ上'
   | 'ジャージ下'
   | 'ランシャツ'
-  | 'ランパ'
+  | 'ランパン'
+  | 'ハーフパンツ'
   | 'タイツ(白)'
   | 'ポロシャツ'
-  | 'ハーフパンツ'
   | '紺ピンクTシャツ'
   | '水色Tシャツ';
+
+export type UniformId =
+  | 'windBreakerUp'
+  | 'windBreakerDown'
+  | 'jerseyUp'
+  | 'jerseyDown'
+  | 'runningShirt'
+  | 'runningPants'
+  | 'halfPants'
+  | 'whiteTights'
+  | 'poloShirt'
+  | 'navyPinkTshirt'
+  | 'lightBlueTshirt';
 
 //==============================
 // タイムスタンプ

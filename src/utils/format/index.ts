@@ -12,6 +12,10 @@ export const formatWeekdayNotation = (date: Date) => {
   return dayjs(date).format('MMMMDD日(ddd)');
 };
 
+export const formatDate = (date: Date) => {
+  return dayjs(date).format('YYYY/MM/DD');
+};
+
 export const formatFullNotation = (date: Date) => {
   return dayjs(date).format('YYYY年MMMMDD日(ddd)');
 };

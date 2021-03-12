@@ -11,9 +11,7 @@ import { screenTransition } from 'utils/firestore/users';
 
 const TeamJoin: VFC = () => {
   const { user } = useAuth();
-  const { data: userInfo } = useDocument<UserInfo>(
-    user ? `users/${user.uid}` : null
-  );
+  const { data: userInfo } = useDocument<UserInfo>(`users/${user?.uid}`);
 
   useEffect(() => {
     !user && Router.push('/signin');

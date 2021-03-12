@@ -59,11 +59,11 @@ export const Home: NextPage = () => {
     <Layout title="Home">
       <TopHeading title="エントリー" linkData={linkData} />
       <Container maxW="xl" py={8}>
-        {!filteredTournament && filteredTournament?.length !== 0 && <Spinner />}
+        {!filteredTournament && <Spinner />}
         {filteredTournament?.length > 0 && (
           <EntryList tournaments={filteredTournament} />
         )}
-        {filteredTournament?.length === 0 && (
+        {(tournamentsError || filteredTournament?.length === 0) && (
           <Box align="center">
             <Text fontSize={['16px', '18px', '20px']} mb={12}>
               エントリーできる大会がありません。

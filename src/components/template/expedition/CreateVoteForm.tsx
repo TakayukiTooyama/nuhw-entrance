@@ -1,4 +1,5 @@
-import { HStack, Stack, Text } from '@chakra-ui/react';
+import { DeleteIcon } from '@chakra-ui/icons';
+import { Flex, HStack, Icon, IconButton, Stack, Text } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
 import { Button, FormButton } from 'components/button';
 import { Card } from 'components/card';
@@ -24,6 +25,9 @@ import {
 import Router from 'next/router';
 import React, { useState, VFC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { AiOutlineFieldTime } from 'react-icons/ai';
+import { BsFillPersonFill } from 'react-icons/bs';
+import { FaBusAlt, FaCarSide } from 'react-icons/fa';
 import { formatTimeNotation } from 'utils/format';
 import { courseOptions } from 'utils/selectOptions';
 
@@ -70,7 +74,6 @@ const CreateVoteForm: VFC = () => {
 
   const [busInfo, setBusInfo] = useState<BusInfo[]>([]);
   const [carInfo, setCarInfo] = useState<CarInfo[]>([]);
-  const [index, setIndex] = useState(0);
 
   // バス情報の編集切り替え
   const [isBusInfoEdit, setIsBusInfoEdit] = useState(false);
@@ -106,20 +109,30 @@ const CreateVoteForm: VFC = () => {
       capacity,
     };
     setBusInfo((prev) => [...prev, newBusInfo]);
-    setIndex((prev) => prev + 1);
     setIsBusInfoEdit(false);
     setTurn('1');
-    setBusNumber('2');
+    setBusNumber(`${busInfo.length + 2}`);
     setCapacity('');
   };
   const addCarInfo = () => {
     const newCarInfo = {
-      id: index,
       carName,
     };
     setCarInfo((prev) => [...prev, newCarInfo]);
     setIsCarInfoEdit(false);
     setCarName('');
+  };
+
+  const deleteBusInfo = (turn: string, busNumber: string) => {
+    const newBusInfo = busInfo.filter(
+      (data) => `${data.turn}${data.busNumber}` !== `${turn}${busNumber}`
+    );
+    setBusInfo(newBusInfo);
+    setBusNumber(`${busInfo.length}`);
+  };
+  const deleteCarInfo = (name: string) => {
+    const newCarInfo = carInfo.filter((data) => data.carName !== name);
+    setCarInfo(newCarInfo);
   };
 
   return (
@@ -148,6 +161,7 @@ const CreateVoteForm: VFC = () => {
           <FormRadio
             label="3. コース"
             name="course"
+            colorScheme="teal"
             radioOptions={courseOptions}
             control={control}
           />
@@ -156,16 +170,36 @@ const CreateVoteForm: VFC = () => {
             <FormLabel label="4. バス" />
             {busInfo &&
               busInfo.map((data) => (
-                <Card key={`${data.turn}/${data.busNumber}`}>
+                <Card
+                  key={`${data.turn}/${data.busNumber}`}
+                  bgGradient="linear(to-l, #dfe9f3, white)"
+                  fontWeight="bold"
+                  fontSize="18px"
+                  innerPadding={6}
+                >
+                  <Flex justify="space-between" align="center">
+                    <HStack spacing={4}>
+                      <Icon as={FaBusAlt} />
+                      <Text>{data.turn}便</Text>
+                      <Text>{data.busNumber}号車</Text>
+                    </HStack>
+                    <IconButton
+                      bg="red.300"
+                      aria-label="deleteIcon"
+                      size="sm"
+                      shadow="inner"
+                      icon={<DeleteIcon />}
+                      onClick={() => deleteBusInfo(data.turn, data.busNumber)}
+                    />
+                  </Flex>
                   <HStack>
-                    <Text>{data.turn}便</Text>
-                    <Text>{data.busNumber}号車</Text>
+                    <Icon as={AiOutlineFieldTime} w={6} h={6} />
+                    <Text>出発時間 ⇨ {data.departureTime}</Text>
+                  </HStack>
+                  <HStack>
+                    <Icon as={BsFillPersonFill} w={6} h={6} />
                     <Text>定員{data.capacity}人</Text>
                   </HStack>
-                  <Text>
-                    出発時間：
-                    {data.departureTime}
-                  </Text>
                 </Card>
               ))}
             {isBusInfoEdit ? (
@@ -191,8 +225,27 @@ const CreateVoteForm: VFC = () => {
             <FormLabel label="5. 車" />
             {carInfo &&
               carInfo.map((data) => (
-                <Card key={data.carName}>
-                  <Text>{data.carName}の車</Text>
+                <Card
+                  key={data.carName}
+                  bgGradient="linear(to-l, #dfe9f3, white)"
+                  fontWeight="bold"
+                  fontSize="18px"
+                  innerPadding={6}
+                >
+                  <Flex justify="space-between" align="center">
+                    <HStack>
+                      <Icon as={FaCarSide} w={6} h={6} />
+                      <Text>{data.carName}の車</Text>
+                    </HStack>
+                    <IconButton
+                      bg="red.300"
+                      aria-label="deleteIcon"
+                      size="sm"
+                      shadow="inner"
+                      icon={<DeleteIcon />}
+                      onClick={() => deleteCarInfo(data.carName)}
+                    />
+                  </Flex>
                 </Card>
               ))}
             {isCarInfoEdit ? (

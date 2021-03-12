@@ -29,6 +29,9 @@ service cloud.firestore {
       match /expenses/{expenseID} {
         allow read, write: if true;
       }
+      match /orders/{orderID} {
+        allow read, write: if true;
+      }
     }
 
     // teams
@@ -44,6 +47,9 @@ service cloud.firestore {
       match /expeditions/{expeditionID} {
         allow read, write: if true;
       }
+      match /uniforms/{uniformID} {
+        allow read, write: if true;
+      }
     }
 
     match /{path=**}/entries/{entryID} {
@@ -52,6 +58,11 @@ service cloud.firestore {
     }
 
     match /{path=**}/votes/{voteID} {
+      allow read: if isAuthenticated()
+                  && isAdmin(request.auth.uid);
+    }
+
+    match /{path=**}/orders/{ordersID} {
       allow read: if isAuthenticated()
                   && isAdmin(request.auth.uid);
     }

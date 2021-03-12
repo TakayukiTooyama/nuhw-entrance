@@ -1,7 +1,7 @@
 import 'react-datepicker/dist/react-datepicker.css';
 import 'dayjs/locale/ja';
 
-import { Button, Icon } from '@chakra-ui/react';
+import { Button, ButtonProps, Icon } from '@chakra-ui/react';
 import ja from 'date-fns/locale/ja';
 import dayjs from 'dayjs';
 import React, { VFC } from 'react';
@@ -12,7 +12,7 @@ import { formatTimeLimitNotation, formatWeekdayNotation } from 'utils/format';
 registerLocale('ja', ja);
 dayjs.locale('ja');
 
-type Props = {
+type Props = ButtonProps & {
   selectsStart?: boolean;
   selectsEnd?: boolean;
   startDate?: Date;
@@ -30,6 +30,7 @@ const DatePicker: VFC<Props> = ({
   selected,
   showTimeSelect,
   onChange,
+  ...props
 }) => {
   // フォーマット変更 → 2020/12/26
   const formatDate = (selected: Date) => {
@@ -57,6 +58,7 @@ const DatePicker: VFC<Props> = ({
           borderRadius="30px"
           iconSpacing={4}
           rightIcon={<Icon as={FcCalendar} w={6} h={6} />}
+          {...props}
         >
           {formatDate(selected)}
         </Button>

@@ -6,11 +6,12 @@ import InputText from 'components/input/InputText';
 import { LinkText } from 'components/text';
 import { useAuth } from 'context/Auth';
 import { TeamInfo, User } from 'models/users';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { useEffect, useState, VFC } from 'react';
 
 const TeamJoinForm: VFC = () => {
   const { user } = useAuth();
+  const router = useRouter();
   const { data: teams } = useCollection<TeamInfo>('teams');
   const { set } = useDocument<User>(`users/${user?.uid}`);
 
@@ -27,7 +28,7 @@ const TeamJoinForm: VFC = () => {
     const selectedTeam = teams.filter((data) => data.name === name)[0];
     if (selectedTeam.password === password) {
       set({ teamId: selectedTeam.id }, { merge: true }).then(() => {
-        Router.push('/');
+        router.push('/');
       });
     } else {
       setIsSubmitting(false);

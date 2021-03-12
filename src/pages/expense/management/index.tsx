@@ -30,13 +30,14 @@ const ExpenseManagement: NextPage = () => {
   expensesError && console.error(expensesError);
   return (
     <Layout title="集金">
-      <TopHeading title="大会集金" linkData={linkData} />
+      <TopHeading
+        title="大会集金"
+        linkData={linkData}
+        adminLink="/expense/management"
+      />
       <Container maxW="xl" py={8}>
         <Stack align="center" spacing={8}>
-          {!tournaments &&
-            tournaments?.length !== 0 &&
-            !expenses &&
-            expenses?.length !== 0 && <Spinner />}
+          {!tournaments && !expenses && <Spinner />}
           {/* {tournaments?.length && expenses?.length > 0 && (
             <ExpenseList expenses={expenses} />
           )} */}

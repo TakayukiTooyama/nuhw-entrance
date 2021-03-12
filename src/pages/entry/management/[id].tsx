@@ -30,9 +30,9 @@ const EntryManagementDetail: NextPage = () => {
       prevPageTitle="エントリー管理一覧"
     >
       <Container maxW="2xl" py={8} align="center">
-        {!entries && entries?.length !== 0 && <Spinner />}
+        {!entries && <Spinner />}
         {entries?.length > 0 && <EntryManagementTableList entries={entries} />}
-        {entries?.length === 0 && (
+        {(entriesError || entries?.length === 0) && (
           <Box>
             <Text fontSize={['16px', '18px', '20px']} mb={12}>
               まだエントリーされていません。

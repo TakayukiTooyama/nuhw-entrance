@@ -43,15 +43,17 @@ const ExpeditionPage: NextPage = () => {
   expeditionsError && console.error(expeditionsError);
   return (
     <Layout title="遠征">
-      <TopHeading title="移動希望投票" linkData={linkData} />
+      <TopHeading
+        title="移動希望投票"
+        linkData={linkData}
+        adminLink="/expedition/management"
+      />
       <Container maxW="xl" py={8}>
-        {!filteredExpeditions && filteredExpeditions?.length !== 0 && (
-          <Spinner />
-        )}
+        {!filteredExpeditions && <Spinner />}
         {filteredExpeditions?.length > 0 && (
           <ExpeditionList expeditions={filteredExpeditions} />
         )}
-        {filteredExpeditions?.length === 0 && (
+        {(expeditionsError || filteredExpeditions?.length === 0) && (
           <Box align="center">
             <Text fontSize={['16px', '18px', '20px']} mb={8}>
               移動希望投票がありません。

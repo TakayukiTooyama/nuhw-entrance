@@ -35,17 +35,21 @@ const EntryManagement: NextPage = () => {
   tournamentsError && console.error(tournamentsError);
   return (
     <Layout title="エントリー管理">
-      <TopHeading title="エントリー管理" linkData={linkData} />
+      <TopHeading
+        title="エントリー管理"
+        linkData={linkData}
+        adminLink="/entry/management"
+      />
       <Container maxW="xl" py={8}>
         <Stack align="center" spacing={4}>
-          {!tournaments && tournaments?.length !== 0 && <Spinner />}
+          {!tournaments && <Spinner />}
           {tournaments?.length > 0 && (
             <EntryManagementList
               userInfo={userInfo}
               tournaments={tournaments}
             />
           )}
-          {tournaments?.length === 0 && (
+          {(tournamentsError || tournaments?.length === 0) && (
             <Box textAlign="center">
               <Text fontSize={['16px', '18px', '20px']} mb={8}>
                 作成されたエントリーがありません。

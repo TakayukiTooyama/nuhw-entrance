@@ -35,17 +35,21 @@ const ExpenseManagement: NextPage = () => {
   expeditionsError && console.error(expeditionsError);
   return (
     <Layout title="投票管理">
-      <TopHeading title="投票管理" linkData={linkData} />
+      <TopHeading
+        title="投票管理"
+        linkData={linkData}
+        adminLink="/expedition/management"
+      />
       <Container maxW="xl" py={8}>
         <Stack align="center" spacing={6}>
-          {!expeditions && expeditions?.length !== 0 && <Spinner />}
+          {!expeditions && <Spinner />}
           {expeditions?.length > 0 && (
             <ExpeditionManagementList
               expeditions={expeditions}
               userInfo={userInfo}
             />
           )}
-          {expeditions?.length === 0 && (
+          {(expeditionsError || expeditions?.length === 0) && (
             <Box align="center">
               <Text fontSize={['16px', '18px', '20px']} mb={8}>
                 作成された投票がありません。

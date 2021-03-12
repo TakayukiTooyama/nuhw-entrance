@@ -80,18 +80,21 @@ const CreateProfileForm: VFC = () => {
         <FormRadio
           label="性別"
           name="gender"
+          colorScheme="orange"
           radioOptions={genderOptions}
           control={control}
         />
         <FormRadio
           label="役割"
           name="role"
+          colorScheme="orange"
           radioOptions={roleOptions}
           control={control}
         />
         <FormRadio
           label="所属ブロック"
           name="block"
+          colorScheme="orange"
           radioOptions={blockOptions}
           control={control}
         />

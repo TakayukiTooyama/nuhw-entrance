@@ -3,7 +3,7 @@ import React, { VFC } from 'react';
 
 type Props = ButtonProps & {
   label: string;
-  isLoading: boolean;
+  isLoading?: boolean;
 };
 
 const FormButton: VFC<Props> = ({ label = '', isLoading, ...props }) => {
@@ -13,8 +13,8 @@ const FormButton: VFC<Props> = ({ label = '', isLoading, ...props }) => {
       type="submit"
       borderRadius="30px"
       shadow="base"
-      {...props}
       isLoading={isLoading}
+      {...props}
     >
       {label}
     </Button>

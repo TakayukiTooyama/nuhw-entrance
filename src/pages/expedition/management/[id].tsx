@@ -52,11 +52,11 @@ const ExpeditionManagementDetail: NextPage = () => {
       prevPageTitle="投票管理"
     >
       <Box px={[4, 12]} py={8} align="center">
-        {!votes && votes?.length !== 0 && <Spinner />}
+        {!votes && <Spinner />}
         {votes?.length > 0 && (
           <VoteManagementTableList votes={votes} rideLabels={rideLabels} />
         )}
-        {votes?.length === 0 && (
+        {(votesError || votes?.length === 0) && (
           <Box>
             <Text fontSize={['16px', '18px', '20px']} mb={12}>
               まだ投票されていません。

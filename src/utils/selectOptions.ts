@@ -53,3 +53,15 @@ export const eventOptions = [
 ];
 
 export const courseOptions = ['行き', '帰り'];
+
+export const sizeOptions = [
+  '選択',
+  'S',
+  'M',
+  'L',
+  'O(XL)',
+  'XO(2XL)',
+  '2XO(3XL)',
+  '3XO(4XL)',
+  '4XO(5XL)',
+];

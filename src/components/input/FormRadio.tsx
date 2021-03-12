@@ -22,7 +22,13 @@ type Props = RadioProps & {
   control: Control;
 };
 
-const FormRadio: VFC<Props> = ({ name, label, radioOptions, control }) => {
+const FormRadio: VFC<Props> = ({
+  name,
+  label,
+  radioOptions,
+  control,
+  ...props
+}) => {
   const {
     field: { ref, ...inputProps },
   } = useController({
@@ -39,7 +45,14 @@ const FormRadio: VFC<Props> = ({ name, label, radioOptions, control }) => {
       <RadioGroup ref={ref} {...inputProps}>
         <Flex wrap="wrap">
           {radioOptions?.map((value) => (
-            <Radio key={value} value={value} colorScheme="orange" mr={4} mb={4}>
+            <Radio
+              key={value}
+              value={value}
+              colorScheme="teal"
+              mr={4}
+              mb={4}
+              {...props}
+            >
               {value}
             </Radio>
           ))}

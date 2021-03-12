@@ -32,7 +32,7 @@ const CreateBusInfo: VFC<Props> = ({
       </HStack>
       <DatePicker
         selected={departureTime}
-        onChange={(date: Date) => setDepartureTime(date)}
+        onChange={(date: any) => setDepartureTime(date)}
         showTimeSelect
       />
       <InputNumber

@@ -29,9 +29,13 @@ const EntryConfirm: NextPage = () => {
   entriesError && console.error(entriesError);
   return (
     <Layout title="エントリー確認">
-      <TopHeading title="エントリー確認" linkData={linkData} />
+      <TopHeading
+        title="エントリー確認"
+        linkData={linkData}
+        adminLink="/entry/management"
+      />
       <Container maxW="xl" py={8} align="center">
-        {!entries && entries?.length !== 0 && <Spinner />}
+        {!entries && <Spinner />}
         {entries?.length > 0 && <EntryConfirmList entries={entries} />}
         {entries?.length === 0 && (
           <Box>

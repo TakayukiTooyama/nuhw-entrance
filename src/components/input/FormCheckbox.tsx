@@ -19,7 +19,7 @@ const FormCheckbox: VFC<Props> = ({ name, control, checkboxOptions }) => {
   });
 
   return (
-    <CheckboxGroup colorScheme="orange" {...inputProps}>
+    <CheckboxGroup colorScheme="teal" {...inputProps}>
       <Stack>
         {checkboxOptions.map((value) => (
           <Checkbox key={value} value={value} ref={ref}>

@@ -22,15 +22,15 @@ const Expense: NextPage = () => {
   entriesError && console.error(entriesError);
   return (
     <Layout title="集金">
-      <TopHeading title="大会集金" />
+      <TopHeading title="大会集金" adminLink="/expense/management" />
       <Container maxW="xl" py={8}>
         <Stack align="center" spacing={8}>
-          {!entries && entries?.length !== 0 && <Spinner />}
+          {!entries && <Spinner />}
           {/* {entries?.length > 0 &&
             entries.map((entry) => (
               <ExpenseList key={entry.id} entry={entry} />
               ))} */}
-          {entries?.length === 0 && (
+          {(entriesError || entries?.length === 0) && (
             <Box align="center">
               <Text fontSize={['16px', '18px', '20px']} mb={8}>
                 集金を行う大会がありません。
