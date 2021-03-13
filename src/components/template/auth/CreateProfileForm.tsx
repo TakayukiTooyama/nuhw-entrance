@@ -61,20 +61,6 @@ const CreateProfileForm: VFC = () => {
   return (
     <form>
       <Stack spacing={6}>
-        <FormText
-          label="氏名"
-          name="name"
-          placeholder="新潟太郎"
-          errors={errors}
-          control={control}
-        />
-        <FormText
-          label="フリガナ"
-          name="furigana"
-          placeholder="ニイガタタロウ"
-          errors={errors}
-          control={control}
-        />
         <FormRadio
           label="性別"
           name="gender"
@@ -94,6 +80,20 @@ const CreateProfileForm: VFC = () => {
           name="block"
           colorScheme="orange"
           radioOptions={blockOptions}
+          control={control}
+        />
+        <FormText
+          label="氏名"
+          name="name"
+          placeholder="新潟太郎"
+          errors={errors}
+          control={control}
+        />
+        <FormText
+          label="フリガナ"
+          name="furigana"
+          placeholder="ニイガタタロウ"
+          errors={errors}
           control={control}
         />
         <Button
