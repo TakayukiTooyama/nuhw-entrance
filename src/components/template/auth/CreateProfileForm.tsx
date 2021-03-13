@@ -2,7 +2,7 @@
 import { Stack } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDocument } from '@nandorojo/swr-firestore';
-import { FormButton } from 'components/button';
+import { Button } from 'components/button';
 import { FormRadio, FormText } from 'components/input';
 import { useAuth } from 'context/Auth';
 import { User, UserInfoInForm } from 'models/users';
@@ -34,26 +34,24 @@ const defaultValues: CreateProfileInput = {
 };
 
 const CreateProfileForm: VFC = () => {
-  const {
-    handleSubmit,
-    control,
-    errors,
-    formState,
-  } = useForm<CreateProfileInput>({
-    defaultValues,
-    resolver: yupResolver(schema),
-  });
+  const { getValues, control, errors, formState } = useForm<CreateProfileInput>(
+    {
+      defaultValues,
+      resolver: yupResolver(schema),
+    }
+  );
   const { user } = useAuth();
   const { set } = useDocument<User>(`users/${user?.uid}`);
 
-  const onSubmit = (data: CreateProfileInput) => {
+  const onSubmit = () => {
+    const values = getValues();
     // 入力した文字列は空白削除
     const profileData: CreateProfileInput = {
-      name: data.name.replace(/\s+/g, ''),
-      furigana: data.furigana.replace(/\s+/g, ''),
-      gender: data.gender,
-      role: data.role,
-      block: data.block,
+      name: values.name.replace(/\s+/g, ''),
+      furigana: values.furigana.replace(/\s+/g, ''),
+      gender: values.gender,
+      role: values.role,
+      block: values.block,
     };
     set(profileData, { merge: true }).then(() => {
       Router.push('/team/join');
@@ -61,7 +59,7 @@ const CreateProfileForm: VFC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form>
       <Stack spacing={6}>
         <FormText
           label="氏名"
@@ -98,10 +96,11 @@ const CreateProfileForm: VFC = () => {
           radioOptions={blockOptions}
           control={control}
         />
-        <FormButton
+        <Button
           label="作成"
           color="white"
           bg="orange.400"
+          onClick={onSubmit}
           isLoading={formState.isSubmitting}
         />
       </Stack>
