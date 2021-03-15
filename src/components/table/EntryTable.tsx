@@ -19,9 +19,9 @@ type Props = {
 };
 
 type TableData = {
+  grade: '1年' | '2年' | '3年' | '4年' | '院1' | '院2' | 'コーチ';
   name: string;
   hurigana: string;
-  gender: '男' | '女';
   event: Event;
   entryRecord: string;
 };
@@ -34,7 +34,7 @@ const EntryTable: VFC<Props> = ({ entries }) => {
         tableData.push({
           name: data.name,
           hurigana: data.furigana,
-          gender: data.gender,
+          grade: data.grade,
           event: event.name,
           entryRecord: event.entryRecord,
         });
@@ -47,16 +47,16 @@ const EntryTable: VFC<Props> = ({ entries }) => {
 
   const COLUMNS: Column<TableData>[] = [
     {
+      Header: '学年',
+      accessor: 'grade',
+    },
+    {
       Header: '氏名',
       accessor: 'name',
     },
     {
       Header: 'フリガナ',
       accessor: 'hurigana',
-    },
-    {
-      Header: '性別',
-      accessor: 'gender',
     },
     {
       Header: '出場種目',

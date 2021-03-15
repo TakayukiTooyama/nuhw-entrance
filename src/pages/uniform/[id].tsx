@@ -1,7 +1,10 @@
 import { Container } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
 import { Layout } from 'components/layout';
-import { MeasurementForm } from 'components/template/uniform';
+import {
+  FemaleUniformForm,
+  MaleUniformForm,
+} from 'components/template/uniform';
 import { useAuth } from 'context/Auth';
 import { UniformCardInfo, User } from 'models/users';
 import { NextPage } from 'next';
@@ -27,9 +30,12 @@ const UniformFormPage: NextPage = () => {
       prevPageTitle="ユニフォーム"
     >
       <Container maxW="xl" py={8}>
-        {uniforms && uniforms.length > 0 && (
-          <MeasurementForm title={uniforms[0].name} userInfo={userInfo} />
-        )}
+        {uniforms?.length > 0 &&
+          (userInfo.gender === '男' ? (
+            <MaleUniformForm title={uniforms[0].name} userInfo={userInfo} />
+          ) : (
+            <FemaleUniformForm title={uniforms[0].name} userInfo={userInfo} />
+          ))}
       </Container>
     </Layout>
   );

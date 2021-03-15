@@ -9,19 +9,12 @@ type Props = {
 };
 
 const EntryManagementTableList: VFC<Props> = ({ entries }) => {
-  const firstGrade = entries.filter((data) => data.grade === '1年');
-  const secondGrade = entries.filter((data) => data.grade === '2年');
-  const thirdGrade = entries.filter((data) => data.grade === '3年');
-  const fourthGrade = entries.filter(
-    (data) =>
-      data.grade === '4年' || data.grade === '院1' || data.grade === '院2'
-  );
+  const maleEntryData = entries.filter((data) => data.gender === '男');
+  const femaleEntryData = entries.filter((data) => data.gender === '女');
 
   const tables = [
-    { grade: '1年生', entries: firstGrade },
-    { grade: '2年生', entries: secondGrade },
-    { grade: '3年生', entries: thirdGrade },
-    { grade: '4年生・院生', entries: fourthGrade },
+    { gender: '男子', entries: maleEntryData },
+    { gender: '女子', entries: femaleEntryData },
   ];
 
   return (
@@ -30,9 +23,9 @@ const EntryManagementTableList: VFC<Props> = ({ entries }) => {
       <Stack>
         {tables.map((data) => (
           <EntryManagementTable
-            key={data.grade}
+            key={data.gender}
             entries={data.entries}
-            grade={data.grade}
+            gender={data.gender}
           />
         ))}
       </Stack>

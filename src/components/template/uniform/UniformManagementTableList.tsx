@@ -9,7 +9,10 @@ import {
 import { Document } from '@nandorojo/swr-firestore';
 import { Button } from 'components/button';
 import { ConfirmDialog } from 'components/dialog';
-import { UniformManagementTable } from 'components/template/uniform';
+import {
+  FemaleUniformManagementTable,
+  MaleUniformManagementTable,
+} from 'components/template/uniform';
 import { UniformInfo } from 'models/users';
 import Router from 'next/router';
 import React, { useRef, useState, VFC } from 'react';
@@ -26,17 +29,17 @@ const UnifomrManagementTableList: VFC<Props> = ({ orders }) => {
   const [loading, setLoading] = useState(false);
   const cancelRef = useRef();
 
-  const manData = orders.filter((data) => data.gender === '男');
-  const womanData = orders.filter((data) => data.gender === '女');
+  const maleData = orders.filter((data) => data.gender === '男');
+  const femaleData = orders.filter((data) => data.gender === '女');
 
   const appendSpreadsheet = async () => {
     setLoading(true);
     try {
-      const manTableAppendData = manData.map((info) => {
+      const manTableAppendData = maleData.map((info) => {
         const sizeData = info.order.flatMap((data) => data.size);
         return [info.name, ...sizeData, info.orderDate];
       });
-      const womanTableAppendData = womanData.map((info) => {
+      const womanTableAppendData = femaleData.map((info) => {
         const sizeData = info.order.flatMap((data) => data.size);
         return [info.name, ...sizeData, info.orderDate];
       });
@@ -96,10 +99,17 @@ const UnifomrManagementTableList: VFC<Props> = ({ orders }) => {
             onClick={() => setGenderToggle('女')}
           />
         </HStack>
-        <UniformManagementTable
-          orders={genderToggle === '男' ? manData : womanData}
-          genderToggle={genderToggle}
-        />
+        {genderToggle === '男' ? (
+          <MaleUniformManagementTable
+            orders={maleData}
+            genderToggle={genderToggle}
+          />
+        ) : (
+          <FemaleUniformManagementTable
+            orders={femaleData}
+            genderToggle={genderToggle}
+          />
+        )}
         <Button
           w="95%"
           position="fixed"

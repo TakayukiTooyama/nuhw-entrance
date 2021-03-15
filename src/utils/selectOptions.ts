@@ -56,10 +56,11 @@ export const courseOptions = ['行き', '帰り'];
 
 export const sizeOptions = [
   '選択',
+  'XS(SS)',
   'S',
   'M',
   'L',
-  'O(XL)',
+  'O(XL,LL)',
   'XO(2XL)',
   '2XO(3XL)',
   '3XO(4XL)',

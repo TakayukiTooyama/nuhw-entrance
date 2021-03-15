@@ -21,10 +21,9 @@ import { FormHeading } from 'components/heading';
 import { FormSelect } from 'components/input';
 import { useAuth } from 'context/Auth';
 import {
-  MeasurementFormInput,
   Order,
   OrderSize,
-  Uniform,
+  UniformFormInput,
   UniformInfo,
   UserInfo,
 } from 'models/users';
@@ -32,7 +31,7 @@ import Image from 'next/image';
 import Router from 'next/router';
 import React, { useRef, useState, VFC } from 'react';
 import { useForm } from 'react-hook-form';
-import { uniformData } from 'utils/data';
+import { femaleUniformData } from 'utils/data';
 import { FirebaseTimestamp } from 'utils/firebase';
 import { formatDate } from 'utils/format';
 import { sizeOptions } from 'utils/selectOptions';
@@ -52,21 +51,24 @@ const schema = yup
   })
   .defined();
 
-const defaultValues: MeasurementFormInput = {
+const defaultValues: Omit<UniformFormInput, 'whiteTights'> = {
   windBreakerUp: '選択',
   windBreakerDown: '選択',
   jerseyUp: '選択',
   jerseyDown: '選択',
   runningShirt: '選択',
   runningPants: '選択',
-  whiteTights: '選択',
+  separateTop: '選択',
+  separateShorts: '選択',
+  navyPinkTights: '選択',
+  halfPants: '選択',
   poloShirt: '選択',
   navyPinkTshirt: '選択',
   lightBlueTshirt: '選択',
 };
 
 type OrderItem = {
-  name: Uniform;
+  name: string;
   size: OrderSize;
 };
 
@@ -75,11 +77,13 @@ type Props = {
   userInfo: UserInfo;
 };
 
-const MeasurementForm: VFC<Props> = ({ title, userInfo }) => {
+const FemaleUniformForm: VFC<Props> = ({ title, userInfo }) => {
   const { user } = useAuth();
   const { add } = useCollection(`users/${user?.uid}/orders`);
 
-  const { handleSubmit, control, getValues } = useForm<MeasurementFormInput>({
+  const { handleSubmit, control, getValues } = useForm<
+    Omit<UniformFormInput, 'whiteTights'>
+  >({
     mode: 'onSubmit',
     defaultValues,
     resolver: yupResolver(schema),
@@ -94,7 +98,7 @@ const MeasurementForm: VFC<Props> = ({ title, userInfo }) => {
 
   const confirm = () => {
     const inputData = getValues();
-    const newOrderList: OrderItem[] = uniformData.map((data) => {
+    const newOrderList: OrderItem[] = femaleUniformData.map((data) => {
       const selectKey = Object.keys(inputData).filter(
         (key) => key === data.id
       )[0];
@@ -146,7 +150,7 @@ const MeasurementForm: VFC<Props> = ({ title, userInfo }) => {
       <FormHeading title={title} />
       <form onSubmit={handleSubmit(confirm)}>
         <Stack spacing={8}>
-          {uniformData.map((item) => (
+          {femaleUniformData.map((item) => (
             <Flex direction={['column', 'row']} key={item.name} shadow="base">
               <Box w={['100%', '40%']}>
                 <Image
@@ -222,4 +226,4 @@ const MeasurementForm: VFC<Props> = ({ title, userInfo }) => {
   );
 };
 
-export default MeasurementForm;
+export default FemaleUniformForm;

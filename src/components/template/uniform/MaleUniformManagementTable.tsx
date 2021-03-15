@@ -19,12 +19,13 @@ type TableData = {
   runningShirt: string;
   runningPants: string;
   whiteTights: string;
+  halfPants: string;
   poloShirt: string;
   navyPinkTshirt: string;
   lightBlueTshirt: string;
 };
 
-const UniformManagementTable: VFC<Props> = ({ orders, genderToggle }) => {
+const MaleUniformManagementTable: VFC<Props> = ({ orders, genderToggle }) => {
   const DATA = orders.map((data) => {
     return {
       name: data.name,
@@ -35,9 +36,10 @@ const UniformManagementTable: VFC<Props> = ({ orders, genderToggle }) => {
       runningShirt: data.order[4].size,
       runningPants: data.order[5].size,
       whiteTights: data.order[6].size,
-      poloShirt: data.order[7].size,
-      navyPinkTshirt: data.order[8].size,
-      lightBlueTshirt: data.order[9].size,
+      halfPants: data.order[7].size,
+      poloShirt: data.order[8].size,
+      navyPinkTshirt: data.order[9].size,
+      lightBlueTshirt: data.order[10].size,
     };
   });
 
@@ -50,6 +52,7 @@ const UniformManagementTable: VFC<Props> = ({ orders, genderToggle }) => {
     { Header: 'ランシャツ', accessor: 'runningShirt' },
     { Header: 'ランパン', accessor: 'runningPants' },
     { Header: 'タイツ(白)', accessor: 'whiteTights' },
+    { Header: 'ハーフパンツ', accessor: 'halfPants' },
     { Header: 'ポロシャツ', accessor: 'poloShirt' },
     { Header: '紺ピンクT', accessor: 'navyPinkTshirt' },
     { Header: '水色T', accessor: 'lightBlueTshirt' },
@@ -112,4 +115,4 @@ const UniformManagementTable: VFC<Props> = ({ orders, genderToggle }) => {
   );
 };
 
-export default UniformManagementTable;
+export default MaleUniformManagementTable;

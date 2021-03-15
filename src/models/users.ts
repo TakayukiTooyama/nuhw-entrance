@@ -236,24 +236,29 @@ export type LinkContent = {
 
 export type OrderSize =
   | '選択'
+  | 'XS(SS)'
   | 'S'
   | 'M'
   | 'L'
-  | 'O(XL)'
+  | 'O(XL,LL)'
   | 'XO(2XL)'
   | '2XO(3XL)'
   | '3XO(4XL)'
   | '4XO(5XL)';
 
 // 採寸結果を入力する項目
-export type MeasurementFormInput = {
+export type UniformFormInput = {
   windBreakerUp: OrderSize;
   windBreakerDown: OrderSize;
   jerseyUp: OrderSize;
   jerseyDown: OrderSize;
   runningShirt: OrderSize;
   runningPants: OrderSize;
+  separateTop: OrderSize;
+  separateShorts: OrderSize;
+  navyPinkTights: OrderSize;
   whiteTights: OrderSize;
+  halfPants: OrderSize;
   poloShirt: OrderSize;
   navyPinkTshirt: OrderSize;
   lightBlueTshirt: OrderSize;
@@ -280,7 +285,7 @@ export type UniformInfo = {
 } & Pick<TimeStamp, 'addedAt'>;
 
 // ユニフォームの種類
-export type Uniform =
+export type MaleUniform =
   | 'ウィンドブレーカー上'
   | 'ウィンドブレーカー下'
   | 'ジャージ上'
@@ -288,11 +293,27 @@ export type Uniform =
   | 'ランシャツ'
   | 'ランパン'
   | 'タイツ(白)'
+  | 'ハーフパンツ'
   | 'ポロシャツ'
   | '紺ピンクTシャツ'
   | '水色Tシャツ';
 
-export type UniformId =
+export type FemaleUniform =
+  | 'ウィンドブレーカー上'
+  | 'ウィンドブレーカー下'
+  | 'ジャージ上'
+  | 'ジャージ下'
+  | 'ランシャツ'
+  | 'ランパン'
+  | 'セパレートトップ'
+  | 'セパレートショーツ'
+  | 'タイツ(紺ピンク) 12cm'
+  | 'ハーフパンツ'
+  | 'ポロシャツ'
+  | '紺ピンクTシャツ'
+  | '水色Tシャツ';
+
+export type MaleUniformId =
   | 'windBreakerUp'
   | 'windBreakerDown'
   | 'jerseyUp'
@@ -300,6 +321,22 @@ export type UniformId =
   | 'runningShirt'
   | 'runningPants'
   | 'whiteTights'
+  | 'halfPants'
+  | 'poloShirt'
+  | 'navyPinkTshirt'
+  | 'lightBlueTshirt';
+
+export type FemaleUniformId =
+  | 'windBreakerUp'
+  | 'windBreakerDown'
+  | 'jerseyUp'
+  | 'jerseyDown'
+  | 'runningShirt'
+  | 'runningPants'
+  | 'separateTop'
+  | 'separateShorts'
+  | 'navyPinkTights'
+  | 'halfPants'
   | 'poloShirt'
   | 'navyPinkTshirt'
   | 'lightBlueTshirt';
