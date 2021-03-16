@@ -48,7 +48,7 @@ const DatePicker: VFC<Props> = ({
       startDate={startDate}
       endDate={endDate}
       showTimeSelect={showTimeSelect}
-      timeIntervals={15}
+      timeIntervals={1}
       minDate={new Date()}
       customInput={
         <Button

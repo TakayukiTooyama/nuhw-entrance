@@ -108,17 +108,17 @@ export const femaleUniformData: FemaleUniformData = [
   {
     id: 'separateTop',
     name: 'セパレートトップ',
-    image: '/Images/uniform/runningShirt.jpg',
+    image: '/Images/uniform/separateTop.jpg',
   },
   {
     id: 'separateShorts',
     name: 'セパレートショーツ',
-    image: '/Images/uniform/runningPants.jpg',
+    image: '/Images/uniform/separateShorts.jpg',
   },
   {
     id: 'navyPinkTights',
     name: 'タイツ(紺ピンク) 12cm',
-    image: '/Images/uniform/whiteTights.jpg',
+    image: '/Images/no-image.png',
   },
   {
     id: 'halfPants',

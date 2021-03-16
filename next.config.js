@@ -12,6 +12,7 @@ module.exports = withPWA({
     FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
   },
   pwa: {
+    disable: process.env.NODE_ENV === 'development',
     dest: 'public',
   },
 });
