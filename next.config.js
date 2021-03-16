@@ -1,4 +1,7 @@
-module.exports = {
+const withPWA = require('next-pwa');
+
+module.exports = withPWA({
+  future: { webpack5: true },
   env: {
     FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
     FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
@@ -8,4 +11,7 @@ module.exports = {
     FIREBASE_MESSEGING_SENDER_ID: process.env.FIREBASE_MESSEGING_SENDER_ID,
     FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
   },
-};
+  pwa: {
+    dest: 'public',
+  },
+});
