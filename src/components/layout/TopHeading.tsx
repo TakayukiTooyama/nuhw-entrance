@@ -24,7 +24,7 @@ const TopHeading: VFC<Props> = ({ title, linkData, adminLink }) => {
     <Box bg="gray.200">
       <Box align="center" pt={8} pb={4}>
         <Heading pb={4}>{title}</Heading>
-        {currentPath !== '/team/management' && (
+        {currentPath !== '/team/management' && currentPath !== '/faq' && (
           <ButtonGroup w="90%" maxW="md" pb={4}>
             {userInfo?.role === '管理者' && (
               <LinkButton

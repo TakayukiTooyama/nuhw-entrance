@@ -9,7 +9,7 @@ import { FaAddressCard, FaBusAlt } from 'react-icons/fa';
 import { GiClothes } from 'react-icons/gi';
 import { IoIosPeople } from 'react-icons/io';
 import { MdDescription } from 'react-icons/md';
-import { RiLogoutBoxLine } from 'react-icons/ri';
+import { RiLogoutBoxLine, RiQuestionAnswerFill } from 'react-icons/ri';
 // import { RiMoneyCnyCircleFill } from 'react-icons/ri';
 import { SiMinutemailer } from 'react-icons/si';
 import { MotionBox } from 'utils/motion';
@@ -59,12 +59,18 @@ const DrawerBodyItemList: VFC = () => {
       onClick: () => Router.push('https://forms.gle/7NfKAdVBseASLbWH6'),
     },
     {
+      icon: RiQuestionAnswerFill,
+      iconColor: 'gray.500',
+      name: 'FAQ',
+      onClick: () => Router.push('/faq'),
+    },
+    {
       icon: MdDescription,
       iconColor: 'gray.500',
       name: '取扱説明書',
       onClick: () =>
         Router.push(
-          'https://www.canva.com/design/DAEYtUhZmYQ/6lI-C3Px3fM6UD-nZzfBgQ/view?website#2'
+          'https://www.canva.com/design/DAEYtUhZmYQ/6lI-C3Px3fM6UD-nZzfBgQ/view'
         ),
     },
     {

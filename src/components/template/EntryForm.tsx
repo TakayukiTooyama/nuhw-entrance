@@ -188,7 +188,7 @@ const EntryFormDetail: VFC = () => {
           </FormControl>
 
           <Stack>
-            <FormLabel label="3. 自己ベスト" />
+            <FormLabel label="3. 参加記録" />
             <Card bg="gray.50" innerPadding={4}>
               {eventsInfo?.length > 0 ? (
                 <SimpleGrid columns={[1, 2]} columnGap={4} rowGap={6}>

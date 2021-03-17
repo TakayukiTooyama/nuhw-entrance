@@ -11,7 +11,8 @@
     "format": "prettier --write .",
     "lint": "eslint . --ext ts --ext tsx --ext js",
     "test": "jest",
-    "test-all": "yarn lint && yarn type-check && yarn test"
+    "test-all": "yarn lint && yarn type-check && yarn test",
+    "api:build": "aspida"
   },
   "husky": {
     "hooks": {
@@ -26,6 +27,7 @@
     ]
   },
   "dependencies": {
+    "@aspida/fetch": "^1.6.3",
     "@chakra-ui/icons": "^1.0.4",
     "@chakra-ui/react": "^1.2.1",
     "@emotion/react": "^11.1.4",
