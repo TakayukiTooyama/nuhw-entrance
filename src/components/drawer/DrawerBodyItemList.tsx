@@ -87,6 +87,9 @@ const DrawerBodyItemList: VFC = () => {
         if (item.name === '管理者引き継ぎ' && userInfo?.role !== '管理者') {
           return false;
         }
+        if (item.name === '取扱説明書' && userInfo?.name === 'デモ太朗') {
+          return false;
+        }
         return (
           <DrawerBodyItem
             key={item.name}

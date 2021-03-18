@@ -31,7 +31,7 @@ const schema: SchemaOf<CreateProfileInput> = object().shape({
     ])
     .required('必須項目です。'),
   name: string()
-    .matches(/^[ぁ-んァ-ンヴー-龥(\s|　)]+$/, '全角で入力してください。')
+    .matches(/^[ぁ-んァ-ンヴー-龥々ヵヶ(\s|　)]+$/, '全角で入力してください。')
     .required('氏名を入力してください。'),
   furigana: string()
     .matches(/^[ァ-ンヴー(\s|　)]+$/, '全角カタカナで入力してください。')

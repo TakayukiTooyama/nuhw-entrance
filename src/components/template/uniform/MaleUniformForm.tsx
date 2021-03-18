@@ -42,11 +42,17 @@ const schema = yup
   .shape({
     firstName: yup
       .string()
-      .matches(/^[ぁ-んァ-ンヴー-龥(\s|　)]+$/, '全角で入力してください。')
+      .matches(
+        /^[ぁ-んァ-ンヴー-龥々ヵヶ(\s|　)]+$/,
+        '全角で入力してください。'
+      )
       .required('名字を入力してください。'),
     lastName: yup
       .string()
-      .matches(/^[ぁ-んァ-ンヴー-龥(\s|　)]+$/, '全角で入力してください。')
+      .matches(
+        /^[ぁ-んァ-ンヴー-龥々ヵヶ(\s|　)]+$/,
+        '全角で入力してください。'
+      )
       .required(' 名前を入力してください。'),
   })
   .defined();
