@@ -197,7 +197,6 @@ export type CreateProfileFormInput = Omit<UserInfo, 'grade' | 'teamId'> &
 
 // ユーザーによるエントリーフォームの入力項目
 export type EntryFormInput = {
-  grade: '1年' | '2年' | '3年' | '4年' | '院1' | '院2' | 'コーチ';
   events: Event[];
 };
 

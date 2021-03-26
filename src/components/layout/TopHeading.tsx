@@ -24,25 +24,28 @@ const TopHeading: VFC<Props> = ({ title, linkData, adminLink }) => {
     <Box bg="gray.200">
       <Box align="center" pt={8} pb={4}>
         <Heading pb={4}>{title}</Heading>
-        {currentPath !== '/team/management' && currentPath !== '/faq' && (
-          <ButtonGroup w="90%" maxW="md" pb={4}>
-            {userInfo?.role === '管理者' && (
-              <LinkButton
-                label="管理"
-                link={path === '' ? '/entry/management' : adminLink}
-                currentPage={adminLink === currentPath}
-              />
-            )}
-            {linkData?.map((item) => (
-              <LinkButton
-                key={item.label}
-                label={item.label}
-                link={item.link}
-                currentPage={item.link === currentPath}
-              />
-            ))}
-          </ButtonGroup>
-        )}
+        {currentPath !== '/team/management' &&
+          currentPath !== '/faq' &&
+          currentPath !== '/expense' &&
+          currentPath !== '/profile' && (
+            <ButtonGroup w="90%" maxW="md" pb={4}>
+              {userInfo?.role === '管理者' && (
+                <LinkButton
+                  label="管理"
+                  link={path === '' ? '/entry/management' : adminLink}
+                  currentPage={adminLink === currentPath}
+                />
+              )}
+              {linkData?.map((item) => (
+                <LinkButton
+                  key={item.label}
+                  label={item.label}
+                  link={item.link}
+                  currentPage={item.link === currentPath}
+                />
+              ))}
+            </ButtonGroup>
+          )}
       </Box>
       <Slash />
     </Box>

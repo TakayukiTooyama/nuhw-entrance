@@ -26,7 +26,7 @@ const SignIn: VFC = () => {
           gender: '男',
           grade: '3年',
           block: '短距離',
-          role: '選手',
+          role: '管理者',
           createdAt: FirebaseTimestamp.now(),
         };
         await usersRef

@@ -44,9 +44,7 @@ const ExpenseManagement: NextPage = () => {
 
           {expenses?.length === 0 && (
             <Box align="center">
-              <Text fontSize={['16px', '18px', '20px']} mb={8}>
-                全て大会の集金が終わっています。
-              </Text>
+              <Text mb={8}>全て大会の集金が終わっています。</Text>
               <Image
                 width={300}
                 height={200}

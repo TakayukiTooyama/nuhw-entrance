@@ -7,3 +7,4 @@ export { default as EntryManagementListItem } from './EntryManagementListItem';
 export { default as EntryManagementTable } from './EntryManagementTable';
 export { default as EntryManagementTableList } from './EntryManagementTableList';
 export { default as Inheritance } from './Inheritance';
+export { default as ProfileChangeForm } from './ProfileChangeForm';

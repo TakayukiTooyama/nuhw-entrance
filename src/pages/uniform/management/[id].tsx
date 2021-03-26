@@ -29,9 +29,7 @@ const UniformManagementDetail: NextPage = () => {
         {orders?.length > 0 && <UniformManagementTableList orders={orders} />}
         {(ordersError || orders?.length === 0) && (
           <Box>
-            <Text fontSize={['16px', '18px', '20px']} mb={12}>
-              まだ注文されていません。
-            </Text>
+            <Text mb={12}>まだ注文されていません。</Text>
             <Image
               width={300}
               height={250}

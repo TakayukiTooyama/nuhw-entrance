@@ -24,10 +24,10 @@ const InputNumber: VFC<Props> = ({
   <HStack>
     {label && <Text>{label}</Text>}
     <NumberInput
-      {...props}
       bg="white"
       value={value}
       onChange={(valueAsString) => setValue(valueAsString)}
+      {...props}
     >
       <NumberInputField autoFocus />
     </NumberInput>

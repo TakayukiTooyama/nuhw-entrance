@@ -1,15 +1,18 @@
-import { Box, HStack, SimpleGrid, Stack, Text } from '@chakra-ui/react';
+import {
+  Box,
+  HStack,
+  SimpleGrid,
+  Stack,
+  Text,
+  useDisclosure,
+} from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
 import { FormButton } from 'components/button';
 import { Card } from 'components/card';
+import { SuccessDialog } from 'components/dialog';
 import { FormLabel } from 'components/form';
 import { FormHeading } from 'components/heading';
-import {
-  EventCheckbox,
-  FormControl,
-  FormRadio,
-  InputNumber,
-} from 'components/input';
+import { EventCheckbox, FormControl, InputNumber } from 'components/input';
 import { useAuth } from 'context/Auth';
 import {
   Entry,
@@ -18,14 +21,12 @@ import {
   Tournament,
   UserInfo,
 } from 'models/users';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState, VFC } from 'react';
 import { useForm } from 'react-hook-form';
 import { FirebaseTimestamp } from 'utils/firebase';
-import { gradeOptions } from 'utils/selectOptions';
 
 const defaultValues: EntryFormInput = {
-  grade: '1年',
   events: [],
 };
 
@@ -57,9 +58,6 @@ const EntryFormDetail: VFC = () => {
       listen: true,
     }
   );
-  // const { add: ExpenseAdd } = useCollection<Omit<Expense, 'collectionDate'>>(
-  //   `users/${user?.uid}/expenses`
-  // );
 
   const { handleSubmit, watch, formState, control } = useForm<EntryFormInput>({
     defaultValues,
@@ -71,6 +69,7 @@ const EntryFormDetail: VFC = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isEdit, setIsEdit] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const { onOpen, isOpen } = useDisclosure();
 
   const updateEntryRecord = (index: number) => {
     const selectedIndex = eventsInfo.findIndex((event) => event.id === index);
@@ -124,15 +123,11 @@ const EntryFormDetail: VFC = () => {
       });
     });
 
-    // const expenseArray = newEventsInfo.map((data) => data.expense);
-    // const totalExpenses =
-    //   expenseArray.length > 0 && expenseArray.reduce((acc, cur) => acc + cur);
-
     const newEntryData: Omit<Entry, 'timeLimit'> = {
       name: userInfo.name,
       furigana: userInfo.furigana,
       gender: userInfo.gender,
-      grade: data.grade,
+      grade: userInfo.grade ?? '1年',
       tournamentId: tournamentInfo.id,
       tournamentName: tournamentInfo.tournamentName,
       startDate: tournamentInfo.startDate,
@@ -141,18 +136,9 @@ const EntryFormDetail: VFC = () => {
       addedAt: FirebaseTimestamp.now(),
     };
 
-    // const newExpenseData: Omit<Expense, 'collectionDate'> = {
-    //   expense: tournamentInfo.expense,
-    //   totalExpenses,
-    //   isPayment: false,
-    //   ...newEntryData,
-    // };
-
     EntryAdd(newEntryData).then(() => {
-      // ExpenseAdd(newExpenseData).then(() => {
-      Router.push('/');
+      onOpen();
     });
-    // });
   };
 
   // 編集への切り替え(Recordクリック時の処理)
@@ -171,14 +157,7 @@ const EntryFormDetail: VFC = () => {
       <FormHeading title="エントリーフォーム" />
       <form onSubmit={handleSubmit(addEntry)}>
         <Stack spacing={8}>
-          <FormRadio
-            name="grade"
-            label="1. 学年"
-            radioOptions={gradeOptions}
-            control={control}
-          />
-
-          <FormControl label="2. エントリー種目">
+          <FormControl label="1. エントリー種目">
             <EventCheckbox
               name="events"
               control={control}
@@ -188,7 +167,7 @@ const EntryFormDetail: VFC = () => {
           </FormControl>
 
           <Stack>
-            <FormLabel label="3. 参加記録" />
+            <FormLabel label="2. 参加記録" />
             <Card bg="gray.50" innerPadding={4}>
               {eventsInfo?.length > 0 ? (
                 <SimpleGrid columns={[1, 2]} columnGap={4} rowGap={6}>
@@ -207,6 +186,7 @@ const EntryFormDetail: VFC = () => {
                               value={entryRecord}
                               setValue={setEntryRecord}
                               inputMode="decimal"
+                              step={0.01}
                               onBlur={() => updateEntryRecord(item.id)}
                               onKeyDown={(e) =>
                                 keyPressUpdateEntryRecord(e, item.id)
@@ -247,6 +227,12 @@ const EntryFormDetail: VFC = () => {
           </Stack>
         </Stack>
       </form>
+      <SuccessDialog
+        title="エントリー完了！"
+        isOpen={isOpen}
+        onClose={() => router.push('/')}
+        onClick={() => router.push('/entry/confirm')}
+      />
     </>
   );
 };

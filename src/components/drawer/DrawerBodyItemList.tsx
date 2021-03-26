@@ -7,6 +7,7 @@ import Router from 'next/router';
 import React, { VFC } from 'react';
 import { FaAddressCard, FaBusAlt } from 'react-icons/fa';
 import { GiClothes } from 'react-icons/gi';
+import { ImProfile } from 'react-icons/im';
 import { IoIosPeople } from 'react-icons/io';
 import { MdDescription } from 'react-icons/md';
 import { RiLogoutBoxLine, RiQuestionAnswerFill } from 'react-icons/ri';
@@ -47,6 +48,12 @@ const DrawerBodyItemList: VFC = () => {
       onClick: () => Router.push('/uniform'),
     },
     {
+      icon: ImProfile,
+      iconColor: 'gray.500',
+      name: 'プロフィール設定',
+      onClick: () => Router.push('/profile'),
+    },
+    {
       icon: IoIosPeople,
       iconColor: 'gray.500',
       name: '管理者引き継ぎ',
@@ -84,6 +91,9 @@ const DrawerBodyItemList: VFC = () => {
   return (
     <MotionBox as={List} spacing={4} variants={listVariants}>
       {bodyItemList.map((item) => {
+        if (item.name === '集金' && userInfo?.role !== '管理者') {
+          return false;
+        }
         if (item.name === '管理者引き継ぎ' && userInfo?.role !== '管理者') {
           return false;
         }

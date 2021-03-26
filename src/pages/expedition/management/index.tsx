@@ -51,9 +51,7 @@ const ExpenseManagement: NextPage = () => {
           )}
           {(expeditionsError || expeditions?.length === 0) && (
             <Box align="center">
-              <Text fontSize={['16px', '18px', '20px']} mb={8}>
-                作成された投票がありません。
-              </Text>
+              <Text mb={8}>作成された投票がありません。</Text>
               <Image
                 width={350}
                 height={250}

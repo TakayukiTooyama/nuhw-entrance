@@ -58,9 +58,7 @@ const ExpeditionManagementDetail: NextPage = () => {
         )}
         {(votesError || votes?.length === 0) && (
           <Box>
-            <Text fontSize={['16px', '18px', '20px']} mb={12}>
-              まだ投票されていません。
-            </Text>
+            <Text mb={12}>まだ投票されていません。</Text>
             <Image
               width={300}
               height={250}

@@ -5,28 +5,18 @@ import { useDocument } from '@nandorojo/swr-firestore';
 import { FormButton } from 'components/button';
 import { FormRadio, FormText } from 'components/input';
 import { useAuth } from 'context/Auth';
-import { User, UserInfoInForm } from 'models/users';
-import Router from 'next/router';
-import React, { VFC } from 'react';
+import { User, UserInfo, UserInfoInForm } from 'models/users';
+import React, { useState, VFC } from 'react';
 import { useForm } from 'react-hook-form';
-import {
-  blockOptions,
-  genderOptions,
-  gradeOptions,
-  roleOptions,
-} from 'utils/selectOptions';
+import { blockOptions, genderOptions, gradeOptions } from 'utils/selectOptions';
 import { mixed, object, SchemaOf, string } from 'yup';
 
-type CreateProfileInput = Omit<UserInfoInForm, 'email'>;
-
-const schema: SchemaOf<CreateProfileInput> = object().shape({
+type ProfileInput = Omit<UserInfoInForm, 'email' | 'role'>;
+const schema: SchemaOf<ProfileInput> = object().shape({
   grade: mixed()
     .oneOf(['1年', '2年', '3年', '4年', '院1', '院2', 'コーチ'])
     .required('必須項目です。'),
   gender: mixed().oneOf(['男', '女']).required('必須項目です。'),
-  role: mixed()
-    .oneOf(['選手', '管理者', 'マネージャー', 'トレーナー', 'コーチ'])
-    .required('必須項目です。'),
   block: mixed()
     .oneOf([
       '短距離',
@@ -46,71 +36,62 @@ const schema: SchemaOf<CreateProfileInput> = object().shape({
     .required('フリガナを入力してください。'),
 });
 
-const defaultValues: CreateProfileInput = {
-  grade: '1年',
-  gender: '男',
-  role: '選手',
-  block: '短距離',
-  name: '',
-  furigana: '',
+type Props = {
+  userInfo: UserInfo;
 };
 
-const CreateProfileForm: VFC = () => {
-  const {
-    handleSubmit,
-    control,
-    errors,
-    formState,
-  } = useForm<CreateProfileInput>({
+const ProfileChangeForm: VFC<Props> = ({ userInfo }) => {
+  const defaultValues: ProfileInput = {
+    name: userInfo.name,
+    furigana: userInfo.furigana,
+    grade: userInfo.grade,
+    gender: userInfo.gender,
+    block: userInfo.block,
+  };
+
+  const { handleSubmit, control, errors } = useForm<ProfileInput>({
     defaultValues,
     resolver: yupResolver(schema),
   });
-  const { user } = useAuth();
-  const { set } = useDocument<User>(`users/${user?.uid}`);
 
-  const onSubmit = (data: CreateProfileInput) => {
-    // 入力した文字列は空白削除
-    const profileData: CreateProfileInput = {
-      grade: data.grade,
-      gender: data.gender,
-      role: data.role,
-      block: data.block,
-      name: data.name.replace(/\s+/g, ''),
-      furigana: data.furigana.replace(/\s+/g, ''),
+  const { user } = useAuth();
+  const { update } = useDocument<User>(`users/${user?.uid}`);
+  const [state, setState] = useState<'default' | 'edit' | 'loading' | 'save'>(
+    'default'
+  );
+
+  const saveProfile = (inputData: ProfileInput) => {
+    setState('loading');
+    const profileData: ProfileInput = {
+      name: inputData.name.replace(/\s+/g, ''),
+      furigana: inputData.furigana.replace(/\s+/g, ''),
+      grade: inputData.grade,
+      gender: inputData.gender,
+      block: inputData.block,
     };
-    set(profileData, { merge: true }).then(() => {
-      Router.push('/team/join');
+    update(profileData).then(() => {
+      setState('save');
     });
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={6}>
+    <form onSubmit={handleSubmit(saveProfile)}>
+      <Stack spacing={6} mb={8} onClick={() => setState('edit')}>
         <FormRadio
           label="学年"
           name="grade"
-          colorScheme="orange"
           radioOptions={gradeOptions}
           control={control}
         />
         <FormRadio
           label="性別"
           name="gender"
-          colorScheme="orange"
           radioOptions={genderOptions}
-          control={control}
-        />
-        <FormRadio
-          label="役割"
-          name="role"
-          colorScheme="orange"
-          radioOptions={roleOptions}
           control={control}
         />
         <FormRadio
           label="所属ブロック"
           name="block"
-          colorScheme="orange"
           radioOptions={blockOptions}
           control={control}
         />
@@ -128,15 +109,17 @@ const CreateProfileForm: VFC = () => {
           errors={errors}
           control={control}
         />
-        <FormButton
-          label="作成"
-          color="white"
-          bg="orange.400"
-          isLoading={formState.isSubmitting}
-        />
       </Stack>
+      <FormButton
+        label={
+          state === 'default' || state === 'edit' ? '保存する' : '保存完了👌'
+        }
+        colorScheme="teal"
+        isLoading={state === 'loading'}
+        disabled={!errors && (state === 'loading' || state === 'default')}
+      />
     </form>
   );
 };
 
-export default CreateProfileForm;
+export default ProfileChangeForm;

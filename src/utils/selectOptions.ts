@@ -1,3 +1,5 @@
+import { Event } from 'models/users';
+
 export const gradeOptions = [
   '1年',
   '2年',
@@ -22,7 +24,7 @@ export const blockOptions = [
   'トレーナー',
 ];
 
-export const eventOptions = [
+export const eventOptions: Event[] = [
   '100m',
   '200m',
   '300m',
@@ -45,7 +47,7 @@ export const eventOptions = [
   '砲丸投',
   '円盤投',
   'ハンマー投',
-  'やり投げ',
+  'やり投',
   '十種競技',
   '七種競技',
   '4×100リレー',

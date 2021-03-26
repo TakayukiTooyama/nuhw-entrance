@@ -17,7 +17,10 @@ const EntryManagementDetail: NextPage = () => {
     Omit<Entry, 'timeLimit'>
   >('entries', {
     where: ['tournamentId', '==', tournamentId],
-    orderBy: ['grade', 'asc'],
+    orderBy: [
+      ['grade', 'asc'],
+      ['furigana', 'asc'],
+    ],
     parseDates: ['startDate', 'endDate'],
     isCollectionGroup: true,
   });
@@ -31,12 +34,15 @@ const EntryManagementDetail: NextPage = () => {
     >
       <Container maxW="2xl" py={8} align="center">
         {!entries && <Spinner />}
-        {entries?.length > 0 && <EntryManagementTableList entries={entries} />}
+        {entries?.length > 0 && (
+          <EntryManagementTableList
+            entries={entries}
+            tournamentId={tournamentId}
+          />
+        )}
         {(entriesError || entries?.length === 0) && (
           <Box>
-            <Text fontSize={['16px', '18px', '20px']} mb={12}>
-              まだエントリーされていません。
-            </Text>
+            <Text mb={12}>まだエントリーされていません。</Text>
             <Image
               width={300}
               height={250}
