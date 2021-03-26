@@ -4,9 +4,9 @@ service cloud.firestore {
 
     // users
     match /users/{userID} {
-      allow get: if isAuthenticated()
+      allow get: if (isAuthenticated()
                   && isUserAuthenticated(userID)
-                  && request.auth.token.firebase.sign_in_provider == 'google.com';
+                  && request.auth.token.firebase.sign_in_provider == 'google.com' || request.auth.token.firebase.sign_in_provider == 'anonymous');
       allow list: if isAuthenticated()
                   && isAdmin(request.auth.uid)
       allow create;
@@ -51,6 +51,7 @@ service cloud.firestore {
         allow read, write: if true;
       }
     }
+
 
     match /{path=**}/entries/{entryID} {
       allow read: if isAuthenticated()
