@@ -1,40 +1,44 @@
 import { Box, Container, Stack, Text } from '@chakra-ui/react';
-import { useCollection } from '@nandorojo/swr-firestore';
+import { useCollection, useDocument } from '@nandorojo/swr-firestore';
 import { Layout, TabBar, TopHeading } from 'components/layout';
 import { Spinner } from 'components/loading';
 // import { ExpenseList } from 'components/template/expense';
 import { useAuth } from 'context/Auth';
-import { Entry } from 'models/users';
+import { Tournament, UserInfo } from 'models/users';
 import { NextPage } from 'next';
 import Image from 'next/image';
 import React from 'react';
 
 const Expense: NextPage = () => {
   const { user } = useAuth();
-  const { data: entries, error: entriesError } = useCollection<Entry>(
-    `users/${user?.uid}/entries`,
-    {
-      orderBy: ['startDate', 'asc'],
-      parseDates: ['startDate', 'endDate'],
-    }
+  const { data: userInfo } = useDocument<UserInfo>(
+    user ? `users/${user.uid}` : null
+  );
+  const { error: tournamentsError } = useCollection<Tournament>(
+    userInfo ? `teams/${userInfo.teamId}/tournaments` : null
   );
 
-  entriesError && console.error(entriesError);
+  const { data: expenses, error: expensesError } = useCollection(
+    userInfo ? `teams/${userInfo.teamId}/expenses` : null
+  );
+
+  // expensesError && console.error(expensesError);
+  tournamentsError && console.error(tournamentsError);
+
   return (
     <Layout title="集金">
       <TopHeading title="大会集金" adminLink="/expense/management" />
       <Container maxW="xl" py={8}>
         <Stack align="center" spacing={8}>
-          {!entries && <Spinner />}
-          {/* {entries?.length > 0 &&
-            entries.map((entry) => (
-              <ExpenseList key={entry.id} entry={entry} />
-              ))} */}
-          {(entriesError || entries?.length === 0) && (
+          {!expenses && <Spinner />}
+
+          {/* {expenses?.length > 0 &&
+              expenses.map((entry) => (
+                <ExpenseList key={entry.id} entry={entry} />
+                ))} */}
+          {(expensesError || expenses?.length === 0) && (
             <Box align="center">
-              <Text fontSize={['16px', '18px', '20px']} mb={8}>
-                集金を行う大会がありません。
-              </Text>
+              <Text mb={8}>集金を行う大会がありません。</Text>
               <Image
                 width={300}
                 height={200}
