@@ -17,8 +17,11 @@ const EntryManagementTableList: VFC<Props> = ({ entries, tournamentId }) => {
   const { data: userInfo } = useDocument<UserInfo>(
     user ? `users/${user.uid}` : null
   );
-  const { set, update, data: tournaments } = useDocument<Tournament>(
-    userInfo ? `teams/${userInfo.teamId}/tournaments/${tournamentId}` : null
+  const { update, data: tournaments } = useDocument<Tournament>(
+    userInfo ? `teams/${userInfo.teamId}/tournaments/${tournamentId}` : null,
+    {
+      listen: true,
+    }
   );
 
   const toast = useToast();
@@ -40,7 +43,8 @@ const EntryManagementTableList: VFC<Props> = ({ entries, tournamentId }) => {
   };
 
   const addEvent = () => {
-    set({ events: [event] }, { merge: true }).then(() => {
+    const currentEvents = tournaments.events;
+    update({ events: [...currentEvents, event] }).then(() => {
       toast({
         title: '種目追加完了',
         description: '正常に種目が追加されました。',
