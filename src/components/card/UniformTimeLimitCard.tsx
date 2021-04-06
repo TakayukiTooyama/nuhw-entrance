@@ -23,7 +23,7 @@ const UniformTimeLimitCard: VFC<Props> = ({
   ...props
 }) => {
   const router = useRouter();
-  const path = router.asPath.split('/')[3];
+  const path = router.asPath.split('/')[2];
 
   return (
     <MotionBox

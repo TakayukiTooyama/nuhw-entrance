@@ -276,6 +276,7 @@ export type Order = {
   size: OrderSize | '';
 };
 export type UniformInfo = {
+  formId: string;
   title: string;
   name: string;
   gender: '男' | '女';

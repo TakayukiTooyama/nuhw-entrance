@@ -80,11 +80,12 @@ type OrderItem = {
 };
 
 type Props = {
+  id: string;
   title: string;
   userInfo: UserInfo;
 };
 
-const MaleUniformForm: VFC<Props> = ({ title, userInfo }) => {
+const MaleUniformForm: VFC<Props> = ({ id, title, userInfo }) => {
   const { user } = useAuth();
   const { add } = useCollection(`users/${user?.uid}/orders`);
 
@@ -133,6 +134,7 @@ const MaleUniformForm: VFC<Props> = ({ title, userInfo }) => {
     });
 
     const uniformInfo: UniformInfo = {
+      formId: id,
       title,
       name: userInfo?.name,
       gender: userInfo?.gender,

@@ -32,9 +32,17 @@ const UniformFormPage: NextPage = () => {
       <Container maxW="xl" py={8}>
         {uniforms?.length > 0 &&
           (userInfo.gender === '男' ? (
-            <MaleUniformForm title={uniforms[0].name} userInfo={userInfo} />
+            <MaleUniformForm
+              id={uniforms[0].id}
+              title={uniforms[0].name}
+              userInfo={userInfo}
+            />
           ) : (
-            <FemaleUniformForm title={uniforms[0].name} userInfo={userInfo} />
+            <FemaleUniformForm
+              id={uniforms[0].id}
+              title={uniforms[0].name}
+              userInfo={userInfo}
+            />
           ))}
       </Container>
     </Layout>
