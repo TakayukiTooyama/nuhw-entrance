@@ -5,7 +5,7 @@ import { CardTextHeading, CardTextTimeLimit } from 'components/text';
 import { UniformCardInfo } from 'models/users';
 import Router, { useRouter } from 'next/router';
 import React, { VFC } from 'react';
-import { formatWeekdayNotation } from 'utils/format';
+import { formatTimeLimitNotation } from 'utils/format';
 import { MotionBox } from 'utils/motion';
 
 type Props = BoxProps & {
@@ -68,7 +68,7 @@ const UniformTimeLimitCard: VFC<Props> = ({
           <CardTextTimeLimit
             mt={2}
             justify="center"
-            text={`${formatWeekdayNotation(data.timeLimit)}`}
+            text={`${formatTimeLimitNotation(data.timeLimit)}`}
           />
         ) : (
           <Text color="gray.400" fontWeight="bold" align="center">

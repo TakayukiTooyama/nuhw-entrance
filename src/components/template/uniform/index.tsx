@@ -1,3 +1,4 @@
+export { default as CreateUniform } from './CreateUniform';
 export { default as FemaleUniformForm } from './FemaleUniformForm';
 export { default as FemaleUniformManagementTable } from './FemaleUniformManagementTable';
 export { default as MaleUniformForm } from './MaleUniformForm';

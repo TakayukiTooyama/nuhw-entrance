@@ -11,7 +11,7 @@ type Props = {
 
 const EntryManagementTable: VFC<Props> = ({ entries, gender }) => {
   return (
-    <Box mr={{ md: 8 }} mb={16} _last={{ mr: 0 }}>
+    <Box>
       <Text textAlign="left" fontSize="20px" fontWeight="bold" mb={4}>
         {gender}
       </Text>

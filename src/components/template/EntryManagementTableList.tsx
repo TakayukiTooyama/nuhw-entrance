@@ -1,7 +1,8 @@
-import { Flex, Heading, Select, Stack, useToast } from '@chakra-ui/react';
+import { Box, Flex, Heading, Select, Stack, useToast } from '@chakra-ui/react';
 import { Document, useDocument } from '@nandorojo/swr-firestore';
 import { Button } from 'components/button';
 import { EntryManagementTable } from 'components/template';
+import { EntryCountTable } from 'components/template/entry';
 import { useAuth } from 'context/Auth';
 import { Entry, Event, Tournament, UserInfo } from 'models/users';
 import React, { useState, VFC } from 'react';
@@ -72,65 +73,68 @@ const EntryManagementTableList: VFC<Props> = ({ entries, tournamentId }) => {
   };
 
   return (
-    <>
-      <Heading mb={12}>{entries[0]?.tournamentName}</Heading>
-      <Stack>
-        {tables.map((data) => (
-          <EntryManagementTable
-            key={data.gender}
-            entries={data.entries}
-            gender={data.gender}
-          />
-        ))}
-        {isEdit ? (
-          <Stack direction={['column', 'row']} spacing={8}>
-            <Stack w="100%" spacing={4}>
-              <Select
-                placeholder="種目"
-                bg="white"
-                size="lg"
-                onChange={eventChange}
-              >
-                {eventOptions
-                  .filter((event) => tournaments.events.indexOf(event) == -1)
-                  .map((event) => (
-                    <option key={event} value={event}>
-                      {event}
-                    </option>
-                  ))}
-              </Select>
-              <Button label="追加" colorScheme="teal" onClick={addEvent} />
-            </Stack>
-            <Stack w="100%" spacing={4}>
-              <Select
-                placeholder="種目"
-                bg="white"
-                size="lg"
-                onChange={eventChange}
-              >
-                {eventOptions
-                  .filter((event) => tournaments.events.indexOf(event) != -1)
-                  .map((event) => (
-                    <option key={event} value={event}>
-                      {event}
-                    </option>
-                  ))}
-              </Select>
-              <Button label="削除" colorScheme="red" onClick={deleteEvent} />
-            </Stack>
+    <Stack spacing={12}>
+      <Heading>{entries[0]?.tournamentName}</Heading>
+      <Box>
+        <EntryCountTable
+          maleCount={maleEntryData.length}
+          femaleCount={femaleEntryData.length}
+        />
+      </Box>
+      {tables.map((data) => (
+        <EntryManagementTable
+          key={data.gender}
+          entries={data.entries}
+          gender={data.gender}
+        />
+      ))}
+      {isEdit ? (
+        <Stack direction={['column', 'row']} spacing={8}>
+          <Stack w="100%" spacing={4}>
+            <Select
+              placeholder="種目"
+              bg="white"
+              size="lg"
+              onChange={eventChange}
+            >
+              {eventOptions
+                .filter((event) => tournaments.events.indexOf(event) == -1)
+                .map((event) => (
+                  <option key={event} value={event}>
+                    {event}
+                  </option>
+                ))}
+            </Select>
+            <Button label="追加" colorScheme="teal" onClick={addEvent} />
           </Stack>
-        ) : (
-          <Flex>
-            <Button
-              label="エントリー種目を編集"
-              colorScheme="teal"
-              onClick={() => setIsEdit(true)}
-            />
-            {/* {LineShareButton} */}
-          </Flex>
-        )}
-      </Stack>
-    </>
+          <Stack w="100%" spacing={4}>
+            <Select
+              placeholder="種目"
+              bg="white"
+              size="lg"
+              onChange={eventChange}
+            >
+              {eventOptions
+                .filter((event) => tournaments.events.indexOf(event) != -1)
+                .map((event) => (
+                  <option key={event} value={event}>
+                    {event}
+                  </option>
+                ))}
+            </Select>
+            <Button label="削除" colorScheme="red" onClick={deleteEvent} />
+          </Stack>
+        </Stack>
+      ) : (
+        <Flex>
+          <Button
+            label="エントリー種目を編集"
+            colorScheme="teal"
+            onClick={() => setIsEdit(true)}
+          />
+        </Flex>
+      )}
+    </Stack>
   );
 };
 
