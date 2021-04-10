@@ -243,11 +243,12 @@ export type OrderSize =
   | 'XO(2XL)'
   | '2XO(3XL)'
   | '3XO(4XL)'
-  | '4XO(6XL)'
-  | '5XO(7XL)'
-  | '6XO(8XL)'
-  | '7XO(9XL)'
-  | '8XO(10XL)';
+  | '4XO(5XL)'
+  | '5XO(6XL)'
+  | '6XO(7XL)'
+  | '7XO(8XL)'
+  | '8XO(9XL)'
+  | '9XO(10XL)';
 
 // 採寸結果を入力する項目
 export type UniformFormInput = {
