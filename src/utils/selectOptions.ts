@@ -66,5 +66,9 @@ export const sizeOptions = [
   'XO(2XL)',
   '2XO(3XL)',
   '3XO(4XL)',
-  '4XO(5XL)',
+  '4XO(6XL)',
+  '5XO(7XL)',
+  '6XO(8XL)',
+  '7XO(9XL)',
+  '8XO(10XL)',
 ];
