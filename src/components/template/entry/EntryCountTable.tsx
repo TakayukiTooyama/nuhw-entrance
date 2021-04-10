@@ -6,13 +6,13 @@ type Props = {
   femaleCount: number;
 };
 
-const EntryConutTable: VFC<Props> = ({ maleCount, femaleCount }) => (
+const EntryCountTable: VFC<Props> = ({ maleCount, femaleCount }) => (
   <Table variant="simple" maxW="sm">
     <Thead>
-      <Tr textAlign="center">
-        <Th>男子</Th>
-        <Th>女子</Th>
-        <Th>合計</Th>
+      <Tr>
+        <Th textAlign="center">男子</Th>
+        <Th textAlign="center">女子</Th>
+        <Th textAlign="center">合計</Th>
       </Tr>
     </Thead>
     <Tbody>
@@ -25,4 +25,4 @@ const EntryConutTable: VFC<Props> = ({ maleCount, femaleCount }) => (
   </Table>
 );
 
-export default EntryConutTable;
+export default EntryCountTable;

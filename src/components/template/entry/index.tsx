@@ -1,1 +1,1 @@
-export { default as EntryCountTable } from './EntryConutTable';
+export { default as EntryCountTable } from './EntryCountTable';
