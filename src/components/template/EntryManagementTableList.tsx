@@ -1,5 +1,6 @@
-import { Box, Flex, Heading, Select, Stack, useToast } from '@chakra-ui/react';
-import { Document, useDocument } from '@nandorojo/swr-firestore';
+/* eslint-disable no-sparse-arrays */
+import { Box, Heading, Select, Stack, useToast } from '@chakra-ui/react';
+import { Document, useCollection, useDocument } from '@nandorojo/swr-firestore';
 import { Button } from 'components/button';
 import { EntryManagementTable } from 'components/template';
 import { EntryCountTable } from 'components/template/entry';
@@ -11,6 +12,21 @@ import { eventOptions } from 'utils/selectOptions';
 type Props = {
   entries: Document<Omit<Entry, 'timeLimit'>>[];
   tournamentId: string | string[];
+};
+
+type TestData = {
+  name: string;
+  romaji: string;
+  furigana: string;
+  gender: '男' | '女';
+  rikukyo: string;
+  birthday: string;
+  tournamentData: {
+    type: string;
+    record: string;
+    tournamentName: string;
+    date: string;
+  }[];
 };
 
 const EntryManagementTableList: VFC<Props> = ({ entries, tournamentId }) => {
@@ -25,13 +41,20 @@ const EntryManagementTableList: VFC<Props> = ({ entries, tournamentId }) => {
     }
   );
 
+  const { data: testData } = useCollection<TestData>(
+    `teams/Vwn4SWU3FsqSbqIU7mKy/test`
+  );
+
   const toast = useToast();
 
   const [isEdit, setIsEdit] = useState(false);
   const [event, setEvent] = useState<Event>();
+  const [loading, setLoading] = useState(false);
 
   const maleEntryData = entries.filter((data) => data.gender === '男');
   const femaleEntryData = entries.filter((data) => data.gender === '女');
+  const maleData = testData?.filter((data) => data.gender === '男');
+  const femaleData = testData?.filter((data) => data.gender === '女');
 
   const tables = [
     { gender: '男子', entries: maleEntryData },
@@ -70,6 +93,85 @@ const EntryManagementTableList: VFC<Props> = ({ entries, tournamentId }) => {
         isClosable: true,
       });
     });
+  };
+
+  const appendSpreadsheet = async () => {
+    setLoading(true);
+
+    try {
+      const manTableAppendData = maleData.flatMap((data, idx) => {
+        return data.tournamentData.flatMap((tournament, id) => {
+          return [
+            [
+              idx + id + 1,
+              '',
+              data.furigana,
+              data.romaji,
+              tournament.tournamentName,
+              tournament.record,
+              data.rikukyo,
+              '',
+            ],
+            [, '', data.name, , '', tournament.date, , data.birthday],
+          ];
+        });
+      });
+
+      const womanTableAppendData = femaleData.flatMap((data, idx) => {
+        data.tournamentData.flatMap((tournament, id) => {
+          return [
+            [
+              idx + id + 1,
+              '',
+              data.furigana,
+              data.romaji,
+              tournament.tournamentName,
+              tournament.record,
+              data.rikukyo,
+              '',
+            ],
+            [, '', data.name, , '', tournament.date, , data.birthday],
+          ];
+        });
+      });
+
+      const manTableResponse = await fetch(
+        'https://v1.nocodeapi.com/sphacks/google_sheets/rWCufIptQSvrrKkj?tabId=男子申し込み用紙',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(manTableAppendData),
+        }
+      );
+      const wonmanTableResponse = await fetch(
+        'https://v1.nocodeapi.com/sphacks/google_sheets/rWCufIptQSvrrKkj?tabId=女子申し込み用紙',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(womanTableAppendData),
+        }
+      );
+      await manTableResponse.json().then(async () => {
+        await wonmanTableResponse.json().then(() => {
+          toast({
+            title: '書き込み成功',
+            description: 'スプレッドシートにデータが書き込まれました。',
+            status: 'success',
+            duration: 4000,
+            isClosable: true,
+          });
+          setLoading(false);
+        });
+      });
+      setLoading(false);
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+    }
   };
 
   return (
@@ -126,14 +228,17 @@ const EntryManagementTableList: VFC<Props> = ({ entries, tournamentId }) => {
           </Stack>
         </Stack>
       ) : (
-        <Flex>
-          <Button
-            label="エントリー種目を編集"
-            colorScheme="teal"
-            onClick={() => setIsEdit(true)}
-          />
-        </Flex>
+        <Button
+          label="エントリー種目を編集"
+          colorScheme="teal"
+          onClick={() => setIsEdit(true)}
+        />
       )}
+      <Button
+        label="県選申し込み作成"
+        onClick={appendSpreadsheet}
+        isLoading={loading}
+      />
     </Stack>
   );
 };

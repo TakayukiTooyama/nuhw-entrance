@@ -4,6 +4,7 @@ import { Button } from 'components/button';
 import { Layout, TabBar, TopHeading } from 'components/layout';
 import { Spinner } from 'components/loading';
 import { EntryManagementList } from 'components/template';
+import { EntryRestore } from 'components/template/entry';
 import { useAuth } from 'context/Auth';
 import { Tournament, User } from 'models/users';
 import { NextPage } from 'next';
@@ -49,18 +50,28 @@ const EntryManagement: NextPage = () => {
               tournaments={tournaments}
             />
           )}
-          {(tournamentsError || tournaments?.length === 0) && (
+          {(tournamentsError ||
+            tournaments?.length === 0 ||
+            tournaments?.every((tournament) => !tournament.view)) && (
             <Box>
               <Text mb={8}>作成されたエントリーがありません。</Text>
               <Image width={350} height={250} src="/Images/run.png" />
             </Box>
           )}
           {tournaments && (
-            <Button
-              label="作成"
-              colorScheme="teal"
-              onClick={() => Router.push('/entry/management/create')}
-            />
+            <Stack w="100%">
+              <Button
+                label="作成"
+                colorScheme="teal"
+                onClick={() => Router.push('/entry/management/create')}
+              />
+              <EntryRestore
+                tournaments={tournaments?.filter(
+                  (tournament) => tournament.view === false
+                )}
+                teamId={userInfo?.teamId}
+              />
+            </Stack>
           )}
         </Stack>
       </Container>

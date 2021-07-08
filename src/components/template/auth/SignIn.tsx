@@ -1,9 +1,8 @@
-import { Box, Container, Heading, HStack, Icon, Stack } from '@chakra-ui/react';
+import { Box, Container, Heading, Icon, Stack } from '@chakra-ui/react';
 import { useDocument } from '@nandorojo/swr-firestore';
 import { Button } from 'components/button';
 import { Card } from 'components/card';
 import { Bounceball } from 'components/loading';
-import { LinkText } from 'components/text';
 import { useAuth } from 'context/Auth';
 import { User } from 'models/users';
 import Image from 'next/image';
@@ -13,15 +12,20 @@ import { auth } from 'utils/firebase';
 import { navigationAfterAuth, screenTransition } from 'utils/firestore/users';
 
 const SignIn: VFC = () => {
+  // 認証Hooks
   const { login, user, loading } = useAuth();
+
+  // ユーザー情報を取得
   const { data: userInfo } = useDocument<User>(
     user ? `users/${user.uid}` : null
   );
 
+  // 状態によっての画面遷移
   useEffect(() => {
     userInfo && screenTransition(userInfo);
   }, [user, userInfo]);
 
+  // Google認証後の動作
   useEffect(() => {
     auth.getRedirectResult().then((result) => {
       if (result.user || auth.currentUser) {
@@ -41,7 +45,7 @@ const SignIn: VFC = () => {
           <Container maxW="xl" py={[8, 12]}>
             <Card py={[8, 8, 16]} innerPadding={4}>
               <Stack spacing={8} align="center">
-                <Heading>ENTRANCE</Heading>
+                <Heading as="h1">ENTRANCE</Heading>
                 <Image
                   width={300}
                   height={200}
@@ -55,10 +59,6 @@ const SignIn: VFC = () => {
                   leftIcon={<Icon as={FcGoogle} w={6} h={6} />}
                   onClick={login}
                 />
-                <HStack justify="center">
-                  <LinkText link="/terms" text="利用規約" />
-                  <LinkText link="/policy" text="プライバシーポリシー" />
-                </HStack>
               </Stack>
             </Card>
           </Container>

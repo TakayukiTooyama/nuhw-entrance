@@ -50,6 +50,9 @@ service cloud.firestore {
       match /uniforms/{uniformID} {
         allow read, write: if true;
       }
+      match /test/{testID} {
+        allow read, write: if true;
+      }
     }
 
 

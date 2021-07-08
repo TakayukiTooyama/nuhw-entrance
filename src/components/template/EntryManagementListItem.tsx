@@ -20,7 +20,7 @@ const EntryManagementList: VFC<Props> = ({ tournament, userInfo }) => {
   const createdEntryDelete = async () => {
     await fuego.db
       .doc(`teams/${userInfo?.teamId}/tournaments/${tournament.id}`)
-      .delete()
+      .update({ view: false })
       .then(() => {
         onClose();
         toast({
@@ -35,21 +35,25 @@ const EntryManagementList: VFC<Props> = ({ tournament, userInfo }) => {
   };
 
   return (
-    <MotionBox as={ListItem} variants={listItemVariants} mb={4}>
-      <DeleteDialog
-        isOpen={isOpen}
-        cancelRef={cancelRef}
-        onClose={onClose}
-        onDelete={createdEntryDelete}
-      >
-        <Text>{tournament.tournamentName}のエントリーは削除されます。</Text>
-      </DeleteDialog>
-      <TimeLimitCard
-        data={tournament}
-        link={`/entry/management/${tournament.id}`}
-        onOpen={onOpen}
-      />
-    </MotionBox>
+    <>
+      {tournament.view === true && (
+        <MotionBox as={ListItem} variants={listItemVariants} mb={4}>
+          <DeleteDialog
+            isOpen={isOpen}
+            cancelRef={cancelRef}
+            onClose={onClose}
+            onDelete={createdEntryDelete}
+          >
+            <Text>{tournament.tournamentName}のエントリーは削除されます。</Text>
+          </DeleteDialog>
+          <TimeLimitCard
+            data={tournament}
+            link={`/entry/management/${tournament.id}`}
+            onOpen={onOpen}
+          />
+        </MotionBox>
+      )}
+    </>
   );
 };
 

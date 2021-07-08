@@ -82,6 +82,7 @@ export type Tournament = {
   timeLimit: Date;
   events: Event[];
   expense: EventExpense;
+  view: boolean;
 } & Pick<TimeStamp, 'createdAt' | 'updatedAt'>;
 
 // 大会種目情報

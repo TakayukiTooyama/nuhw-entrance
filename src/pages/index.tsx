@@ -1,5 +1,6 @@
 import { Box, Container, Text } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
+import { Button } from 'components/button';
 import { Layout, TabBar, TopHeading } from 'components/layout';
 import { Spinner } from 'components/loading';
 import { EntryList } from 'components/template';
@@ -7,6 +8,7 @@ import { useAuth } from 'context/Auth';
 import { Entry, Tournament, User } from 'models/users';
 import { NextPage } from 'next';
 import Image from 'next/image';
+import Router from 'next/router';
 import { useEffect } from 'react';
 import { screenTransition } from 'utils/firestore/users';
 
@@ -65,6 +67,12 @@ export const Home: NextPage = () => {
         )}
         {(tournamentsError || filteredTournament?.length === 0) && (
           <Box>
+            <Button
+              label="新潟県選手権出場する選手へ"
+              colorScheme="teal"
+              onClick={() => Router.push('/test')}
+              mb={12}
+            />
             <Text mb={8}>エントリーできる大会がありません。</Text>
             <Image
               width={350}
