@@ -206,7 +206,7 @@ const TestForm: VFC = () => {
         textAlign="center"
         bgGradient="linear(to-l, #7928CA,#FF0080)"
         bgClip="text"
-        fontSize="6xl"
+        fontSize="3xl"
       >
         新潟県選エントリー
       </Heading>

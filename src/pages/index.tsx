@@ -65,14 +65,14 @@ export const Home: NextPage = () => {
         {filteredTournament?.length > 0 && (
           <EntryList tournaments={filteredTournament} />
         )}
+        <Button
+          label="新潟県選手権出場する選手へ"
+          colorScheme="teal"
+          onClick={() => Router.push('/test')}
+          mb={12}
+        />
         {(tournamentsError || filteredTournament?.length === 0) && (
           <Box>
-            <Button
-              label="新潟県選手権出場する選手へ"
-              colorScheme="teal"
-              onClick={() => Router.push('/test')}
-              mb={12}
-            />
             <Text mb={8}>エントリーできる大会がありません。</Text>
             <Image
               width={350}
