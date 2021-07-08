@@ -176,7 +176,7 @@ const TestForm: VFC = () => {
             onChange={(e) => handleChange(setBirthday, e)}
           />
           <Input
-            placeholder="登録陸協"
+            placeholder="登録陸協（新潟）"
             onChange={(e) => handleChange(setRikukyo, e)}
           />
           {registrationData.map((data, idx) => (
@@ -184,12 +184,12 @@ const TestForm: VFC = () => {
               {edit && select === `${idx}` ? (
                 <Stack align="start" mb={4}>
                   <Input
-                    placeholder="種目"
+                    placeholder="種目（100m）"
                     value={type}
                     onChange={(e) => setType(e.target.value)}
                   />
                   <Input
-                    placeholder="公認記録"
+                    placeholder="公認記録（2年間有効）"
                     value={record}
                     onChange={(e) => setRecord(e.target.value)}
                   />
@@ -199,10 +199,14 @@ const TestForm: VFC = () => {
                     onChange={(e) => setTournamentName(e.target.value)}
                   />
                   <HStack>
-                    <Text color="gray.400">大会の日付</Text>
+                    <Text color="gray.400">上記の大会日</Text>
                     <ReactDatePicker
                       locale="ja"
                       selected={date}
+                      peekNextMonth
+                      showMonthDropdown
+                      showYearDropdown
+                      dropdownMode="select"
                       onChange={(date: Date) => setDate(date)}
                       customInput={
                         <BasicButton
@@ -269,11 +273,11 @@ const TestForm: VFC = () => {
           {open ? (
             <Stack spacing={4} align="start">
               <Input
-                placeholder="種目"
+                placeholder="種目（100m）"
                 onChange={(e) => setType(e.target.value)}
               />
               <Input
-                placeholder="公認記録"
+                placeholder="公認記録（2年間有効）"
                 onChange={(e) => setRecord(e.target.value)}
               />
               <Input
@@ -282,7 +286,7 @@ const TestForm: VFC = () => {
               />
               <HStack>
                 <Text color="gray.400" pl={4}>
-                  大会の日付
+                  上記の大会日
                 </Text>
                 <ReactDatePicker
                   locale="ja"
@@ -309,7 +313,7 @@ const TestForm: VFC = () => {
               <Button colorScheme="teal" label="追加" onClick={addData} />
             </Stack>
           ) : (
-            <Button label="＋" onClick={() => setOpen(true)} />
+            !edit && <Button label="＋" onClick={() => setOpen(true)} />
           )}
           {registrationData.length > 0 && (
             <Button
@@ -343,7 +347,7 @@ const TestForm: VFC = () => {
                   <Text>{`種目 : ${data.type}`}</Text>
                   <Text>{`公認記録 : ${data.record}`}</Text>
                   <Text>{`大会名 : ${data.tournamentName}`}</Text>
-                  <Text>{`大会の日付 : ${formatDate(data.date)}`}</Text>
+                  <Text>{`大会日 : ${formatDate(data.date)}`}</Text>
                   <Divider mt={4} />
                 </Box>
               ))}
