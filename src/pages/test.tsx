@@ -24,7 +24,7 @@ import { Layout } from 'components/layout';
 import { useAuth } from 'context/Auth';
 import ja from 'date-fns/locale/ja';
 import dayjs from 'dayjs';
-import { Entry, User } from 'models/users';
+import { User } from 'models/users';
 import Router from 'next/router';
 import React, { useRef, useState, VFC } from 'react';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
@@ -53,9 +53,6 @@ const TestForm: VFC = () => {
   const [romaji, setRomaji] = useState<string>('');
   const [birthday, setBirthday] = useState<string>('');
   const [rikukyo, setRikukyo] = useState<string>('');
-  const [records, setRecords] = useState<string[]>([]);
-  const [tournamentNames, setTournamentNames] = useState<string[]>([]);
-  const [dates, setDates] = useState<Date[]>([]);
   const [open, setOpen] = useState(false);
 
   const [type, setType] = useState<string>('');
@@ -68,30 +65,12 @@ const TestForm: VFC = () => {
   const [edit, setEdit] = useState(false);
   const [select, setSelect] = useState('');
 
-  const { data: entries } = useCollection<Entry>(
-    user ? `users/${user.uid}/entries` : null
-  );
-
   const { data: userData } = useDocument<User>(
     user ? `users/${user.uid}` : null
   );
 
-  const entryType = entries?.filter(
-    (entry) => entry.tournamentId === '398FgMsAsmEzjx3NjeoK'
-  )[0];
-
   const handleChange = (setState: any, e: any) => {
     setState(e.target.value);
-  };
-
-  const recordData = (state: any, setState: any, e: any, idx: number) => {
-    state[idx] = e.target.value;
-    setState(state);
-  };
-
-  const dateChange = (e: Date, idx: number) => {
-    dates[idx] = e;
-    setDates([...dates]);
   };
 
   const addData = () => {
@@ -141,61 +120,29 @@ const TestForm: VFC = () => {
   };
 
   const sendData = () => {
-    if (entryType) {
-      const tournamentData = [];
-      const length = entryType?.eventsInfo?.filter(
-        (event) => event.name !== '4×100リレー' && event.name !== '4×400リレー'
-      ).length;
-      for (let i = 0; i < length; i++) {
-        tournamentData.push({
-          type: entryType.eventsInfo[i].name,
-          records: records[i],
-          tournamentName: tournamentNames[i],
-          date: formatDate(dates[i]),
-        });
-      }
-      add({
-        name,
-        furigana,
-        romaji,
-        gender: userData?.gender,
-        rikukyo,
-        birthday,
-        tournamentData,
-      }).then(() => {
-        toast({
-          title: '送信完了',
-          status: 'success',
-          duration: 6000,
-          isClosable: true,
-        });
-        Router.push('/');
+    const tournamentData = registrationData.map((data) => {
+      return {
+        ...data,
+        date: formatDate(data.date),
+      };
+    });
+    add({
+      name,
+      furigana,
+      romaji,
+      gender: userData?.gender,
+      rikukyo,
+      birthday,
+      tournamentData,
+    }).then(() => {
+      toast({
+        title: '送信完了',
+        status: 'success',
+        duration: 6000,
+        isClosable: true,
       });
-    } else {
-      const tournamentData = registrationData.map((data) => {
-        return {
-          ...data,
-          date: formatDate(data.date),
-        };
-      });
-      add({
-        name,
-        furigana,
-        romaji,
-        gender: userData?.gender,
-        rikukyo,
-        birthday,
-        tournamentData,
-      }).then(() => {
-        toast({
-          title: '送信完了',
-          status: 'success',
-          duration: 6000,
-          isClosable: true,
-        });
-        Router.push('/');
-      });
-    }
+      Router.push('/');
+    });
   };
 
   return (
@@ -319,53 +266,6 @@ const TestForm: VFC = () => {
               )}
             </Box>
           ))}
-          {entryType &&
-            entryType.eventsInfo?.map((event, idx) => {
-              if (
-                event.name === '4×100リレー' ||
-                event.name === '4×400リレー'
-              ) {
-                return false;
-              } else {
-                return (
-                  <Stack key={event.name} align="start" mb={4}>
-                    <Text fontSize="20px">{event.name}</Text>
-                    <Input
-                      placeholder="公認記録"
-                      onChange={(e) => recordData(records, setRecords, e, idx)}
-                    />
-                    <Input
-                      placeholder="大会名"
-                      onChange={(e) =>
-                        recordData(tournamentNames, setTournamentNames, e, idx)
-                      }
-                    />
-                    <HStack>
-                      <Text color="gray.400" pl={4}>
-                        大会の日付
-                      </Text>
-                      <ReactDatePicker
-                        locale="ja"
-                        selected={dates[idx]}
-                        onChange={(e: Date) => dateChange(e, idx)}
-                        customInput={
-                          <BasicButton
-                            bg="gray.100"
-                            border="2px solid"
-                            borderColor="gray.300"
-                            borderRadius="30px"
-                            iconSpacing={4}
-                            rightIcon={<Icon as={FcCalendar} w={6} h={6} />}
-                          >
-                            {formatDate(dates[idx])}
-                          </BasicButton>
-                        }
-                      />
-                    </HStack>
-                  </Stack>
-                );
-              }
-            })}
           {open ? (
             <Stack spacing={4} align="start">
               <Input
@@ -388,6 +288,10 @@ const TestForm: VFC = () => {
                   locale="ja"
                   selected={date}
                   onChange={(date: Date) => setDate(date)}
+                  peekNextMonth
+                  showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
                   customInput={
                     <BasicButton
                       bg="gray.100"
@@ -407,18 +311,17 @@ const TestForm: VFC = () => {
           ) : (
             <Button label="＋" onClick={() => setOpen(true)} />
           )}
-          {entryType ||
-            (registrationData.length > 0 && (
-              <Button
-                bgGradient="linear(to-l, #7928CA,#FF0080)"
-                color="white"
-                label="確認へ"
-                onClick={onOpen}
-                _hover={{
-                  bgGradient: 'linear(to-r, red.500, yellow.500)',
-                }}
-              />
-            ))}
+          {registrationData.length > 0 && (
+            <Button
+              bgGradient="linear(to-l, #7928CA,#FF0080)"
+              color="white"
+              label="確認へ"
+              onClick={onOpen}
+              _hover={{
+                bgGradient: 'linear(to-r, red.500, yellow.500)',
+              }}
+            />
+          )}
         </Stack>
         <ConfirmDialog
           title=""
@@ -435,24 +338,6 @@ const TestForm: VFC = () => {
             <Text mb={2}>登録陸協：{rikukyo}</Text>
             <Divider mb={2} />
             <SimpleGrid row={2}>
-              {entryType?.eventsInfo?.map((event, idx) => {
-                if (
-                  event.name === '4×100リレー' ||
-                  event.name === '4×400リレー'
-                ) {
-                  return false;
-                } else {
-                  return (
-                    <Box key={event.name} mb={4}>
-                      <Text>{`種目 : ${event.name}`}</Text>
-                      <Text>{`公認記録 : ${records[idx]}`}</Text>
-                      <Text>{`大会名 : ${tournamentNames[idx]}`}</Text>
-                      <Text>{`大会の日付 : ${formatDate(dates[idx])}`}</Text>
-                      <Divider mt={4} />
-                    </Box>
-                  );
-                }
-              })}
               {registrationData.map((data, idx) => (
                 <Box key={`${data.type}-${idx}`} mb={4}>
                   <Text>{`種目 : ${data.type}`}</Text>
