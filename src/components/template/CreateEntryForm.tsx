@@ -1,8 +1,9 @@
-import { Box, Stack, Text } from '@chakra-ui/react';
+import { Box, Stack, Text, useDisclosure } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
 import { Button, FormButton } from 'components/button';
 import { DatePicker } from 'components/datepicker';
+import { SuccessDialog } from 'components/dialog';
 import { FormLabel } from 'components/form';
 import { FormHeading } from 'components/heading';
 import {
@@ -14,9 +15,11 @@ import {
 import { useAuth } from 'context/Auth';
 import { CreateEntryFormInput, Tournament, UserInfo } from 'models/users';
 import Router from 'next/router';
+// import fetch from 'node-fetch';
 import React, { VFC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { FirebaseTimestamp } from 'utils/firebase';
+// import { formatTimeLimitNotation } from 'utils/format';
 import { eventOptions } from 'utils/selectOptions';
 import * as yup from 'yup';
 
@@ -45,6 +48,12 @@ const CreateEntryForm: VFC = () => {
   const { data: userInfo } = useDocument<UserInfo>(
     user ? `users/${user.uid}` : null
   );
+
+  // const { data: users } = useCollection<UserInfo>(`users`, {
+  //   where: ['teamId', '==', userInfo.teamId],
+  //   isCollectionGroup: true,
+  // });
+
   const { add } = useCollection<Tournament>(
     `teams/${userInfo?.teamId}/tournaments`
   );
@@ -62,6 +71,26 @@ const CreateEntryForm: VFC = () => {
   });
   const { startDate, endDate } = watch(['startDate', 'endDate']);
 
+  const { onOpen, isOpen } = useDisclosure();
+
+  // // 部員全体に大会エントリー開始をメールで知らせる
+  // const sendEmail = async (
+  //   tournamentName: string,
+  //   timeLimit: string,
+  //   email: string
+  // ) => {
+  //   await fetch('/api/send', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       email: `${email}`,
+  //       message: `${tournamentName}のエントリーが開始されました。期限【${timeLimit}】早めのエントリーにご協力ください。`,
+  //     }),
+  //   });
+  // };
+
   // エントリーフォーム作成処理
   const createEntryForm = async (data: CreateEntryFormInput) => {
     const newEntryFormData: Tournament = {
@@ -74,10 +103,21 @@ const CreateEntryForm: VFC = () => {
       endDate: data.endDate,
       timeLimit: data.timeLimit,
       events: data.events,
+      view: true,
       createdAt: FirebaseTimestamp.now(),
       updatedAt: FirebaseTimestamp.now(),
     };
-    add(newEntryFormData).then(() => Router.push('/entry/management'));
+    add(newEntryFormData).then(() => {
+      onOpen();
+      // users.map(async (user) => {
+      // await sendEmail(
+      //   data.name,
+      //     formatTimeLimitNotation(data.timeLimit),
+      //     user.email
+      //     ).then(() => {
+      //     });
+      // });
+    });
   };
 
   // 全ての大会種目にチェックをつける
@@ -188,6 +228,14 @@ const CreateEntryForm: VFC = () => {
           />
         </Stack>
       </form>
+      <SuccessDialog
+        title="エントリー作成成功"
+        isOpen={isOpen}
+        onClose={() => Router.push('/entry/management')}
+        onClick={() => Router.push('/')}
+      >
+        エントリー作成が完了しました。
+      </SuccessDialog>
     </>
   );
 };
