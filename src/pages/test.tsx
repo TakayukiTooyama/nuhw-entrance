@@ -54,6 +54,7 @@ const TestForm: VFC = () => {
   const [birthday, setBirthday] = useState<string>('');
   const [rikukyo, setRikukyo] = useState<string>('');
   const [open, setOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const [type, setType] = useState<string>('');
   const [record, setRecord] = useState<string>('');
@@ -74,21 +75,30 @@ const TestForm: VFC = () => {
   };
 
   const addData = () => {
-    const data: RegistrationData = {
-      type,
-      record,
-      tournamentName,
-      date,
-    };
-    setRegistrationData((prev) => [...prev, data]);
-    setType('');
-    setRecord('');
-    setTournamentName('');
-    setDate(new Date());
-    setOpen(false);
+    if (formatDate(date) === formatDate(new Date())) {
+      setErrorMessage('大会日を変更してください');
+      return;
+    } else {
+      const data: RegistrationData = {
+        type,
+        record,
+        tournamentName,
+        date,
+      };
+      setRegistrationData((prev) => [...prev, data]);
+      setType('');
+      setRecord('');
+      setTournamentName('');
+      setDate(new Date());
+      setOpen(false);
+    }
   };
 
   const editData = (selectIdx: number) => {
+    if (formatDate(date) === formatDate(new Date())) {
+      setErrorMessage('大会日を変更してください');
+      return;
+    }
     const data = {
       type,
       record,
@@ -145,6 +155,11 @@ const TestForm: VFC = () => {
     });
   };
 
+  const dateOnChange = (date: Date) => {
+    setDate(date);
+    setErrorMessage('');
+  };
+
   return (
     <Layout title="新潟県選エントリー">
       <Heading
@@ -182,7 +197,7 @@ const TestForm: VFC = () => {
           {registrationData.map((data, idx) => (
             <Box key={`${data.type}-${idx}`}>
               {edit && select === `${idx}` ? (
-                <Stack align="start" mb={4}>
+                <Stack align="center" mb={4}>
                   <Input
                     placeholder="種目（100m）"
                     value={type}
@@ -194,7 +209,7 @@ const TestForm: VFC = () => {
                     onChange={(e) => setRecord(e.target.value)}
                   />
                   <Input
-                    placeholder="大会名"
+                    placeholder="記録を出した大会名（正式名所）"
                     value={tournamentName}
                     onChange={(e) => setTournamentName(e.target.value)}
                   />
@@ -206,8 +221,9 @@ const TestForm: VFC = () => {
                       peekNextMonth
                       showMonthDropdown
                       showYearDropdown
+                      maxDate={new Date()}
                       dropdownMode="select"
-                      onChange={(date: Date) => setDate(date)}
+                      onChange={dateOnChange}
                       customInput={
                         <BasicButton
                           bg="gray.100"
@@ -222,6 +238,7 @@ const TestForm: VFC = () => {
                       }
                     />
                   </HStack>
+                  {errorMessage && <Text color="red.400">{errorMessage}</Text>}
                   <HStack w="100%">
                     <Button
                       w="100%"
@@ -271,7 +288,7 @@ const TestForm: VFC = () => {
             </Box>
           ))}
           {open ? (
-            <Stack spacing={4} align="start">
+            <Stack spacing={4} align="center">
               <Input
                 placeholder="種目（100m）"
                 onChange={(e) => setType(e.target.value)}
@@ -281,7 +298,7 @@ const TestForm: VFC = () => {
                 onChange={(e) => setRecord(e.target.value)}
               />
               <Input
-                placeholder="大会名"
+                placeholder="記録を出した大会名（正式名所）"
                 onChange={(e) => setTournamentName(e.target.value)}
               />
               <HStack>
@@ -291,10 +308,11 @@ const TestForm: VFC = () => {
                 <ReactDatePicker
                   locale="ja"
                   selected={date}
-                  onChange={(date: Date) => setDate(date)}
+                  onChange={dateOnChange}
                   peekNextMonth
                   showMonthDropdown
                   showYearDropdown
+                  maxDate={new Date()}
                   dropdownMode="select"
                   customInput={
                     <BasicButton
@@ -310,6 +328,7 @@ const TestForm: VFC = () => {
                   }
                 />
               </HStack>
+              {errorMessage && <Text color="red.400">{errorMessage}</Text>}
               <Button colorScheme="teal" label="追加" onClick={addData} />
             </Stack>
           ) : (
