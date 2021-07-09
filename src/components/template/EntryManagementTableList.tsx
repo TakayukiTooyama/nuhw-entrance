@@ -42,7 +42,8 @@ const EntryManagementTableList: VFC<Props> = ({ entries, tournamentId }) => {
   );
 
   const { data: testData } = useCollection<TestData>(
-    `teams/Vwn4SWU3FsqSbqIU7mKy/test`
+    `teams/Vwn4SWU3FsqSbqIU7mKy/test`,
+    { orderBy: ['gender', 'desc'] }
   );
 
   const toast = useToast();
@@ -107,7 +108,7 @@ const EntryManagementTableList: VFC<Props> = ({ entries, tournamentId }) => {
               '',
               data.furigana,
               data.romaji,
-              tournament.tournamentName,
+              tournament.type,
               tournament.record,
               data.rikukyo,
               '',
@@ -118,19 +119,35 @@ const EntryManagementTableList: VFC<Props> = ({ entries, tournamentId }) => {
       });
 
       const womanTableAppendData = femaleData.flatMap((data, idx) => {
-        data.tournamentData.flatMap((tournament, id) => {
+        return data.tournamentData.flatMap((tournament, id) => {
           return [
             [
               idx + id + 1,
               '',
               data.furigana,
               data.romaji,
-              tournament.tournamentName,
+              tournament.type,
               tournament.record,
               data.rikukyo,
               '',
             ],
             [, '', data.name, , '', tournament.date, , data.birthday],
+          ];
+        });
+      });
+      const evidenceAppendData = testData?.flatMap((data, idx) => {
+        return data.tournamentData.flatMap((tournament, id) => {
+          return [
+            [
+              idx + id + 1,
+              data.gender,
+              data.name,
+              tournament.type,
+              tournament.record,
+              tournament.date,
+              tournament.tournamentName,
+              '',
+            ],
           ];
         });
       });
@@ -155,16 +172,28 @@ const EntryManagementTableList: VFC<Props> = ({ entries, tournamentId }) => {
           body: JSON.stringify(womanTableAppendData),
         }
       );
+      const evidenceResponse = await fetch(
+        'https://v1.nocodeapi.com/sphacks/google_sheets/rWCufIptQSvrrKkj?tabId=参加標準記録証明文書',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(evidenceAppendData),
+        }
+      );
       await manTableResponse.json().then(async () => {
-        await wonmanTableResponse.json().then(() => {
-          toast({
-            title: '書き込み成功',
-            description: 'スプレッドシートにデータが書き込まれました。',
-            status: 'success',
-            duration: 4000,
-            isClosable: true,
+        await wonmanTableResponse.json().then(async () => {
+          await evidenceResponse.json().then(() => {
+            toast({
+              title: '書き込み成功',
+              description: 'スプレッドシートにデータが書き込まれました。',
+              status: 'success',
+              duration: 4000,
+              isClosable: true,
+            });
+            setLoading(false);
           });
-          setLoading(false);
         });
       });
       setLoading(false);
