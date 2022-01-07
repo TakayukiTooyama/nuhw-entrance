@@ -16,11 +16,5 @@
     "baseUrl": "./src"
   },
   "exclude": ["node_modules", ".next", "out"],
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.js",
-    "src/components/input/TableCheckbox.jsx"
-  ]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js"]
 }
