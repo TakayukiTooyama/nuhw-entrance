@@ -49,7 +49,11 @@ const ProfileChangeForm: VFC<Props> = ({ userInfo }) => {
     block: userInfo.block,
   };
 
-  const { handleSubmit, control, errors } = useForm<ProfileInput>({
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<ProfileInput>({
     defaultValues,
     resolver: yupResolver(schema),
   });

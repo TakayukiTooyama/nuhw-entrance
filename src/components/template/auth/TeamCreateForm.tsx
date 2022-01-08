@@ -45,7 +45,11 @@ const TeamCreateForm: VFC = () => {
     ),
   });
 
-  const { handleSubmit, control, errors, formState } = useForm<TeamInfoInForm>({
+  const {
+    handleSubmit,
+    control,
+    formState: { errors, isSubmitting },
+  } = useForm<TeamInfoInForm>({
     defaultValues,
     resolver: yupResolver(schema),
   });
@@ -112,7 +116,7 @@ const TeamCreateForm: VFC = () => {
           label="作成"
           bg="pink.300"
           color="white"
-          isLoading={formState.isSubmitting}
+          isLoading={isSubmitting}
         />
       </Stack>
     </form>

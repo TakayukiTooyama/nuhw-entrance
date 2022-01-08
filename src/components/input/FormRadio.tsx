@@ -19,7 +19,7 @@ type Props = RadioProps & {
   name: FieldName<Name>;
   label?: string;
   radioOptions: string[];
-  control: Control;
+  control: Control<any, object>;
 };
 
 const FormRadio: VFC<Props> = ({

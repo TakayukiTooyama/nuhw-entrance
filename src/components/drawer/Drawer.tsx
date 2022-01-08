@@ -15,13 +15,7 @@ type Props = {
 
 const BasicDrawer: VFC<Props> = ({ isOpen, onClose }) => {
   return (
-    <Drawer
-      isOpen={isOpen}
-      placement="left"
-      onClose={onClose}
-      isCentered
-      motionPreset="scale"
-    >
+    <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
       <DrawerOverlay>
         <DrawerContent
           borderRadius="10px"
