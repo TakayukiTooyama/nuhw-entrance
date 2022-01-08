@@ -16,7 +16,7 @@ type Name = {
 type Props = {
   label: string;
   name: FieldName<Name>;
-  control: Control;
+  control: Control<any, object>;
   unit: string;
 };
 

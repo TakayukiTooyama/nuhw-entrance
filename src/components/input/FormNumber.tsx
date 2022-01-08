@@ -17,7 +17,7 @@ type NumberInputName = {
 type Props = {
   label: string;
   name: FieldName<NumberInputName>;
-  control: Control;
+  control: Control<any, object>;
   unit?: string;
 };
 

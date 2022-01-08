@@ -59,9 +59,8 @@ const CreateEntryForm: VFC = () => {
   );
 
   const {
-    errors,
     control,
-    formState,
+    formState: { errors, isSubmitting },
     handleSubmit,
     setValue,
     watch,
@@ -69,7 +68,7 @@ const CreateEntryForm: VFC = () => {
     defaultValues,
     resolver: yupResolver(schema),
   });
-  const { startDate, endDate } = watch(['startDate', 'endDate']);
+  const watchField = watch(['startDate', 'endDate']);
 
   const { onOpen, isOpen } = useDisclosure();
 
@@ -146,14 +145,14 @@ const CreateEntryForm: VFC = () => {
                 <Controller
                   control={control}
                   name="startDate"
-                  render={({ onChange, value }) => (
+                  render={({ field: { onChange, value } }) => (
                     <DatePicker
                       selected={value}
                       onChange={onChange}
                       selectsStart
                       selectsEnd
-                      startDate={startDate}
-                      endDate={endDate}
+                      startDate={watchField[0]}
+                      endDate={watchField[1]}
                     />
                   )}
                 />
@@ -163,14 +162,14 @@ const CreateEntryForm: VFC = () => {
                 <Controller
                   control={control}
                   name="endDate"
-                  render={({ onChange, value }) => (
+                  render={({ field: { onChange, value } }) => (
                     <DatePicker
                       selected={value}
                       onChange={onChange}
                       selectsStart
                       selectsEnd
-                      startDate={startDate}
-                      endDate={endDate}
+                      startDate={watchField[0]}
+                      endDate={watchField[1]}
                     />
                   )}
                 />
@@ -183,7 +182,7 @@ const CreateEntryForm: VFC = () => {
             <Controller
               control={control}
               name="timeLimit"
-              render={({ onChange, value }) => (
+              render={({ field: { onChange, value } }) => (
                 <DatePicker
                   selected={value}
                   onChange={onChange}
@@ -224,7 +223,7 @@ const CreateEntryForm: VFC = () => {
           <FormButton
             label="作成"
             colorScheme="teal"
-            isLoading={formState.isSubmitting}
+            isLoading={isSubmitting}
           />
         </Stack>
       </form>

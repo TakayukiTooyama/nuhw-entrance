@@ -5,7 +5,7 @@ import { Control, useController } from 'react-hook-form';
 
 type Props = {
   name: string;
-  control: Control;
+  control: Control<any, object>;
   checkboxOptions: string[];
   setEvents?: React.Dispatch<React.SetStateAction<EventInfo[]>>;
 };

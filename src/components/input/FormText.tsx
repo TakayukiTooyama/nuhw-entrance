@@ -13,7 +13,7 @@ import { Control, FieldErrors, useController } from 'react-hook-form';
 type Props = InputProps & {
   name: string;
   label?: string;
-  control: Control;
+  control: Control<any, object>;
   errors: FieldErrors;
 };
 
@@ -27,7 +27,7 @@ const FormText: FC<Props> = ({
 }) => {
   const {
     field: { ref, ...inputProps },
-    meta: { invalid, isTouched },
+    fieldState: { invalid, isTouched },
   } = useController({
     name,
     control,

@@ -263,7 +263,7 @@ const CreateVoteForm: VFC = () => {
             <Controller
               control={control}
               name="timeLimit"
-              render={({ onChange, value }) => (
+              render={({ field: { onChange, value } }) => (
                 <DatePicker
                   selected={value}
                   onChange={onChange}

@@ -6,7 +6,7 @@ type Props = SelectProps & {
   name: string;
   label: string;
   selectOptions: string[];
-  control: Control;
+  control: Control<any, object>;
 };
 
 const FormSelect: VFC<Props> = ({

@@ -59,8 +59,7 @@ const CreateProfileForm: VFC = () => {
   const {
     handleSubmit,
     control,
-    errors,
-    formState,
+    formState: { errors, isSubmitting },
   } = useForm<CreateProfileInput>({
     defaultValues,
     resolver: yupResolver(schema),
@@ -132,7 +131,7 @@ const CreateProfileForm: VFC = () => {
           label="作成"
           color="white"
           bg="orange.400"
-          isLoading={formState.isSubmitting}
+          isLoading={isSubmitting}
         />
       </Stack>
     </form>
