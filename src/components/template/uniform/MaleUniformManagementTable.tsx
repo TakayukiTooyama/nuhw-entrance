@@ -62,13 +62,8 @@ const MaleUniformManagementTable: VFC<Props> = ({ orders, genderToggle }) => {
   const columns = useMemo(() => COLUMNS, [genderToggle]);
   const tableInstance = useTable<TableData>({ columns, data }, useSortBy);
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    prepareRow,
-    headerGroups,
-    rows,
-  } = tableInstance;
+  const { getTableProps, getTableBodyProps, prepareRow, headerGroups, rows } =
+    tableInstance;
 
   return (
     <Table

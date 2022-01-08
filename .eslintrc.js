@@ -2,7 +2,6 @@ module.exports = {
   env: {
     es6: true,
     browser: true,
-    jest: true,
     node: true,
   },
   extends: [
@@ -11,7 +10,6 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:react/recommended',
     'prettier',
-    'prettier/@typescript-eslint',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {

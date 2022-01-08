@@ -21,16 +21,14 @@ const ExpeditionPage: NextPage = () => {
 
   const { data: votes } = useCollection<Vote>(`users/${user?.uid}/votes`);
 
-  const {
-    data: expeditions,
-    error: expeditionsError,
-  } = useCollection<Expedition>(
-    votes ? `teams/${userInfo?.teamId}/expeditions` : null,
-    {
-      orderBy: ['startDate', 'desc'],
-      parseDates: ['startDate', 'endDate', 'timeLimit'],
-    }
-  );
+  const { data: expeditions, error: expeditionsError } =
+    useCollection<Expedition>(
+      votes ? `teams/${userInfo?.teamId}/expeditions` : null,
+      {
+        orderBy: ['startDate', 'desc'],
+        parseDates: ['startDate', 'endDate', 'timeLimit'],
+      }
+    );
 
   const filteredExpeditions = expeditions?.filter((data) => {
     const tournamentNameArray = votes?.map((vote) => vote.tournamentName);
