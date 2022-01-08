@@ -10,6 +10,8 @@ module.exports = withPWA({
     FIREBASE_STORAGE_BUCKET: process.env.FIREBASE_STORAGE_BUCKET,
     FIREBASE_MESSEGING_SENDER_ID: process.env.FIREBASE_MESSEGING_SENDER_ID,
     FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
+    MICRO_CMS_HOST: process.env.MICRO_CMS_HOST,
+    MICRO_CMS_API_KEY: process.env.MICRO_CMS_API_KEY,
   },
   pwa: {
     disable: process.env.NODE_ENV === 'development',
