@@ -20,17 +20,15 @@ const ExpenseManagement: NextPage = () => {
   const { user } = useAuth();
 
   const { data: userInfo } = useDocument<User>(`users/${user?.uid}`);
-  const {
-    data: expeditions,
-    error: expeditionsError,
-  } = useCollection<Expedition>(
-    userInfo ? `teams/${userInfo.teamId}/expeditions` : null,
-    {
-      orderBy: ['startDate', 'desc'],
-      parseDates: ['startDate', 'endDate', 'timeLimit'],
-      listen: true,
-    }
-  );
+  const { data: expeditions, error: expeditionsError } =
+    useCollection<Expedition>(
+      userInfo ? `teams/${userInfo.teamId}/expeditions` : null,
+      {
+        orderBy: ['startDate', 'desc'],
+        parseDates: ['startDate', 'endDate', 'timeLimit'],
+        listen: true,
+      }
+    );
 
   expeditionsError && console.error(expeditionsError);
   return (

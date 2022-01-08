@@ -21,17 +21,15 @@ const EntryManagement: NextPage = () => {
   const { user } = useAuth();
 
   const { data: userInfo } = useDocument<User>(`users/${user?.uid}`);
-  const {
-    data: tournaments,
-    error: tournamentsError,
-  } = useCollection<Tournament>(
-    userInfo ? `teams/${userInfo.teamId}/tournaments` : null,
-    {
-      orderBy: ['startDate', 'desc'],
-      parseDates: ['startDate', 'endDate', 'timeLimit'],
-      listen: true,
-    }
-  );
+  const { data: tournaments, error: tournamentsError } =
+    useCollection<Tournament>(
+      userInfo ? `teams/${userInfo.teamId}/tournaments` : null,
+      {
+        orderBy: ['startDate', 'desc'],
+        parseDates: ['startDate', 'endDate', 'timeLimit'],
+        listen: true,
+      }
+    );
 
   tournamentsError && console.error(tournamentsError);
   return (

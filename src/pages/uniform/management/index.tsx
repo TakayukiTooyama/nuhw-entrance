@@ -16,14 +16,12 @@ const linkData = [
 const UniformManagementPage: NextPage = () => {
   const { user } = useAuth();
   const { data: userInfo } = useDocument<User>(`users/${user?.uid}`);
-  const {
-    data: uniforms,
-    error: uniformsError,
-  } = useCollection<UniformCardInfo>(`teams/${userInfo?.teamId}/uniforms`, {
-    orderBy: ['createdAt', 'desc'],
-    parseDates: ['createdAt', 'timeLimit'],
-    listen: true,
-  });
+  const { data: uniforms, error: uniformsError } =
+    useCollection<UniformCardInfo>(`teams/${userInfo?.teamId}/uniforms`, {
+      orderBy: ['createdAt', 'desc'],
+      parseDates: ['createdAt', 'timeLimit'],
+      listen: true,
+    });
 
   uniformsError && console.error(uniformsError);
   return (

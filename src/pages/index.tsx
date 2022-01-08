@@ -26,16 +26,14 @@ export const Home: NextPage = () => {
     user ? `users/${user?.uid}/entries` : null
   );
 
-  const {
-    data: tournaments,
-    error: tournamentsError,
-  } = useCollection<Tournament>(
-    entries ? `teams/${userInfo?.teamId}/tournaments` : null,
-    {
-      orderBy: ['startDate', 'desc'],
-      parseDates: ['startDate', 'endDate', 'timeLimit'],
-    }
-  );
+  const { data: tournaments, error: tournamentsError } =
+    useCollection<Tournament>(
+      entries ? `teams/${userInfo?.teamId}/tournaments` : null,
+      {
+        orderBy: ['startDate', 'desc'],
+        parseDates: ['startDate', 'endDate', 'timeLimit'],
+      }
+    );
 
   /*
     チーム情報やプロフィール情報を入力したのにもかかわらず、

@@ -22,12 +22,10 @@ const UniformPage: NextPage = () => {
     `users/${user?.uid}/orders`
   );
   const { data: userInfo } = useDocument<User>(`users/${user?.uid}`);
-  const {
-    data: uniforms,
-    error: uniformsError,
-  } = useCollection<UniformCardInfo>(`teams/${userInfo?.teamId}/uniforms`, {
-    parseDates: ['timeLimit', 'createdAt'],
-  });
+  const { data: uniforms, error: uniformsError } =
+    useCollection<UniformCardInfo>(`teams/${userInfo?.teamId}/uniforms`, {
+      parseDates: ['timeLimit', 'createdAt'],
+    });
 
   // 期限内のユニフォーム採寸
   const filteredUniforms = uniforms?.filter(

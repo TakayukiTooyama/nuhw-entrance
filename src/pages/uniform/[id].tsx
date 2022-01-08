@@ -13,14 +13,12 @@ import React from 'react';
 const UniformFormPage: NextPage = () => {
   const { user } = useAuth();
   const { data: userInfo } = useDocument<User>(`users/${user?.uid}`);
-  const {
-    data: uniforms,
-    error: uniformsError,
-  } = useCollection<UniformCardInfo>(`teams/${userInfo?.teamId}/uniforms`, {
-    parseDates: ['timeLimit', 'cretatedAt'],
-    orderBy: ['createdAt', 'desc'],
-    limit: 1,
-  });
+  const { data: uniforms, error: uniformsError } =
+    useCollection<UniformCardInfo>(`teams/${userInfo?.teamId}/uniforms`, {
+      parseDates: ['timeLimit', 'cretatedAt'],
+      orderBy: ['createdAt', 'desc'],
+      limit: 1,
+    });
 
   uniformsError && console.error(uniformsError);
   return (
