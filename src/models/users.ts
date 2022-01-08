@@ -1,4 +1,4 @@
-import firebase from 'firebase/app';
+import firebase from 'firebase/compat/app';
 
 /*
   下記の型定義には必要なidが定義されていない型があります。
