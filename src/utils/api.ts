@@ -4,7 +4,7 @@ import type { FaqListResponse } from 'models/users';
 
 const url = process.env.MICRO_CMS_HOST;
 const config = {
-  headers: { 'X-API-KEY': process.env.MICRO_CMS_API_KEY ?? '' },
+  headers: { 'X-MICROCMS-API-KEY': process.env.MICRO_CMS_API_KEY ?? '' },
 };
 
 export const getAllFaq = async (): Promise<FaqListResponse> => {
