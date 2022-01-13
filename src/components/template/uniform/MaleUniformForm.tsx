@@ -2,6 +2,7 @@
 import {
   Box,
   Flex,
+  Image,
   Stack,
   Table,
   Tbody,
@@ -27,7 +28,7 @@ import {
   UniformInfo,
   UserInfo,
 } from 'models/users';
-import Image from 'next/image';
+// import Image from 'next/image';
 import Router from 'next/router';
 import React, { useRef, useState, VFC } from 'react';
 import { useForm } from 'react-hook-form';
@@ -162,13 +163,7 @@ const MaleUniformForm: VFC<Props> = ({ id, title, userInfo }) => {
           {maleUniformData.map((item) => (
             <Flex direction={['column', 'row']} key={item.name} shadow="base">
               <Box w={['100%', '40%']}>
-                <Image
-                  src={item.image}
-                  layout="responsive"
-                  objectFit="cover"
-                  width="100%"
-                  height="auto"
-                />
+                <Image src={item.image} width={'100%'} height={'auto'} />
               </Box>
               <Flex
                 direction="column"

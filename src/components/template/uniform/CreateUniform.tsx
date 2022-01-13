@@ -37,7 +37,9 @@ const CreateUniform: VFC<Props> = ({ uniforms, userInfo }) => {
             uniforms.length + 1
           }回ユニフォーム採寸`}</Text>
           <HStack>
-            <Text fontWeight="bold">【期限】</Text>
+            <Text fontWeight="bold" width={'100%'}>
+              【期限】
+            </Text>
             <DatePicker
               selected={timeLimit}
               showTimeSelect
