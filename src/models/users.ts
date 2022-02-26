@@ -53,13 +53,6 @@ export type Entry = {
   eventsInfo: EventInfo[];
 } & Pick<TimeStamp, 'addedAt'>;
 
-export type Expense = Omit<Entry, 'timeLimit'> & {
-  expense: EventExpense;
-  totalExpenses: number;
-  isPayment: boolean;
-  collectionDate: Date;
-};
-
 //=============================
 // チーム情報
 //=============================
@@ -130,58 +123,6 @@ export type EventExpense = {
 };
 
 //==============================
-// 遠征
-//==============================
-
-// 管理者が作った遠征時の移動方法
-export type Expedition = {
-  tournamentId: string;
-  tournamentName: string;
-  startDate: Date;
-  endDate: Date;
-  day: string;
-  course: '行き' | '帰り';
-  busInfo: BusInfo[];
-  carInfo: CarInfo[];
-  timeLimit: Date;
-};
-
-/*
-  バス移動のデータ
-  turn = 便
-  busNumber = 号車
-  departureTime = 出発時間
-  capacity = 定員
-*/
-export type BusInfo = {
-  turn: string;
-  busNumber: string;
-  departureTime: string;
-  capacity: string;
-};
-
-// 車移動のデータ
-export type CarInfo = {
-  carName: string;
-};
-
-// 移動希望投票の型
-export type Vote = {
-  name: string;
-  furigana: string;
-  gender: '男' | '女';
-  grade: '1年' | '2年' | '3年' | '4年' | '院1' | '院2' | 'コーチ';
-  tournamentId: string;
-  tournamentName: string;
-  startDate: Date;
-  endDate: Date;
-  day: string;
-  course: '行き' | '帰り';
-  busInfo: BusInfo | '';
-  carInfo: CarInfo | '';
-};
-
-//==============================
 // フォーム
 //==============================
 // フォームでのユーザー詳細情報
@@ -210,18 +151,6 @@ export type CreateEntryFormInput = {
   endDate: Date;
   timeLimit: Date;
   events: Event[];
-};
-
-export type VoteFormInput = {
-  grade: '1年' | '2年' | '3年' | '4年' | '院1' | '院2' | 'コーチ';
-  rideInfo: '';
-};
-
-export type CreateVoteFormInput = {
-  name: string;
-  day: string;
-  course: '行き' | '帰り';
-  timeLimit: Date;
 };
 
 //==============================
@@ -291,61 +220,45 @@ export type UniformInfo = {
 } & Pick<TimeStamp, 'addedAt'>;
 
 // ユニフォームの種類
-export type MaleUniform =
+type CommonUniform =
   | 'ウィンドブレーカー上'
   | 'ウィンドブレーカー下'
   | 'ジャージ上'
   | 'ジャージ下'
   | 'ランシャツ'
   | 'ランパン'
-  | 'タイツ(白)'
   | 'ハーフパンツ'
   | 'ポロシャツ'
   | '紺ピンクTシャツ'
   | '水色Tシャツ';
+
+export type MaleUniform = CommonUniform | 'タイツ(白)';
 
 export type FemaleUniform =
-  | 'ウィンドブレーカー上'
-  | 'ウィンドブレーカー下'
-  | 'ジャージ上'
-  | 'ジャージ下'
-  | 'ランシャツ'
-  | 'ランパン'
+  | CommonUniform
   | 'セパレートトップ'
   | 'セパレートショーツ'
-  | 'タイツ(紺ピンク) 12cm'
-  | 'ハーフパンツ'
-  | 'ポロシャツ'
-  | '紺ピンクTシャツ'
-  | '水色Tシャツ';
+  | 'タイツ(紺ピンク) 12cm';
 
-export type MaleUniformId =
+type CommonUniformId =
   | 'windBreakerUp'
   | 'windBreakerDown'
   | 'jerseyUp'
   | 'jerseyDown'
   | 'runningShirt'
   | 'runningPants'
-  | 'whiteTights'
   | 'halfPants'
   | 'poloShirt'
   | 'navyPinkTshirt'
   | 'lightBlueTshirt';
+
+export type MaleUniformId = CommonUniformId | 'whiteTights';
 
 export type FemaleUniformId =
-  | 'windBreakerUp'
-  | 'windBreakerDown'
-  | 'jerseyUp'
-  | 'jerseyDown'
-  | 'runningShirt'
-  | 'runningPants'
+  | CommonUniformId
   | 'separateTop'
   | 'separateShorts'
-  | 'navyPinkTights'
-  | 'halfPants'
-  | 'poloShirt'
-  | 'navyPinkTshirt'
-  | 'lightBlueTshirt';
+  | 'navyPinkTights';
 
 //==============================
 // タイムスタンプ
