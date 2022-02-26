@@ -5,13 +5,12 @@ import { useAuth } from 'context/Auth';
 import { User } from 'models/users';
 import Router from 'next/router';
 import React, { VFC } from 'react';
-import { FaAddressCard, FaBusAlt } from 'react-icons/fa';
+import { FaAddressCard } from 'react-icons/fa';
 import { GiClothes } from 'react-icons/gi';
 import { ImProfile } from 'react-icons/im';
 import { IoIosPeople } from 'react-icons/io';
 import { MdDescription } from 'react-icons/md';
 import { RiLogoutBoxLine, RiQuestionAnswerFill } from 'react-icons/ri';
-// import { RiMoneyCnyCircleFill } from 'react-icons/ri';
 import { SiMinutemailer } from 'react-icons/si';
 import { MotionBox } from 'utils/motion';
 import { listVariants } from 'utils/variants';
@@ -29,18 +28,6 @@ const DrawerBodyItemList: VFC = () => {
       name: '大会エントリー',
       onClick: () => Router.push('/'),
     },
-    {
-      icon: FaBusAlt,
-      iconColor: 'gray.500',
-      name: '遠征',
-      onClick: () => Router.push('/expedition'),
-    },
-    // {
-    //   icon: RiMoneyCnyCircleFill,
-    //   iconColor: 'gray.500',
-    //   name: '集金',
-    //   onClick: () => Router.push('/expense'),
-    // },
     {
       icon: GiClothes,
       iconColor: 'gray.500',
