@@ -1,6 +1,6 @@
-import { CreateProfile } from 'components/template/auth';
-import { NextPage } from 'next';
-import React from 'react';
+import type { NextPage } from 'next';
+
+import { CreateProfile } from '@/components/template/auth';
 
 const TeamProfile: NextPage = () => <CreateProfile />;
 

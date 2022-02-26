@@ -1,13 +1,13 @@
 import { Box, Container, Text } from '@chakra-ui/react';
 import { useCollection } from '@nandorojo/swr-firestore';
-import { Layout } from 'components/layout';
-import { Spinner } from 'components/loading';
-import { EntryManagementTableList } from 'components/template';
-import { Entry } from 'models/users';
-import { NextPage } from 'next';
+import type { NextPage } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React from 'react';
+
+import { Layout } from '@/components/layout';
+import { Spinner } from '@/components/loading';
+import { EntryManagementTableList } from '@/components/template';
+import type { Entry } from '@/models/users';
 
 const EntryManagementDetail: NextPage = () => {
   const router = useRouter();

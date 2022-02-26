@@ -1,1 +1,1 @@
-export { default as Slash } from './Slash';
+export { Slash } from './Slash';

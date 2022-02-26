@@ -1,6 +1,6 @@
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
-import React, { VFC } from 'react';
+import type { VFC } from 'react';
 
 const load = keyframes`
   50% {
@@ -37,15 +37,11 @@ const Container = styled.div`
   }
 `;
 
-const Loading: VFC = () => {
-  return (
-    <Container>
-      <span></span>
-      <span></span>
-      <span></span>
-      <p>Loading...</p>
-    </Container>
-  );
-};
-
-export default Loading;
+export const Loading: VFC = () => (
+  <Container>
+    <span></span>
+    <span></span>
+    <span></span>
+    <p>Loading...</p>
+  </Container>
+);

@@ -1,6 +1,6 @@
-import { TeamCreate } from 'components/template/auth';
-import { NextPage } from 'next';
-import React from 'react';
+import type { NextPage } from 'next';
+
+import { TeamCreate } from '@/components/template/auth';
 
 const TeamCreatePage: NextPage = () => <TeamCreate />;
 

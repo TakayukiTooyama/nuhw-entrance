@@ -1,15 +1,15 @@
 import { Box, Container, Stack, Text } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
-import { UniformTimeLimitCard } from 'components/card';
-import { Layout, TabBar, TopHeading } from 'components/layout';
-import { Spinner } from 'components/loading';
-import { useAuth } from 'context/Auth';
-import { UniformCardInfo, UniformInfo, User } from 'models/users';
-import { NextPage } from 'next';
+import type { NextPage } from 'next';
 import Image from 'next/image';
-import React from 'react';
-import { MotionBox } from 'utils/motion';
-import { listItemVariants } from 'utils/variants';
+
+import { UniformTimeLimitCard } from '@/components/card';
+import { Layout, TabBar, TopHeading } from '@/components/layout';
+import { Spinner } from '@/components/loading';
+import { useAuth } from '@/context/Auth';
+import type { UniformCardInfo, UniformInfo, User } from '@/models/users';
+import { MotionBox } from '@/utils/motion';
+import { listItemVariants } from '@/utils/variants';
 
 const linkData = [
   { label: '採寸', link: '/uniform' },
@@ -49,7 +49,12 @@ const UniformPage: NextPage = () => {
               <br />
               ご協力ありがとうございました。
             </Text>
-            <Image width={400} height={300} src="/Images/present.png" />
+            <Image
+              width={400}
+              height={300}
+              src="/Images/present.png"
+              alt="採寸"
+            />
           </Stack>
         ) : (
           <>

@@ -1,18 +1,24 @@
 import { ListItem, Text, useDisclosure, useToast } from '@chakra-ui/react';
-import { Document, fuego } from '@nandorojo/swr-firestore';
-import { TimeLimitCard } from 'components/card';
-import { DeleteDialog } from 'components/dialog';
-import { Tournament, UserInfo } from 'models/users';
-import React, { useRef, VFC } from 'react';
-import { MotionBox } from 'utils/motion';
-import { listItemVariants } from 'utils/variants';
+import type { Document } from '@nandorojo/swr-firestore';
+import { fuego } from '@nandorojo/swr-firestore';
+import type { VFC } from 'react';
+import { useRef } from 'react';
+
+import { TimeLimitCard } from '@/components/card';
+import { DeleteDialog } from '@/components/dialog';
+import type { Tournament, UserInfo } from '@/models/users';
+import { MotionBox } from '@/utils/motion';
+import { listItemVariants } from '@/utils/variants';
 
 type Props = {
   tournament: Document<Tournament>;
   userInfo: UserInfo;
 };
 
-const EntryManagementList: VFC<Props> = ({ tournament, userInfo }) => {
+export const EntryManagementListItem: VFC<Props> = ({
+  tournament,
+  userInfo,
+}) => {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
@@ -56,5 +62,3 @@ const EntryManagementList: VFC<Props> = ({ tournament, userInfo }) => {
     </>
   );
 };
-
-export default EntryManagementList;

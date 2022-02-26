@@ -1,14 +1,14 @@
 import { Container } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
-import { Layout } from 'components/layout';
+import type { NextPage } from 'next';
+
+import { Layout } from '@/components/layout';
 import {
   FemaleUniformForm,
   MaleUniformForm,
-} from 'components/template/uniform';
-import { useAuth } from 'context/Auth';
-import { UniformCardInfo, User } from 'models/users';
-import { NextPage } from 'next';
-import React from 'react';
+} from '@/components/template/uniform';
+import { useAuth } from '@/context/Auth';
+import type { UniformCardInfo, User } from '@/models/users';
 
 const UniformFormPage: NextPage = () => {
   const { user } = useAuth();

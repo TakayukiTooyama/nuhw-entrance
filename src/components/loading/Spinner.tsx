@@ -1,12 +1,11 @@
-import { Box, Spinner, SpinnerProps } from '@chakra-ui/react';
-import React, { VFC } from 'react';
+import type { SpinnerProps } from '@chakra-ui/react';
+import { Box, Spinner } from '@chakra-ui/react';
+import type { VFC } from 'react';
 
 type Props = SpinnerProps;
 
-const BasicSpinner: VFC<Props> = ({ size = 'lg', ...props }) => (
+export const BasicSpinner: VFC<Props> = ({ size = 'lg', ...props }) => (
   <Box align="center">
     <Spinner size={size} {...props} color="gray.400" />
   </Box>
 );
-
-export default BasicSpinner;

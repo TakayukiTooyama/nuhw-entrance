@@ -1,9 +1,11 @@
 import { ArrowBackIcon, HamburgerIcon } from '@chakra-ui/icons';
 import { Flex, Heading, HStack, Text, useDisclosure } from '@chakra-ui/react';
-import { Drawer } from 'components/drawer';
-import { useAuth } from 'context/Auth';
 import Router from 'next/router';
-import React, { useEffect, VFC } from 'react';
+import type { VFC } from 'react';
+import { useEffect } from 'react';
+
+import { Drawer } from '@/components/drawer';
+import { useAuth } from '@/context/Auth';
 
 type Props = {
   prevPageLink?: string;
@@ -17,7 +19,7 @@ const wrapper = {
   h: '50px',
 };
 
-const Header: VFC<Props> = ({ prevPageLink, prevPageTitle }) => {
+export const Header: VFC<Props> = ({ prevPageLink, prevPageTitle }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user } = useAuth();
 
@@ -59,5 +61,3 @@ const Header: VFC<Props> = ({ prevPageLink, prevPageTitle }) => {
     </>
   );
 };
-
-export default Header;

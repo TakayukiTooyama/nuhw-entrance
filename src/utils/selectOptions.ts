@@ -1,4 +1,4 @@
-import { Event } from 'models/users';
+import type { Event } from '@/models/users';
 
 export const gradeOptions = [
   '1年',

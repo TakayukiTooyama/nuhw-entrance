@@ -1,1 +1,1 @@
-export { default as FormHeading } from './FormHeading';
+export { FormHeading } from './FormHeading';

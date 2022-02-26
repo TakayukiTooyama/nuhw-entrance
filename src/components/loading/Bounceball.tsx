@@ -1,6 +1,6 @@
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
-import React, { VFC } from 'react';
+import type { VFC } from 'react';
 
 const bounce = keyframes`
   0% {
@@ -52,13 +52,9 @@ const Bounceball = styled.div`
   }
 `;
 
-const BounceballLoading: VFC = () => {
-  return (
-    <Wrap>
-      <Bounceball />
-      <Text>NOW LOADING</Text>
-    </Wrap>
-  );
-};
-
-export default BounceballLoading;
+export const BounceballLoading: VFC = () => (
+  <Wrap>
+    <Bounceball />
+    <Text>NOW LOADING</Text>
+  </Wrap>
+);

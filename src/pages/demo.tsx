@@ -1,19 +1,21 @@
 import { Box, Container, Heading, Icon, Stack, Text } from '@chakra-ui/react';
 import { fuego } from '@nandorojo/swr-firestore';
-import { Button } from 'components/button';
-import { Card } from 'components/card';
-import { User } from 'models/users';
 import Image from 'next/image';
 import Router from 'next/router';
-import { useState, VFC } from 'react';
+import type { VFC } from 'react';
+import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
-import { auth, FirebaseTimestamp } from 'utils/firebase';
+
+import { Button } from '@/components/button';
+import { Card } from '@/components/card';
+import type { User } from '@/models/users';
+import { auth, FirebaseTimestamp } from '@/utils/firebase';
 
 const SignIn: VFC = () => {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const login = async () => {
-    setLoading(true);
+    setIsLoading(true);
     auth.signInAnonymously().then(async (res) => {
       if (res.user) {
         const usersRef = fuego.db.collection('users');
@@ -55,7 +57,7 @@ const SignIn: VFC = () => {
               maxW="300px"
               label="ログイン"
               leftIcon={<Icon as={FcGoogle} w={6} h={6} />}
-              isLoading={loading}
+              isLoading={isLoading}
               onClick={login}
             />
             <Text color="gray" maxW="300px">

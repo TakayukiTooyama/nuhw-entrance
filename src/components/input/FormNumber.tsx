@@ -6,8 +6,9 @@ import {
   NumberInputField,
   Text,
 } from '@chakra-ui/react';
-import React, { VFC } from 'react';
-import { Control, FieldName, useController } from 'react-hook-form';
+import type { VFC } from 'react';
+import type { Control, FieldName } from 'react-hook-form';
+import { useController } from 'react-hook-form';
 
 type NumberInputName = {
   individualExpense: number;
@@ -21,7 +22,7 @@ type Props = {
   unit?: string;
 };
 
-const FormNumber: VFC<Props> = ({ name, control, label, unit }) => {
+export const FormNumber: VFC<Props> = ({ name, control, label, unit }) => {
   const {
     field: { ref, ...inputProps },
   } = useController({
@@ -44,5 +45,3 @@ const FormNumber: VFC<Props> = ({ name, control, label, unit }) => {
     </FormControl>
   );
 };
-
-export default FormNumber;

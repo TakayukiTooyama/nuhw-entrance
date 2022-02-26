@@ -1,2 +1,2 @@
-export { default as EntryCountTable } from './EntryCountTable';
-export { default as EntryRestore } from './EntryRestore';
+export { EntryCountTable } from './EntryCountTable';
+export { EntryRestore } from './EntryRestore';

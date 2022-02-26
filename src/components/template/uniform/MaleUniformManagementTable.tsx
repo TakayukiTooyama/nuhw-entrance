@@ -1,9 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
-import { Document } from '@nandorojo/swr-firestore';
-import type { UniformInfo } from 'models/users';
-import React, { useMemo, VFC } from 'react';
-import { Column, useSortBy, useTable } from 'react-table';
+import type { Document } from '@nandorojo/swr-firestore';
+import type { VFC } from 'react';
+import { useMemo } from 'react';
+import type { Column } from 'react-table';
+import { useSortBy, useTable } from 'react-table';
+
+import type { UniformInfo } from '@/models/users';
 
 type Props = {
   orders: Document<UniformInfo>[];
@@ -25,7 +28,10 @@ type TableData = {
   lightBlueTshirt: string;
 };
 
-const MaleUniformManagementTable: VFC<Props> = ({ orders, genderToggle }) => {
+export const MaleUniformManagementTable: VFC<Props> = ({
+  orders,
+  genderToggle,
+}) => {
   const DATA = orders.map((data) => {
     return {
       name: data.name,
@@ -109,5 +115,3 @@ const MaleUniformManagementTable: VFC<Props> = ({ orders, genderToggle }) => {
     </Table>
   );
 };
-
-export default MaleUniformManagementTable;

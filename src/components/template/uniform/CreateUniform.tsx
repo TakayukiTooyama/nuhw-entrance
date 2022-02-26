@@ -1,18 +1,21 @@
 import { HStack, Stack, Text } from '@chakra-ui/layout';
-import { Document, useCollection } from '@nandorojo/swr-firestore';
-import { Button } from 'components/button';
-import { DatePicker } from 'components/datepicker';
-import { UniformCardInfo, UserInfo } from 'models/users';
-import React, { useState, VFC } from 'react';
-import { FirebaseTimestamp } from 'utils/firebase';
+import type { Document } from '@nandorojo/swr-firestore';
+import { useCollection } from '@nandorojo/swr-firestore';
+import type { VFC } from 'react';
+import { useState } from 'react';
+
+import { Button } from '@/components/button';
+import { DatePicker } from '@/components/datepicker';
+import type { UniformCardInfo, UserInfo } from '@/models/users';
+import { FirebaseTimestamp } from '@/utils/firebase';
 
 type Props = {
   uniforms: Document<UniformCardInfo>[];
   userInfo: UserInfo;
 };
 
-const CreateUniform: VFC<Props> = ({ uniforms, userInfo }) => {
-  const [inputToggle, setInputToggle] = useState(false);
+export const CreateUniform: VFC<Props> = ({ uniforms, userInfo }) => {
+  const [isInputToggle, setIsInputToggle] = useState(false);
   const [timeLimit, setTimeLimit] = useState(new Date());
 
   const { add } = useCollection<UniformCardInfo>(
@@ -25,13 +28,13 @@ const CreateUniform: VFC<Props> = ({ uniforms, userInfo }) => {
       timeLimit,
       createdAt: FirebaseTimestamp.now(),
     }).then(() => {
-      setInputToggle(false);
+      setIsInputToggle(false);
     });
   };
 
   return (
     <>
-      {inputToggle ? (
+      {isInputToggle ? (
         <Stack spacing={4} align="center">
           <Text fontSize="18px" fontWeight="bold">{`第${
             uniforms.length + 1
@@ -52,11 +55,9 @@ const CreateUniform: VFC<Props> = ({ uniforms, userInfo }) => {
         <Button
           label="新しく作成する"
           colorScheme="teal"
-          onClick={() => setInputToggle(true)}
+          onClick={() => setIsInputToggle(true)}
         />
       )}
     </>
   );
 };
-
-export default CreateUniform;

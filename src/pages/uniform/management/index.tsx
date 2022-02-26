@@ -1,12 +1,12 @@
 import { Container } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
-import { Layout, TabBar, TopHeading } from 'components/layout';
-import { Spinner } from 'components/loading';
-import { UniformManagementList } from 'components/template/uniform';
-import { useAuth } from 'context/Auth';
-import { UniformCardInfo, User } from 'models/users';
-import { NextPage } from 'next';
-import React from 'react';
+import type { NextPage } from 'next';
+
+import { Layout, TabBar, TopHeading } from '@/components/layout';
+import { Spinner } from '@/components/loading';
+import { UniformManagementList } from '@/components/template/uniform';
+import { useAuth } from '@/context/Auth';
+import type { UniformCardInfo, User } from '@/models/users';
 
 const linkData = [
   { label: '採寸', link: '/uniform' },

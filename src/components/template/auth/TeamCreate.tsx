@@ -1,12 +1,14 @@
 import { Box, Container, Heading, Stack } from '@chakra-ui/react';
-import { Card } from 'components/card';
-import { TeamCreateForm } from 'components/template/auth';
-import { useAuth } from 'context/Auth';
 import Image from 'next/image';
 import Router from 'next/router';
-import React, { useEffect, VFC } from 'react';
+import type { VFC } from 'react';
+import { useEffect } from 'react';
 
-const TeamCreate: VFC = () => {
+import { Card } from '@/components/card';
+import { TeamCreateForm } from '@/components/template/auth';
+import { useAuth } from '@/context/Auth';
+
+export const TeamCreate: VFC = () => {
   const { user } = useAuth();
 
   useEffect(() => {
@@ -34,5 +36,3 @@ const TeamCreate: VFC = () => {
     </Box>
   );
 };
-
-export default TeamCreate;

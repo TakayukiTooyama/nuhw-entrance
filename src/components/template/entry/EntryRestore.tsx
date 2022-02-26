@@ -1,16 +1,17 @@
 import { Select } from '@chakra-ui/react';
-import { Document, fuego } from '@nandorojo/swr-firestore';
-import { Tournament } from 'models/users';
-import React from 'react';
-import { ChangeEvent } from 'react';
-import { VFC } from 'react';
+import type { Document } from '@nandorojo/swr-firestore';
+import { fuego } from '@nandorojo/swr-firestore';
+import type { ChangeEvent } from 'react';
+import type { VFC } from 'react';
+
+import type { Tournament } from '@/models/users';
 
 type Props = {
   tournaments: Document<Tournament>[];
   teamId: string;
 };
 
-const EntryRestore: VFC<Props> = ({ tournaments, teamId }) => {
+export const EntryRestore: VFC<Props> = ({ tournaments, teamId }) => {
   const restore = async (e: ChangeEvent<HTMLSelectElement>) => {
     const tournamentId = e.target.value;
     if (!tournamentId) return;
@@ -34,5 +35,3 @@ const EntryRestore: VFC<Props> = ({ tournaments, teamId }) => {
     </Select>
   );
 };
-
-export default EntryRestore;

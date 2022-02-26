@@ -1,10 +1,6 @@
-import {
-  FormControl,
-  FormControlProps,
-  FormErrorMessage,
-  FormLabel,
-} from '@chakra-ui/react';
-import React, { FC } from 'react';
+import type { FormControlProps } from '@chakra-ui/react';
+import { FormControl, FormErrorMessage, FormLabel } from '@chakra-ui/react';
+import type { FC } from 'react';
 
 type Props = FormControlProps & {
   label: string;
@@ -12,22 +8,18 @@ type Props = FormControlProps & {
   errorMessage?: string;
 };
 
-const FormInputWrapper: FC<Props> = ({
+export const FormInputWrapper: FC<Props> = ({
   label,
   isInvalid,
   errorMessage,
   children,
   ...props
-}) => {
-  return (
-    <FormControl isInvalid={isInvalid} {...props} w="100%">
-      <FormLabel fontSize="18px" fontWeight="bold">
-        {label}
-      </FormLabel>
-      {children}
-      <FormErrorMessage>{isInvalid && errorMessage}</FormErrorMessage>
-    </FormControl>
-  );
-};
-
-export default FormInputWrapper;
+}) => (
+  <FormControl isInvalid={isInvalid} {...props} w="100%">
+    <FormLabel fontSize="18px" fontWeight="bold">
+      {label}
+    </FormLabel>
+    {children}
+    <FormErrorMessage>{isInvalid && errorMessage}</FormErrorMessage>
+  </FormControl>
+);

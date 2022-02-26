@@ -1,11 +1,11 @@
 import { Container } from '@chakra-ui/react';
 import { useDocument } from '@nandorojo/swr-firestore';
-import { Layout, TabBar, TopHeading } from 'components/layout';
-import { ProfileChangeForm } from 'components/template';
-import { useAuth } from 'context/Auth';
-import { User } from 'models/users';
-import { NextPage } from 'next';
-import React from 'react';
+import type { NextPage } from 'next';
+
+import { Layout, TabBar, TopHeading } from '@/components/layout';
+import { ProfileChangeForm } from '@/components/template';
+import { useAuth } from '@/context/Auth';
+import type { User } from '@/models/users';
 
 const Profile: NextPage = () => {
   const { user } = useAuth();

@@ -1,5 +1,5 @@
-export { default as Header } from './Header';
-export { default as Layout } from './Layout';
-export { default as NavTab } from './NavTab';
-export { default as TabBar } from './TabBar';
-export { default as TopHeading } from './TopHeading';
+export { Header } from './Header';
+export { Layout } from './Layout';
+export { NavTab } from './NavTab';
+export { TabBar } from './TabBar';
+export { TopHeading } from './TopHeading';

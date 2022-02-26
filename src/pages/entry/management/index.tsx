@@ -1,16 +1,16 @@
 import { Box, Container, Stack, Text } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
-import { Button } from 'components/button';
-import { Layout, TabBar, TopHeading } from 'components/layout';
-import { Spinner } from 'components/loading';
-import { EntryManagementList } from 'components/template';
-import { EntryRestore } from 'components/template/entry';
-import { useAuth } from 'context/Auth';
-import { Tournament, User } from 'models/users';
-import { NextPage } from 'next';
+import type { NextPage } from 'next';
 import Image from 'next/image';
 import Router from 'next/router';
-import React from 'react';
+
+import { Button } from '@/components/button';
+import { Layout, TabBar, TopHeading } from '@/components/layout';
+import { Spinner } from '@/components/loading';
+import { EntryManagementList } from '@/components/template';
+import { EntryRestore } from '@/components/template/entry';
+import { useAuth } from '@/context/Auth';
+import type { Tournament, User } from '@/models/users';
 
 const linkData = [
   { label: '大会一覧', link: '/' },
@@ -53,7 +53,12 @@ const EntryManagement: NextPage = () => {
             tournaments?.every((tournament) => !tournament.view)) && (
             <Box>
               <Text mb={8}>作成されたエントリーがありません。</Text>
-              <Image width={350} height={250} src="/Images/run.png" />
+              <Image
+                width={350}
+                height={250}
+                src="/Images/run.png"
+                alt="大会エントリー"
+              />
             </Box>
           )}
           {tournaments && (

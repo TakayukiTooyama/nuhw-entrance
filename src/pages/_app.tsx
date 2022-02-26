@@ -1,11 +1,12 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import { FuegoProvider } from '@nandorojo/swr-firestore';
-import { AuthProvider } from 'context/Auth';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { VFC } from 'react';
-import { fuego } from 'utils/firebase';
-import theme from 'utils/theme';
+import type { VFC } from 'react';
+
+import { AuthProvider } from '@/context/Auth';
+import { fuego } from '@/utils/firebase';
+import { theme } from '@/utils/theme';
 
 const MyApp: VFC<AppProps> = ({ Component, pageProps }) => (
   <>

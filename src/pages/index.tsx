@@ -1,14 +1,15 @@
 import { Box, Container, Text } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
-import { Layout, TabBar, TopHeading } from 'components/layout';
-import { Spinner } from 'components/loading';
-import { EntryList } from 'components/template';
-import { useAuth } from 'context/Auth';
-import { Entry, Tournament, User } from 'models/users';
-import { NextPage } from 'next';
+import type { NextPage } from 'next';
 import Image from 'next/image';
 import { useEffect } from 'react';
-import { screenTransition } from 'utils/firestore/users';
+
+import { Layout, TabBar, TopHeading } from '@/components/layout';
+import { Spinner } from '@/components/loading';
+import { EntryList } from '@/components/template';
+import { useAuth } from '@/context/Auth';
+import type { Entry, Tournament, User } from '@/models/users';
+import { screenTransition } from '@/utils/firestore/users';
 
 const linkData = [
   { label: '大会一覧', link: '/' },

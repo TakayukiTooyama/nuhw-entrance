@@ -1,15 +1,17 @@
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Box, Text } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
-import { FormButton } from 'components/button';
-import InputText from 'components/input/InputText';
-import { LinkText } from 'components/text';
-import { useAuth } from 'context/Auth';
-import { TeamInfo, User } from 'models/users';
 import { useRouter } from 'next/router';
-import { useEffect, useState, VFC } from 'react';
+import type { VFC } from 'react';
+import { useEffect, useState } from 'react';
 
-const TeamJoinForm: VFC = () => {
+import { FormButton } from '@/components/button';
+import { InputText } from '@/components/input';
+import { LinkText } from '@/components/text';
+import { useAuth } from '@/context/Auth';
+import type { TeamInfo, User } from '@/models/users';
+
+export const TeamJoinForm: VFC = () => {
   const { user } = useAuth();
   const router = useRouter();
   const { data: teams } = useCollection<TeamInfo>('teams');
@@ -17,7 +19,7 @@ const TeamJoinForm: VFC = () => {
 
   const [name, setName] = useState('新潟医療福祉大学');
   const [password, setPassword] = useState('');
-  const [show, setShow] = useState(false);
+  const [isShow, setIsShow] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -53,12 +55,12 @@ const TeamJoinForm: VFC = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="パスワード"
-          type={show ? 'text' : 'password'}
+          type={isShow ? 'text' : 'password'}
           rightElement={
-            show ? (
-              <ViewIcon onClick={() => setShow(false)} />
+            isShow ? (
+              <ViewIcon onClick={() => setIsShow(false)} />
             ) : (
-              <ViewOffIcon onClick={() => setShow(true)} />
+              <ViewOffIcon onClick={() => setIsShow(true)} />
             )
           }
         />
@@ -85,5 +87,3 @@ const TeamJoinForm: VFC = () => {
     </>
   );
 };
-
-export default TeamJoinForm;

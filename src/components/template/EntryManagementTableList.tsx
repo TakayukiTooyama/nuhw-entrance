@@ -1,13 +1,16 @@
 /* eslint-disable no-sparse-arrays */
 import { Box, Heading, Select, Stack, useToast } from '@chakra-ui/react';
-import { Document, useCollection, useDocument } from '@nandorojo/swr-firestore';
-import { Button } from 'components/button';
-import { EntryManagementTable } from 'components/template';
-import { EntryCountTable } from 'components/template/entry';
-import { useAuth } from 'context/Auth';
-import { Entry, Event, Tournament, UserInfo } from 'models/users';
-import React, { useState, VFC } from 'react';
-import { eventOptions } from 'utils/selectOptions';
+import type { Document } from '@nandorojo/swr-firestore';
+import { useCollection, useDocument } from '@nandorojo/swr-firestore';
+import type { VFC } from 'react';
+import { useState } from 'react';
+
+import { Button } from '@/components/button';
+import { EntryManagementTable } from '@/components/template';
+import { EntryCountTable } from '@/components/template/entry';
+import { useAuth } from '@/context/Auth';
+import type { Entry, Event, Tournament, UserInfo } from '@/models/users';
+import { eventOptions } from '@/utils/selectOptions';
 
 type Props = {
   entries: Document<Omit<Entry, 'timeLimit'>>[];
@@ -29,7 +32,10 @@ type TestData = {
   }[];
 };
 
-const EntryManagementTableList: VFC<Props> = ({ entries, tournamentId }) => {
+export const EntryManagementTableList: VFC<Props> = ({
+  entries,
+  tournamentId,
+}) => {
   const { user } = useAuth();
   const { data: userInfo } = useDocument<UserInfo>(
     user ? `users/${user.uid}` : null
@@ -50,7 +56,7 @@ const EntryManagementTableList: VFC<Props> = ({ entries, tournamentId }) => {
 
   const [isEdit, setIsEdit] = useState(false);
   const [event, setEvent] = useState<Event>();
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const maleEntryData = entries.filter((data) => data.gender === '男');
   const femaleEntryData = entries.filter((data) => data.gender === '女');
@@ -97,60 +103,54 @@ const EntryManagementTableList: VFC<Props> = ({ entries, tournamentId }) => {
   };
 
   const appendSpreadsheet = async () => {
-    setLoading(true);
+    setIsLoading(true);
 
     try {
-      const manTableAppendData = maleData.flatMap((data, idx) => {
-        return data.tournamentData.flatMap((tournament, id) => {
-          return [
-            [
-              idx + id + 1,
-              '',
-              data.furigana,
-              data.romaji,
-              tournament.type,
-              tournament.record,
-              data.rikukyo,
-              '',
-            ],
-            [, '', data.name, , '', tournament.date, , data.birthday],
-          ];
-        });
-      });
+      const manTableAppendData = maleData.flatMap((data, idx) =>
+        data.tournamentData.flatMap((tournament, id) => [
+          [
+            idx + id + 1,
+            '',
+            data.furigana,
+            data.romaji,
+            tournament.type,
+            tournament.record,
+            data.rikukyo,
+            '',
+          ],
+          [, '', data.name, , '', tournament.date, , data.birthday],
+        ])
+      );
 
-      const womanTableAppendData = femaleData.flatMap((data, idx) => {
-        return data.tournamentData.flatMap((tournament, id) => {
-          return [
-            [
-              idx + id + 1,
-              '',
-              data.furigana,
-              data.romaji,
-              tournament.type,
-              tournament.record,
-              data.rikukyo,
-              '',
-            ],
-            [, '', data.name, , '', tournament.date, , data.birthday],
-          ];
-        });
-      });
-      const evidenceAppendData = testData?.flatMap((data, idx) => {
-        return data.tournamentData.flatMap((tournament, id) => {
-          return [
-            [
-              idx + id + 1,
-              data.gender,
-              data.name,
-              tournament.type,
-              tournament.record,
-              tournament.date,
-              tournament.tournamentName,
-              '',
-            ],
-          ];
-        });
-      });
+      const womanTableAppendData = femaleData.flatMap((data, idx) =>
+        data.tournamentData.flatMap((tournament, id) => [
+          [
+            idx + id + 1,
+            '',
+            data.furigana,
+            data.romaji,
+            tournament.type,
+            tournament.record,
+            data.rikukyo,
+            '',
+          ],
+          [, '', data.name, , '', tournament.date, , data.birthday],
+        ])
+      );
+      const evidenceAppendData = testData?.flatMap((data, idx) =>
+        data.tournamentData.flatMap((tournament, id) => [
+          [
+            idx + id + 1,
+            data.gender,
+            data.name,
+            tournament.type,
+            tournament.record,
+            tournament.date,
+            tournament.tournamentName,
+            '',
+          ],
+        ])
+      );
 
       const manTableResponse = await fetch(
         'https://v1.nocodeapi.com/sphacks/google_sheets/rWCufIptQSvrrKkj?tabId=男子申し込み用紙',
@@ -192,14 +192,14 @@ const EntryManagementTableList: VFC<Props> = ({ entries, tournamentId }) => {
               duration: 4000,
               isClosable: true,
             });
-            setLoading(false);
+            setIsLoading(false);
           });
         });
       });
-      setLoading(false);
+      setIsLoading(false);
     } catch (err) {
       console.error(err);
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -266,10 +266,8 @@ const EntryManagementTableList: VFC<Props> = ({ entries, tournamentId }) => {
       <Button
         label="県選申し込み作成"
         onClick={appendSpreadsheet}
-        isLoading={loading}
+        isLoading={isLoading}
       />
     </Stack>
   );
 };
-
-export default EntryManagementTableList;

@@ -1,17 +1,18 @@
 import { List, ListItem, Stack, Text } from '@chakra-ui/react';
-import { Document } from '@nandorojo/swr-firestore';
-import { EntryConfirmCard } from 'components/card';
-import { Spinner } from 'components/loading';
-import { Entry } from 'models/users';
-import React, { VFC } from 'react';
-import { MotionBox } from 'utils/motion';
-import { listItemVariants, listVariants } from 'utils/variants';
+import type { Document } from '@nandorojo/swr-firestore';
+import type { VFC } from 'react';
+
+import { EntryConfirmCard } from '@/components/card';
+import { Spinner } from '@/components/loading';
+import type { Entry } from '@/models/users';
+import { MotionBox } from '@/utils/motion';
+import { listItemVariants, listVariants } from '@/utils/variants';
 
 type Props = {
   entries: Document<Entry>[];
 };
 
-const EntryConfirmList: VFC<Props> = ({ entries }) => (
+export const EntryConfirmList: VFC<Props> = ({ entries }) => (
   <Stack spacing={6}>
     <MotionBox
       as={List}
@@ -39,5 +40,3 @@ const EntryConfirmList: VFC<Props> = ({ entries }) => (
     </Text>
   </Stack>
 );
-
-export default EntryConfirmList;

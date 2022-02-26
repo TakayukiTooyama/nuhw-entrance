@@ -1,11 +1,12 @@
 import { Box, ButtonGroup, Heading } from '@chakra-ui/react';
 import { useDocument } from '@nandorojo/swr-firestore';
-import { Slash } from 'components/boundary';
-import { LinkButton } from 'components/button';
-import { useAuth } from 'context/Auth';
-import { UserInfo } from 'models/users';
 import { useRouter } from 'next/router';
-import React, { VFC } from 'react';
+import type { VFC } from 'react';
+
+import { Slash } from '@/components/boundary';
+import { LinkButton } from '@/components/button';
+import { useAuth } from '@/context/Auth';
+import type { UserInfo } from '@/models/users';
 
 type Props = {
   title: string;
@@ -13,7 +14,7 @@ type Props = {
   adminLink?: string;
 };
 
-const TopHeading: VFC<Props> = ({ title, linkData, adminLink }) => {
+export const TopHeading: VFC<Props> = ({ title, linkData, adminLink }) => {
   const { user } = useAuth();
   const { data: userInfo } = useDocument<UserInfo>(`users/${user?.uid}`);
   const router = useRouter();
@@ -24,32 +25,27 @@ const TopHeading: VFC<Props> = ({ title, linkData, adminLink }) => {
     <Box bg="gray.200">
       <Box align="center" pt={8} pb={4}>
         <Heading pb={4}>{title}</Heading>
-        {currentPath !== '/team/management' &&
-          currentPath !== '/faq' &&
-          currentPath !== '/expense' &&
-          currentPath !== '/profile' && (
-            <ButtonGroup w="90%" maxW="md" pb={4}>
-              {userInfo?.role === '管理者' && (
-                <LinkButton
-                  label="管理"
-                  link={path === '' ? '/entry/management' : adminLink}
-                  currentPage={adminLink === currentPath}
-                />
-              )}
-              {linkData?.map((item) => (
-                <LinkButton
-                  key={item.label}
-                  label={item.label}
-                  link={item.link}
-                  currentPage={item.link === currentPath}
-                />
-              ))}
-            </ButtonGroup>
-          )}
+        {currentPath !== '/team/management' && currentPath !== '/profile' && (
+          <ButtonGroup w="90%" maxW="md" pb={4}>
+            {userInfo?.role === '管理者' && (
+              <LinkButton
+                label="管理"
+                link={path === '' ? '/entry/management' : adminLink}
+                currentPage={adminLink === currentPath}
+              />
+            )}
+            {linkData?.map((item) => (
+              <LinkButton
+                key={item.label}
+                label={item.label}
+                link={item.link}
+                currentPage={item.link === currentPath}
+              />
+            ))}
+          </ButtonGroup>
+        )}
       </Box>
       <Slash />
     </Box>
   );
 };
-
-export default TopHeading;

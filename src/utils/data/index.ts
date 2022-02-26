@@ -1,9 +1,9 @@
-import {
+import type {
   FemaleUniform,
   FemaleUniformId,
   MaleUniform,
   MaleUniformId,
-} from 'models/users';
+} from '@/models/users';
 
 export type MaleUniformData = {
   id: MaleUniformId;

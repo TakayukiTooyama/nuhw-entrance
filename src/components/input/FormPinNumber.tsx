@@ -6,8 +6,9 @@ import {
   PinInputField,
   Text,
 } from '@chakra-ui/react';
-import React, { VFC } from 'react';
-import { Control, FieldName, useController } from 'react-hook-form';
+import type { VFC } from 'react';
+import type { Control, FieldName } from 'react-hook-form';
+import { useController } from 'react-hook-form';
 
 type Name = {
   day: number;
@@ -20,7 +21,7 @@ type Props = {
   unit: string;
 };
 
-const InputPinNumber: VFC<Props> = ({ label, name, control, unit }) => {
+export const InputPinNumber: VFC<Props> = ({ label, name, control, unit }) => {
   const {
     field: { ref, value, onChange, ...inputProps },
   } = useController({
@@ -43,5 +44,3 @@ const InputPinNumber: VFC<Props> = ({ label, name, control, unit }) => {
     </FormControl>
   );
 };
-
-export default InputPinNumber;

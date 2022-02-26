@@ -1,12 +1,12 @@
 import { Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
-import React, { VFC } from 'react';
+import type { VFC } from 'react';
 
 type Props = {
   maleCount: number;
   femaleCount: number;
 };
 
-const EntryCountTable: VFC<Props> = ({ maleCount, femaleCount }) => (
+export const EntryCountTable: VFC<Props> = ({ maleCount, femaleCount }) => (
   <Table variant="simple" maxW="sm">
     <Thead>
       <Tr>
@@ -24,5 +24,3 @@ const EntryCountTable: VFC<Props> = ({ maleCount, femaleCount }) => (
     </Tbody>
   </Table>
 );
-
-export default EntryCountTable;

@@ -1,7 +1,9 @@
-import { Box, BoxProps, Text } from '@chakra-ui/react';
-import { LinkContent } from 'models/users';
+import type { BoxProps } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import Link from 'next/link';
-import React, { VFC } from 'react';
+import type { VFC } from 'react';
+
+import type { LinkContent } from '@/models/users';
 
 type Props = BoxProps & {
   item: LinkContent;
@@ -49,26 +51,17 @@ const textStyle = {
   zIndex: '1',
 };
 
-const LinkImageCard: VFC<Props> = ({ item, ...props }) => {
-  return (
-    <Link href={`/${item.link}/${item.id}`} passHref>
+export const LinkImageCard: VFC<Props> = ({ item, ...props }) => (
+  <Link href={`/${item.link}/${item.id}`} passHref>
+    <Box pos="relative" {...boxStyles} _after={{ ...boxAfterStyle }} {...props}>
       <Box
-        pos="relative"
-        {...boxStyles}
-        _after={{ ...boxAfterStyle }}
-        {...props}
-      >
-        <Box
-          pos="absolute"
-          backgroundImage={`url(${item.image})`}
-          {...backgroundImage}
-        />
-        <Text pos="absolute" {...textStyle}>
-          {item.name}
-        </Text>
-      </Box>
-    </Link>
-  );
-};
-
-export default LinkImageCard;
+        pos="absolute"
+        backgroundImage={`url(${item.image})`}
+        {...backgroundImage}
+      />
+      <Text pos="absolute" {...textStyle}>
+        {item.name}
+      </Text>
+    </Box>
+  </Link>
+);

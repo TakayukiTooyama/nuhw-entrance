@@ -1,11 +1,6 @@
-import {
-  HStack,
-  NumberInput,
-  NumberInputField,
-  NumberInputProps,
-  Text,
-} from '@chakra-ui/react';
-import React, { VFC } from 'react';
+import type { NumberInputProps } from '@chakra-ui/react';
+import { HStack, NumberInput, NumberInputField, Text } from '@chakra-ui/react';
+import type { VFC } from 'react';
 
 type Props = NumberInputProps & {
   value: string;
@@ -14,7 +9,7 @@ type Props = NumberInputProps & {
   setValue?: (valueAsString: string) => void;
 };
 
-const InputNumber: VFC<Props> = ({
+export const InputNumber: VFC<Props> = ({
   value,
   label,
   unit,
@@ -34,5 +29,3 @@ const InputNumber: VFC<Props> = ({
     {unit && <Text>{unit}</Text>}
   </HStack>
 );
-
-export default InputNumber;

@@ -1,28 +1,19 @@
-import {
-  Flex,
-  Radio,
-  RadioGroup,
-  RadioProps,
-  Stack,
-  Text,
-} from '@chakra-ui/react';
-import { UserInfoInForm, VoteFormInput } from 'models/users';
-import React, { VFC } from 'react';
-import { Control, FieldName, useController } from 'react-hook-form';
+import type { RadioProps } from '@chakra-ui/react';
+import { Flex, Radio, RadioGroup, Stack, Text } from '@chakra-ui/react';
+import type { VFC } from 'react';
+import type { Control, FieldName } from 'react-hook-form';
+import { useController } from 'react-hook-form';
 
-type Name = UserInfoInForm &
-  VoteFormInput & {
-    course: '行き' | '帰り';
-  };
+import type { UserInfoInForm } from '@/models/users';
 
 type Props = RadioProps & {
-  name: FieldName<Name>;
+  name: FieldName<UserInfoInForm>;
   label?: string;
   radioOptions: string[];
   control: Control<any, object>;
 };
 
-const FormRadio: VFC<Props> = ({
+export const FormRadio: VFC<Props> = ({
   name,
   label,
   radioOptions,
@@ -61,5 +52,3 @@ const FormRadio: VFC<Props> = ({
     </Stack>
   );
 };
-
-export default FormRadio;

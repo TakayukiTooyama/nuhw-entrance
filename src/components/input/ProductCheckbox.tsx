@@ -1,7 +1,10 @@
 import { Checkbox, CheckboxGroup, Stack } from '@chakra-ui/react';
-import { EventInfo } from 'models/users';
-import React, { useEffect, VFC } from 'react';
-import { Control, useController } from 'react-hook-form';
+import type { VFC } from 'react';
+import { useEffect } from 'react';
+import type { Control } from 'react-hook-form';
+import { useController } from 'react-hook-form';
+
+import type { EventInfo } from '@/models/users';
 
 type Props = {
   name: string;
@@ -10,7 +13,7 @@ type Props = {
   setEvents?: React.Dispatch<React.SetStateAction<EventInfo[]>>;
 };
 
-const ProductCheckbox: VFC<Props> = ({
+export const ProductCheckbox: VFC<Props> = ({
   name,
   control,
   checkboxOptions,
@@ -46,5 +49,3 @@ const ProductCheckbox: VFC<Props> = ({
     </CheckboxGroup>
   );
 };
-
-export default ProductCheckbox;

@@ -1,8 +1,8 @@
 import { Container } from '@chakra-ui/react';
-import { Layout, TabBar, TopHeading } from 'components/layout';
-import { Inheritance } from 'components/template';
-import { NextPage } from 'next';
-import React from 'react';
+import type { NextPage } from 'next';
+
+import { Layout, TabBar, TopHeading } from '@/components/layout';
+import { Inheritance } from '@/components/template';
 
 const TeamManagement: NextPage = () => (
   <Layout title="引き継ぎ">

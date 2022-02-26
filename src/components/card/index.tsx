@@ -1,9 +1,7 @@
-export { default as Card } from './BasicCard';
-export { default as ConfirmCard } from './ConfirmCard';
-export { default as EntryConfirmCard } from './EntryConfirmCard';
-export { default as ExpenseCard } from './ExpenseCard';
-export { default as LinkImageCard } from './LinkImageCard';
-export { default as RadioCard } from './RadioCard';
-export { default as TimeLimitCard } from './TimeLimitCard';
-export { default as UniformTimeLimitCard } from './UniformTimeLimitCard';
-export { default as VoteConfirmCard } from './VoteConfirmCard';
+export { BasicCard as Card } from './BasicCard';
+export { ConfirmCard } from './ConfirmCard';
+export { EntryConfirmCard } from './EntryConfirmCard';
+export { LinkImageCard } from './LinkImageCard';
+export { RadioCard } from './RadioCard';
+export { TimeLimitCard } from './TimeLimitCard';
+export { UniformTimeLimitCard } from './UniformTimeLimitCard';

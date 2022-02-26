@@ -2,20 +2,23 @@
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { IconButton, InputRightElement, Stack } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import type { Document } from '@nandorojo/swr-firestore';
 import {
-  Document,
   getCollection,
   useCollection,
   useDocument,
 } from '@nandorojo/swr-firestore';
-import { FormButton } from 'components/button';
-import { FormText } from 'components/input';
-import { useAuth } from 'context/Auth';
-import { TeamInfo, TeamInfoInForm, User } from 'models/users';
 import Router from 'next/router';
-import { useState, VFC } from 'react';
+import type { VFC } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { object, ref, SchemaOf, string } from 'yup';
+import type { SchemaOf } from 'yup';
+import { object, ref, string } from 'yup';
+
+import { FormButton } from '@/components/button';
+import { FormText } from '@/components/input';
+import { useAuth } from '@/context/Auth';
+import type { TeamInfo, TeamInfoInForm, User } from '@/models/users';
 
 const defaultValues: TeamInfoInForm = {
   name: '',
@@ -23,14 +26,13 @@ const defaultValues: TeamInfoInForm = {
   passwordConfirmation: '',
 };
 
-const TeamCreateForm: VFC = () => {
+export const TeamCreateForm: VFC = () => {
   const { user } = useAuth();
   const { data: teams, add } = useCollection<TeamInfo>('teams');
   const { set } = useDocument<User>(`users/${user?.uid}`);
 
-  const validateDuplicatedName = (name: string): boolean => {
-    return teams.every((info) => info.name !== name);
-  };
+  const validateDuplicatedName = (name: string): boolean =>
+    teams.every((info) => info.name !== name);
 
   // 重複がないようにバリデーションするためにここに書いている
   const schema: SchemaOf<TeamInfoInForm> = object().shape({
@@ -55,7 +57,7 @@ const TeamCreateForm: VFC = () => {
   });
 
   // パスワードを見る/隠す
-  const [show, setShow] = useState(false);
+  const [isShow, setIsShow] = useState(false);
 
   // チーム作成処理
   const onSubmit = (data: TeamInfoInForm) => {
@@ -88,7 +90,7 @@ const TeamCreateForm: VFC = () => {
         <FormText
           name="password"
           placeholder="パスワード"
-          type={show ? 'text' : 'password'}
+          type={isShow ? 'text' : 'password'}
           errors={errors}
           control={control}
         >
@@ -97,8 +99,8 @@ const TeamCreateForm: VFC = () => {
               bg="none"
               size="sm"
               aria-label="toggle-icon"
-              icon={show ? <ViewIcon /> : <ViewOffIcon />}
-              onClick={() => setShow(!show)}
+              icon={isShow ? <ViewIcon /> : <ViewOffIcon />}
+              onClick={() => setIsShow(!isShow)}
               _focus={{ boxShadow: 'none' }}
               _active={{ bg: 'none' }}
               _hover={{ bg: 'none' }}
@@ -122,5 +124,3 @@ const TeamCreateForm: VFC = () => {
     </form>
   );
 };
-
-export default TeamCreateForm;

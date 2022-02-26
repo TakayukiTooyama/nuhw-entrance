@@ -1,13 +1,13 @@
 import { Box, Text } from '@chakra-ui/react';
 import { useCollection } from '@nandorojo/swr-firestore';
-import { Layout } from 'components/layout';
-import { Spinner } from 'components/loading';
-import { UniformManagementTableList } from 'components/template/uniform';
-import { UniformInfo } from 'models/users';
-import { NextPage } from 'next';
+import type { NextPage } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React from 'react';
+
+import { Layout } from '@/components/layout';
+import { Spinner } from '@/components/loading';
+import { UniformManagementTableList } from '@/components/template/uniform';
+import type { UniformInfo } from '@/models/users';
 
 const UniformManagementDetail: NextPage = () => {
   const router = useRouter();

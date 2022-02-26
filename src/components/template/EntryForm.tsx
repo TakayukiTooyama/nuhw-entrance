@@ -7,24 +7,26 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
-import { FormButton } from 'components/button';
-import { Card } from 'components/card';
-import { SuccessDialog } from 'components/dialog';
-import { FormLabel } from 'components/form';
-import { FormHeading } from 'components/heading';
-import { EventCheckbox, FormControl, InputNumber } from 'components/input';
-import { useAuth } from 'context/Auth';
-import {
+import { useRouter } from 'next/router';
+import type { VFC } from 'react';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+
+import { FormButton } from '@/components/button';
+import { Card } from '@/components/card';
+import { SuccessDialog } from '@/components/dialog';
+import { FormLabel } from '@/components/form';
+import { FormHeading } from '@/components/heading';
+import { EventCheckbox, FormControl, InputNumber } from '@/components/input';
+import { useAuth } from '@/context/Auth';
+import type {
   Entry,
   EntryFormInput,
   EventInfo,
   Tournament,
   UserInfo,
-} from 'models/users';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState, VFC } from 'react';
-import { useForm } from 'react-hook-form';
-import { FirebaseTimestamp } from 'utils/firebase';
+} from '@/models/users';
+import { FirebaseTimestamp } from '@/utils/firebase';
 
 const defaultValues: EntryFormInput = {
   events: [],
@@ -40,7 +42,7 @@ const inputStyle = {
   bg: 'white',
 };
 
-const EntryFormDetail: VFC = () => {
+export const EntryForm: VFC = () => {
   const { user } = useAuth();
   const router = useRouter();
   const tournamentId: string = router.asPath.split('/entry/')[1];
@@ -92,10 +94,10 @@ const EntryFormDetail: VFC = () => {
   };
 
   const addEntry = (data: EntryFormInput) => {
-    const existsEntryRecord = eventsInfo.some(
+    const hasExistsEntryRecord = eventsInfo.some(
       (event) => !event.entryRecord || event.entryRecord === ''
     );
-    if (existsEntryRecord) {
+    if (hasExistsEntryRecord) {
       setErrorMessage('自己ベストが入力されていません。');
       return;
     }
@@ -236,5 +238,3 @@ const EntryFormDetail: VFC = () => {
     </>
   );
 };
-
-export default EntryFormDetail;

@@ -1,12 +1,15 @@
 import { Stack, Text, useToast } from '@chakra-ui/react';
-import { Document, fuego, getCollection } from '@nandorojo/swr-firestore';
-import { Button } from 'components/button';
-import { Card } from 'components/card';
-import { InputText } from 'components/input';
-import { User } from 'models/users';
-import React, { useEffect, useState, VFC } from 'react';
+import type { Document } from '@nandorojo/swr-firestore';
+import { fuego, getCollection } from '@nandorojo/swr-firestore';
+import type { VFC } from 'react';
+import { useEffect, useState } from 'react';
 
-const Inheritance: VFC = () => {
+import { Button } from '@/components/button';
+import { Card } from '@/components/card';
+import { InputText } from '@/components/input';
+import type { User } from '@/models/users';
+
+export const Inheritance: VFC = () => {
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const toast = useToast();
@@ -66,5 +69,3 @@ const Inheritance: VFC = () => {
     </Stack>
   );
 };
-
-export default Inheritance;

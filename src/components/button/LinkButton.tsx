@@ -1,6 +1,7 @@
-import { Button, ButtonProps } from '@chakra-ui/react';
+import type { ButtonProps } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 import Link from 'next/link';
-import React, { VFC } from 'react';
+import type { VFC } from 'react';
 
 type Props = ButtonProps & {
   label: string;
@@ -8,7 +9,7 @@ type Props = ButtonProps & {
   currentPage?: boolean;
 };
 
-const LinkButton: VFC<Props> = ({
+export const LinkButton: VFC<Props> = ({
   label = '',
   link = '',
   currentPage = false,
@@ -25,5 +26,3 @@ const LinkButton: VFC<Props> = ({
     </Button>
   </Link>
 );
-
-export default LinkButton;

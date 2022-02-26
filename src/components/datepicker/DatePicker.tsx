@@ -1,13 +1,15 @@
 import 'react-datepicker/dist/react-datepicker.css';
 import 'dayjs/locale/ja';
 
-import { Button, ButtonProps, Icon } from '@chakra-ui/react';
+import type { ButtonProps } from '@chakra-ui/react';
+import { Button, Icon } from '@chakra-ui/react';
 import ja from 'date-fns/locale/ja';
 import dayjs from 'dayjs';
-import React, { VFC } from 'react';
+import type { VFC } from 'react';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import { FcCalendar } from 'react-icons/fc';
-import { formatTimeLimitNotation, formatWeekdayNotation } from 'utils/format';
+
+import { formatTimeLimitNotation, formatWeekdayNotation } from '@/utils/format';
 
 registerLocale('ja', ja);
 dayjs.locale('ja');
@@ -22,7 +24,7 @@ type Props = ButtonProps & {
   onChange: (...event: any[]) => void;
 };
 
-const DatePicker: VFC<Props> = ({
+export const DatePicker: VFC<Props> = ({
   selectsStart = false,
   selectsEnd = false,
   startDate,
@@ -33,11 +35,10 @@ const DatePicker: VFC<Props> = ({
   ...props
 }) => {
   // フォーマット変更 → 2020/12/26
-  const formatDate = (selected: Date) => {
-    return showTimeSelect
+  const formatDate = (selected: Date) =>
+    showTimeSelect
       ? formatTimeLimitNotation(selected)
       : formatWeekdayNotation(selected);
-  };
   return (
     <ReactDatePicker
       locale="ja"
@@ -66,5 +67,3 @@ const DatePicker: VFC<Props> = ({
     />
   );
 };
-
-export default DatePicker;

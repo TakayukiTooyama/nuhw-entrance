@@ -1,6 +1,6 @@
 import { CalendarIcon, DeleteIcon } from '@chakra-ui/icons';
+import type { BoxProps } from '@chakra-ui/react';
 import {
-  BoxProps,
   Divider,
   Flex,
   Heading,
@@ -10,18 +10,24 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react';
-import { Card } from 'components/card';
-import { CardTextSchedule } from 'components/text';
-import React, { FC } from 'react';
+import type { FC } from 'react';
 import { IoIosSchool } from 'react-icons/io';
-import { formatWeekdayNotation } from 'utils/format';
+
+import { Card } from '@/components/card';
+import { CardTextSchedule } from '@/components/text';
+import { formatWeekdayNotation } from '@/utils/format';
 
 type Props = BoxProps & {
   onOpen: () => void;
   data: any;
 };
 
-const ConfirmCard: FC<Props> = ({ onOpen, data, children, ...props }) => (
+export const ConfirmCard: FC<Props> = ({
+  onOpen,
+  data,
+  children,
+  ...props
+}) => (
   <Card innerPadding={4} {...props}>
     <Stack mb={4} spacing={1}>
       <Flex alignItems="center" justify="space-between">
@@ -54,5 +60,3 @@ const ConfirmCard: FC<Props> = ({ onOpen, data, children, ...props }) => (
     {children}
   </Card>
 );
-
-export default ConfirmCard;

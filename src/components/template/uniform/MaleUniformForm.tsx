@@ -16,27 +16,29 @@ import {
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCollection } from '@nandorojo/swr-firestore';
-import { Button } from 'components/button';
-import { ConfirmDialog } from 'components/dialog';
-import { FormHeading } from 'components/heading';
-import { FormSelect } from 'components/input';
-import { useAuth } from 'context/Auth';
-import {
+// import Image from 'next/image';
+import Router from 'next/router';
+import type { VFC } from 'react';
+import { useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+
+import { Button } from '@/components/button';
+import { ConfirmDialog } from '@/components/dialog';
+import { FormHeading } from '@/components/heading';
+import { FormSelect } from '@/components/input';
+import { useAuth } from '@/context/Auth';
+import type {
   Order,
   OrderSize,
   UniformFormInput,
   UniformInfo,
   UserInfo,
-} from 'models/users';
-// import Image from 'next/image';
-import Router from 'next/router';
-import React, { useRef, useState, VFC } from 'react';
-import { useForm } from 'react-hook-form';
-import { maleUniformData } from 'utils/data';
-import { FirebaseTimestamp } from 'utils/firebase';
-import { formatDate } from 'utils/format';
-import { sizeOptions } from 'utils/selectOptions';
-import * as yup from 'yup';
+} from '@/models/users';
+import { maleUniformData } from '@/utils/data';
+import { FirebaseTimestamp } from '@/utils/firebase';
+import { formatDate } from '@/utils/format';
+import { sizeOptions } from '@/utils/selectOptions';
 
 const schema = yup
   .object()
@@ -86,7 +88,7 @@ type Props = {
   userInfo: UserInfo;
 };
 
-const MaleUniformForm: VFC<Props> = ({ id, title, userInfo }) => {
+export const MaleUniformForm: VFC<Props> = ({ id, title, userInfo }) => {
   const { user } = useAuth();
   const { add } = useCollection(`users/${user?.uid}/orders`);
 
@@ -118,9 +120,9 @@ const MaleUniformForm: VFC<Props> = ({ id, title, userInfo }) => {
     });
     setOrderList(newOrderList);
 
-    const existsSize =
+    const hasUniform =
       Object.values(inputData).filter((value) => value !== '選択').length > 0;
-    existsSize
+    hasUniform
       ? onOpen()
       : setErrorMessage('1つ以上商品を選択してから注文してください。');
   };
@@ -163,7 +165,12 @@ const MaleUniformForm: VFC<Props> = ({ id, title, userInfo }) => {
           {maleUniformData.map((item) => (
             <Flex direction={['column', 'row']} key={item.name} shadow="base">
               <Box w={['100%', '40%']}>
-                <Image src={item.image} width={'100%'} height={'auto'} />
+                <Image
+                  src={item.image}
+                  width={'100%'}
+                  height={'auto'}
+                  alt={item.name}
+                />
               </Box>
               <Flex
                 direction="column"
@@ -213,21 +220,19 @@ const MaleUniformForm: VFC<Props> = ({ id, title, userInfo }) => {
           </Thead>
           <Tbody>
             {orderList &&
-              orderList.map((item) => {
-                return item.size !== '選択' ? (
+              orderList.map((item) =>
+                item.size !== '選択' ? (
                   <Tr key={item.name}>
                     <Td>{item.name}</Td>
                     <Td>{item.size}</Td>
                   </Tr>
                 ) : (
                   false
-                );
-              })}
+                )
+              )}
           </Tbody>
         </Table>
       </ConfirmDialog>
     </>
   );
 };
-
-export default MaleUniformForm;

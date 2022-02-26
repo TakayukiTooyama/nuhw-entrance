@@ -1,6 +1,7 @@
-import { UserInfo } from 'models/users';
 import Router from 'next/router';
-import { db } from 'utils/firebase';
+
+import type { UserInfo } from '@/models/users';
+import { db } from '@/utils/firebase';
 
 const usersRef = db.collection('users');
 

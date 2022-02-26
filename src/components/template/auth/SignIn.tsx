@@ -1,19 +1,21 @@
 import { Box, Container, Heading, Icon, Stack } from '@chakra-ui/react';
 import { useDocument } from '@nandorojo/swr-firestore';
-import { Button } from 'components/button';
-import { Card } from 'components/card';
-import { Bounceball } from 'components/loading';
-import { useAuth } from 'context/Auth';
-import { User } from 'models/users';
 import Image from 'next/image';
-import { useEffect, VFC } from 'react';
+import type { VFC } from 'react';
+import { useEffect } from 'react';
 import { FcGoogle } from 'react-icons/fc';
-import { auth } from 'utils/firebase';
-import { navigationAfterAuth, screenTransition } from 'utils/firestore/users';
 
-const SignIn: VFC = () => {
+import { Button } from '@/components/button';
+import { Card } from '@/components/card';
+import { Bounceball } from '@/components/loading';
+import { useAuth } from '@/context/Auth';
+import type { User } from '@/models/users';
+import { auth } from '@/utils/firebase';
+import { navigationAfterAuth, screenTransition } from '@/utils/firestore/users';
+
+export const SignIn: VFC = () => {
   // 認証Hooks
-  const { login, user, loading } = useAuth();
+  const { login, user, isLoading } = useAuth();
 
   // ユーザー情報を取得
   const { data: userInfo } = useDocument<User>(
@@ -36,7 +38,7 @@ const SignIn: VFC = () => {
 
   return (
     <>
-      {loading ? (
+      {isLoading ? (
         <Box pos="relative" minH="100vh">
           <Bounceball />
         </Box>
@@ -67,5 +69,3 @@ const SignIn: VFC = () => {
     </>
   );
 };
-
-export default SignIn;

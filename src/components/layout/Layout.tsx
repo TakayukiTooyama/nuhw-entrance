@@ -1,7 +1,8 @@
 import { Box } from '@chakra-ui/react';
-import { Header } from 'components/layout';
 import Head from 'next/head';
-import React, { FC } from 'react';
+import type { FC } from 'react';
+
+import { Header } from '@/components/layout';
 
 type Props = {
   title: string;
@@ -9,7 +10,7 @@ type Props = {
   prevPageTitle?: string;
 };
 
-const Layout: FC<Props> = ({
+export const Layout: FC<Props> = ({
   children,
   title,
   prevPageLink,
@@ -37,5 +38,3 @@ const Layout: FC<Props> = ({
     )}
   </>
 );
-
-export default Layout;

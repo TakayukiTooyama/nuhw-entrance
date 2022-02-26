@@ -1,10 +1,7 @@
 import { List } from '@chakra-ui/react';
 import { useDocument } from '@nandorojo/swr-firestore';
-import { DrawerBodyItem } from 'components/drawer';
-import { useAuth } from 'context/Auth';
-import { User } from 'models/users';
 import Router from 'next/router';
-import React, { VFC } from 'react';
+import type { VFC } from 'react';
 import { FaAddressCard } from 'react-icons/fa';
 import { GiClothes } from 'react-icons/gi';
 import { ImProfile } from 'react-icons/im';
@@ -12,10 +9,14 @@ import { IoIosPeople } from 'react-icons/io';
 import { MdDescription } from 'react-icons/md';
 import { RiLogoutBoxLine } from 'react-icons/ri';
 import { SiMinutemailer } from 'react-icons/si';
-import { MotionBox } from 'utils/motion';
-import { listVariants } from 'utils/variants';
 
-const DrawerBodyItemList: VFC = () => {
+import { DrawerBodyItem } from '@/components/drawer';
+import { useAuth } from '@/context/Auth';
+import type { User } from '@/models/users';
+import { MotionBox } from '@/utils/motion';
+import { listVariants } from '@/utils/variants';
+
+export const DrawerBodyItemList: VFC = () => {
   const { logout } = useAuth();
   const { user } = useAuth();
   const { data: userInfo } = useDocument<User>(`users/${user?.uid}`);
@@ -91,5 +92,3 @@ const DrawerBodyItemList: VFC = () => {
     </MotionBox>
   );
 };
-
-export default DrawerBodyItemList;

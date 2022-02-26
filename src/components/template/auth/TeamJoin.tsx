@@ -1,15 +1,17 @@
 import { Box, Container, Heading, Stack } from '@chakra-ui/react';
 import { useDocument } from '@nandorojo/swr-firestore';
-import { Card } from 'components/card';
-import { TeamJoinForm } from 'components/template/auth';
-import { useAuth } from 'context/Auth';
-import { UserInfo } from 'models/users';
 import Image from 'next/image';
 import Router from 'next/router';
-import React, { useEffect, VFC } from 'react';
-import { screenTransition } from 'utils/firestore/users';
+import type { VFC } from 'react';
+import { useEffect } from 'react';
 
-const TeamJoin: VFC = () => {
+import { Card } from '@/components/card';
+import { TeamJoinForm } from '@/components/template/auth';
+import { useAuth } from '@/context/Auth';
+import type { UserInfo } from '@/models/users';
+import { screenTransition } from '@/utils/firestore/users';
+
+export const TeamJoin: VFC = () => {
   const { user } = useAuth();
   const { data: userInfo } = useDocument<UserInfo>(`users/${user?.uid}`);
 
@@ -34,5 +36,3 @@ const TeamJoin: VFC = () => {
     </Box>
   );
 };
-
-export default TeamJoin;

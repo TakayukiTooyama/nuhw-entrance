@@ -1,3 +1,3 @@
-export { default as Button } from './BasicButton';
-export { default as FormButton } from './FormButton';
-export { default as LinkButton } from './LinkButton';
+export { BasicButton as Button } from './BasicButton';
+export { FormButton } from './FormButton';
+export { LinkButton } from './LinkButton';

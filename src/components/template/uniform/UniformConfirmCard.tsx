@@ -7,21 +7,24 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
-import { Document, fuego, useDocument } from '@nandorojo/swr-firestore';
-import { Button } from 'components/button';
-import { Card } from 'components/card';
-import { DeleteDialog } from 'components/dialog';
-import { useAuth } from 'context/Auth';
-import { UniformInfo, UserInfo } from 'models/users';
-import React, { useRef, VFC } from 'react';
+import type { Document } from '@nandorojo/swr-firestore';
+import { fuego, useDocument } from '@nandorojo/swr-firestore';
+import type { VFC } from 'react';
+import { useRef } from 'react';
 
-import UniformTable from './UniformTable';
+import { Button } from '@/components/button';
+import { Card } from '@/components/card';
+import { DeleteDialog } from '@/components/dialog';
+import { useAuth } from '@/context/Auth';
+import type { UniformInfo, UserInfo } from '@/models/users';
+
+import { UniformTable } from '.';
 
 type Props = {
   data: Document<UniformInfo>;
 };
 
-const UniformConfirmCard: VFC<Props> = ({ data }) => {
+export const UniformConfirmCard: VFC<Props> = ({ data }) => {
   const { user } = useAuth();
   const { data: userInfo } = useDocument<UserInfo>(`users/${user?.uid}`);
   const toast = useToast();
@@ -73,5 +76,3 @@ const UniformConfirmCard: VFC<Props> = ({ data }) => {
     </>
   );
 };
-
-export default UniformConfirmCard;

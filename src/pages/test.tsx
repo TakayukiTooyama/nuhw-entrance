@@ -17,19 +17,21 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
-import { Button } from 'components/button';
-import { Card } from 'components/card';
-import { ConfirmDialog } from 'components/dialog';
-import { Layout } from 'components/layout';
-import { useAuth } from 'context/Auth';
 import ja from 'date-fns/locale/ja';
 import dayjs from 'dayjs';
-import { User } from 'models/users';
 import Router from 'next/router';
-import React, { useRef, useState, VFC } from 'react';
+import type { VFC } from 'react';
+import { useRef, useState } from 'react';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import { FcCalendar } from 'react-icons/fc';
-import { formatDate } from 'utils/format';
+
+import { Button } from '@/components/button';
+import { Card } from '@/components/card';
+import { ConfirmDialog } from '@/components/dialog';
+import { Layout } from '@/components/layout';
+import { useAuth } from '@/context/Auth';
+import type { User } from '@/models/users';
+import { formatDate } from '@/utils/format';
 
 registerLocale('ja', ja);
 dayjs.locale('ja');
@@ -53,7 +55,7 @@ const TestForm: VFC = () => {
   const [romaji, setRomaji] = useState<string>('');
   const [birthday, setBirthday] = useState<string>('');
   const [rikukyo, setRikukyo] = useState<string>('');
-  const [open, setOpen] = useState(false);
+  const [isField, setIsField] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   const [type, setType] = useState<string>('');
@@ -63,7 +65,7 @@ const TestForm: VFC = () => {
   const [registrationData, setRegistrationData] = useState<RegistrationData[]>(
     []
   );
-  const [edit, setEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
   const [select, setSelect] = useState('');
 
   const { data: userData } = useDocument<User>(
@@ -90,7 +92,7 @@ const TestForm: VFC = () => {
       setRecord('');
       setTournamentName('');
       setDate(new Date());
-      setOpen(false);
+      setIsField(false);
     }
   };
 
@@ -107,7 +109,7 @@ const TestForm: VFC = () => {
     };
     registrationData[selectIdx] = data;
     setRegistrationData([...registrationData]);
-    setEdit(false);
+    setIsEdit(false);
   };
   const toggleEdit = (
     type: string,
@@ -120,13 +122,13 @@ const TestForm: VFC = () => {
     setRecord(record);
     setTournamentName(tournamentName);
     setDate(date);
-    setEdit(true);
+    setIsEdit(true);
     setSelect(selectIdx);
   };
   const deleteData = (selectIdx: number) => {
     const newData = registrationData.filter((_data, idx) => idx !== selectIdx);
     setRegistrationData([...newData]);
-    setEdit(false);
+    setIsEdit(false);
   };
 
   const sendData = () => {
@@ -196,7 +198,7 @@ const TestForm: VFC = () => {
           />
           {registrationData.map((data, idx) => (
             <Box key={`${data.type}-${idx}`}>
-              {edit && select === `${idx}` ? (
+              {isEdit && select === `${idx}` ? (
                 <Stack align="center" mb={4}>
                   <Input
                     placeholder="種目（100m）"
@@ -287,7 +289,7 @@ const TestForm: VFC = () => {
               )}
             </Box>
           ))}
-          {open ? (
+          {isField ? (
             <Stack spacing={4} align="center">
               <Input
                 placeholder="種目（100m）"
@@ -332,7 +334,7 @@ const TestForm: VFC = () => {
               <Button colorScheme="teal" label="追加" onClick={addData} />
             </Stack>
           ) : (
-            !edit && <Button label="＋" onClick={() => setOpen(true)} />
+            !isEdit && <Button label="＋" onClick={() => setIsField(true)} />
           )}
           {registrationData.length > 0 && (
             <Button

@@ -1,27 +1,30 @@
 import { Box, Stack, Text, useDisclosure } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
-import { Button, FormButton } from 'components/button';
-import { DatePicker } from 'components/datepicker';
-import { SuccessDialog } from 'components/dialog';
-import { FormLabel } from 'components/form';
-import { FormHeading } from 'components/heading';
+import Router from 'next/router';
+import type { VFC } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import * as yup from 'yup';
+
+import { Button, FormButton } from '@/components/button';
+import { DatePicker } from '@/components/datepicker';
+import { SuccessDialog } from '@/components/dialog';
+import { FormLabel } from '@/components/form';
+import { FormHeading } from '@/components/heading';
 import {
   EventCheckbox,
   FormControl,
   FormNumber,
   FormText,
-} from 'components/input';
-import { useAuth } from 'context/Auth';
-import { CreateEntryFormInput, Tournament, UserInfo } from 'models/users';
-import Router from 'next/router';
-// import fetch from 'node-fetch';
-import React, { VFC } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { FirebaseTimestamp } from 'utils/firebase';
-// import { formatTimeLimitNotation } from 'utils/format';
-import { eventOptions } from 'utils/selectOptions';
-import * as yup from 'yup';
+} from '@/components/input';
+import { useAuth } from '@/context/Auth';
+import type {
+  CreateEntryFormInput,
+  Tournament,
+  UserInfo,
+} from '@/models/users';
+import { FirebaseTimestamp } from '@/utils/firebase';
+import { eventOptions } from '@/utils/selectOptions';
 
 const schema = yup.object().shape({
   name: yup.string().required('大会名を入力してください。'),
@@ -43,16 +46,11 @@ const defaultValues: CreateEntryFormInput = {
   events: [],
 };
 
-const CreateEntryForm: VFC = () => {
+export const CreateEntryForm: VFC = () => {
   const { user } = useAuth();
   const { data: userInfo } = useDocument<UserInfo>(
     user ? `users/${user.uid}` : null
   );
-
-  // const { data: users } = useCollection<UserInfo>(`users`, {
-  //   where: ['teamId', '==', userInfo.teamId],
-  //   isCollectionGroup: true,
-  // });
 
   const { add } = useCollection<Tournament>(
     `teams/${userInfo?.teamId}/tournaments`
@@ -72,24 +70,6 @@ const CreateEntryForm: VFC = () => {
 
   const { onOpen, isOpen } = useDisclosure();
 
-  // // 部員全体に大会エントリー開始をメールで知らせる
-  // const sendEmail = async (
-  //   tournamentName: string,
-  //   timeLimit: string,
-  //   email: string
-  // ) => {
-  //   await fetch('/api/send', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       email: `${email}`,
-  //       message: `${tournamentName}のエントリーが開始されました。期限【${timeLimit}】早めのエントリーにご協力ください。`,
-  //     }),
-  //   });
-  // };
-
   // エントリーフォーム作成処理
   const createEntryForm = async (data: CreateEntryFormInput) => {
     const newEntryFormData: Tournament = {
@@ -108,14 +88,6 @@ const CreateEntryForm: VFC = () => {
     };
     add(newEntryFormData).then(() => {
       onOpen();
-      // users.map(async (user) => {
-      // await sendEmail(
-      //   data.name,
-      //     formatTimeLimitNotation(data.timeLimit),
-      //     user.email
-      //     ).then(() => {
-      //     });
-      // });
     });
   };
 
@@ -238,5 +210,3 @@ const CreateEntryForm: VFC = () => {
     </>
   );
 };
-
-export default CreateEntryForm;

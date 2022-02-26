@@ -1,6 +1,6 @@
-export { default as CreateProfile } from './CreateProfile';
-export { default as SignIn } from './SignIn';
-export { default as TeamCreate } from './TeamCreate';
-export { default as TeamCreateForm } from './TeamCreateForm';
-export { default as TeamJoin } from './TeamJoin';
-export { default as TeamJoinForm } from './TeamJoinForm';
+export { CreateProfile } from './CreateProfile';
+export { SignIn } from './SignIn';
+export { TeamCreate } from './TeamCreate';
+export { TeamCreateForm } from './TeamCreateForm';
+export { TeamJoin } from './TeamJoin';
+export { TeamJoinForm } from './TeamJoinForm';

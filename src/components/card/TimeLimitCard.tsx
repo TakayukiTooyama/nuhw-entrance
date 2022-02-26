@@ -1,23 +1,25 @@
 import { DeleteIcon } from '@chakra-ui/icons';
-import { Box, BoxProps, Flex, IconButton } from '@chakra-ui/react';
+import type { BoxProps } from '@chakra-ui/react';
+import { Box, Flex, IconButton } from '@chakra-ui/react';
+import Router, { useRouter } from 'next/router';
+import type { FC } from 'react';
+
 import {
   CardTextHeading,
   CardTextSchedule,
   CardTextTimeLimit,
-} from 'components/text';
-import { Entry, Expedition, Tournament } from 'models/users';
-import Router, { useRouter } from 'next/router';
-import React, { FC } from 'react';
-import { formatTimeLimitNotation, formatWeekdayNotation } from 'utils/format';
-import { MotionBox } from 'utils/motion';
+} from '@/components/text';
+import type { Entry, Tournament } from '@/models/users';
+import { formatTimeLimitNotation, formatWeekdayNotation } from '@/utils/format';
+import { MotionBox } from '@/utils/motion';
 
 type Props = BoxProps & {
-  data: Tournament | Entry | Expedition;
+  data: Tournament | Entry;
   link: string;
   onOpen?: () => void;
 };
 
-const TimeLimitCard: FC<Props> = ({
+export const TimeLimitCard: FC<Props> = ({
   data,
   link,
   children,
@@ -80,5 +82,3 @@ const TimeLimitCard: FC<Props> = ({
     </MotionBox>
   );
 };
-
-export default TimeLimitCard;

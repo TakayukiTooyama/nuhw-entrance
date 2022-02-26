@@ -1,14 +1,15 @@
+import type { InputProps } from '@chakra-ui/react';
 import {
   FormControl,
   FormErrorMessage,
   FormLabel,
   Input,
   InputGroup,
-  InputProps,
 } from '@chakra-ui/react';
 import { ErrorMessage } from '@hookform/error-message';
-import React, { FC } from 'react';
-import { Control, FieldErrors, useController } from 'react-hook-form';
+import type { FC } from 'react';
+import type { Control, FieldErrors } from 'react-hook-form';
+import { useController } from 'react-hook-form';
 
 type Props = InputProps & {
   name: string;
@@ -17,7 +18,7 @@ type Props = InputProps & {
   errors: FieldErrors;
 };
 
-const FormText: FC<Props> = ({
+export const FormText: FC<Props> = ({
   label,
   name,
   control,
@@ -27,6 +28,7 @@ const FormText: FC<Props> = ({
 }) => {
   const {
     field: { ref, ...inputProps },
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     fieldState: { invalid, isTouched },
   } = useController({
     name,
@@ -53,5 +55,3 @@ const FormText: FC<Props> = ({
     </FormControl>
   );
 };
-
-export default FormText;

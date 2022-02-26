@@ -6,34 +6,36 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
-import { Document } from '@nandorojo/swr-firestore';
-import { Button } from 'components/button';
-import { ConfirmDialog } from 'components/dialog';
+import type { Document } from '@nandorojo/swr-firestore';
+import Router from 'next/router';
+import type { VFC } from 'react';
+import { useRef, useState } from 'react';
+
+import { Button } from '@/components/button';
+import { ConfirmDialog } from '@/components/dialog';
 import {
   FemaleUniformManagementTable,
   MaleUniformManagementTable,
-} from 'components/template/uniform';
-import { UniformInfo } from 'models/users';
-import Router from 'next/router';
-import React, { useRef, useState, VFC } from 'react';
+} from '@/components/template/uniform';
+import type { UniformInfo } from '@/models/users';
 
 type Props = {
   orders: Document<UniformInfo>[];
 };
 
-const UnifomrManagementTableList: VFC<Props> = ({ orders }) => {
+export const UniformManagementTableList: VFC<Props> = ({ orders }) => {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [genderToggle, setGenderToggle] = useState<'男' | '女'>('男');
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const cancelRef = useRef();
 
   const maleData = orders.filter((data) => data.gender === '男');
   const femaleData = orders.filter((data) => data.gender === '女');
 
   const appendSpreadsheet = async () => {
-    setLoading(true);
+    setIsLoading(true);
     try {
       const manTableAppendData = maleData.map((info) => {
         const sizeData = info.order.flatMap((data) => data.size);
@@ -77,7 +79,7 @@ const UnifomrManagementTableList: VFC<Props> = ({ orders }) => {
       });
     } catch (err) {
       console.error(err);
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -121,7 +123,7 @@ const UnifomrManagementTableList: VFC<Props> = ({ orders }) => {
           colorScheme="teal"
           shadow="base"
           onClick={onOpen}
-          isLoading={loading}
+          isLoading={isLoading}
         />
       </Stack>
       <ConfirmDialog
@@ -138,5 +140,3 @@ const UnifomrManagementTableList: VFC<Props> = ({ orders }) => {
     </>
   );
 };
-
-export default UnifomrManagementTableList;

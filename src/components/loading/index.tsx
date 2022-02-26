@@ -1,3 +1,3 @@
-export { default as Bounceball } from './Bounceball';
-export { default as Loading } from './Loading';
-export { default as Spinner } from './Spinner';
+export { BounceballLoading as Bounceball } from './Bounceball';
+export { Loading } from './Loading';
+export { BasicSpinner as Spinner } from './Spinner';

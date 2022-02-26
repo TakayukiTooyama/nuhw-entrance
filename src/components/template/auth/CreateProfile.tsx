@@ -1,16 +1,18 @@
 import { Box, Container, Heading, Stack } from '@chakra-ui/react';
 import { useDocument } from '@nandorojo/swr-firestore';
-import { Card } from 'components/card';
-import { useAuth } from 'context/Auth';
-import { UserInfo } from 'models/users';
 import Image from 'next/image';
 import Router from 'next/router';
-import React, { useEffect, VFC } from 'react';
-import { screenTransition } from 'utils/firestore/users';
+import type { VFC } from 'react';
+import { useEffect } from 'react';
 
-import CreateProfileForm from './CreateProfileForm';
+import { Card } from '@/components/card';
+import { useAuth } from '@/context/Auth';
+import type { UserInfo } from '@/models/users';
+import { screenTransition } from '@/utils/firestore/users';
 
-const CreateProfile: VFC = () => {
+import { CreateProfileForm } from './CreateProfileForm';
+
+export const CreateProfile: VFC = () => {
   const { user } = useAuth();
   const { data: userInfo } = useDocument<UserInfo>(
     user ? `users/${user.uid}` : null
@@ -42,5 +44,3 @@ const CreateProfile: VFC = () => {
     </Box>
   );
 };
-
-export default CreateProfile;

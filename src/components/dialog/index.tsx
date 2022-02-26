@@ -1,3 +1,3 @@
-export { default as ConfirmDialog } from './ConfirmDialog';
-export { default as DeleteDialog } from './DeleteDialog';
-export { default as SuccessDialog } from './SuccessDialog';
+export { ConfirmDialog } from './ConfirmDialog';
+export { DeleteDialog } from './DeleteDialog';
+export { SuccessDialog } from './SuccessDialog';

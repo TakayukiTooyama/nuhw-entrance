@@ -8,18 +8,21 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
-import { Document, fuego } from '@nandorojo/swr-firestore';
-import { ConfirmCard } from 'components/card';
-import { DeleteDialog } from 'components/dialog';
-import { useAuth } from 'context/Auth';
-import { Entry } from 'models/users';
-import React, { useRef, VFC } from 'react';
+import type { Document } from '@nandorojo/swr-firestore';
+import { fuego } from '@nandorojo/swr-firestore';
+import type { VFC } from 'react';
+import { useRef } from 'react';
+
+import { ConfirmCard } from '@/components/card';
+import { DeleteDialog } from '@/components/dialog';
+import { useAuth } from '@/context/Auth';
+import type { Entry } from '@/models/users';
 
 type Props = {
   data: Document<Entry>;
 };
 
-const EntryConfirmCard: VFC<Props> = ({ data }) => {
+export const EntryConfirmCard: VFC<Props> = ({ data }) => {
   const { user } = useAuth();
   const toast = useToast();
 
@@ -77,5 +80,3 @@ const EntryConfirmCard: VFC<Props> = ({ data }) => {
     </>
   );
 };
-
-export default EntryConfirmCard;

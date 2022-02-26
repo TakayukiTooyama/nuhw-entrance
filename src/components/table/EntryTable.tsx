@@ -9,10 +9,13 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import type { Entry } from 'models/users';
-import { Event } from 'models/users';
-import React, { useMemo, VFC } from 'react';
-import { Column, useSortBy, useTable } from 'react-table';
+import type { VFC } from 'react';
+import { useMemo } from 'react';
+import type { Column } from 'react-table';
+import { useSortBy, useTable } from 'react-table';
+
+import type { Entry } from '@/models/users';
+import type { Event } from '@/models/users';
 
 type Props = {
   entries: Omit<Entry, 'timeLimit'>[];
@@ -26,7 +29,7 @@ type TableData = {
   entryRecord: string;
 };
 
-const EntryTable: VFC<Props> = ({ entries }) => {
+export const EntryTable: VFC<Props> = ({ entries }) => {
   const tableData = () => {
     const tableData: TableData[] = [];
     entries.forEach((data) => {
@@ -155,5 +158,3 @@ const EntryTable: VFC<Props> = ({ entries }) => {
     </>
   );
 };
-
-export default EntryTable;

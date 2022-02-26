@@ -1,12 +1,14 @@
 import { DeleteIcon } from '@chakra-ui/icons';
-import { Box, BoxProps, Flex, IconButton, Text } from '@chakra-ui/react';
-import { Document } from '@nandorojo/swr-firestore';
-import { CardTextHeading, CardTextTimeLimit } from 'components/text';
-import { UniformCardInfo } from 'models/users';
+import type { BoxProps } from '@chakra-ui/react';
+import { Box, Flex, IconButton, Text } from '@chakra-ui/react';
+import type { Document } from '@nandorojo/swr-firestore';
 import Router, { useRouter } from 'next/router';
-import React, { VFC } from 'react';
-import { formatTimeLimitNotation } from 'utils/format';
-import { MotionBox } from 'utils/motion';
+import type { VFC } from 'react';
+
+import { CardTextHeading, CardTextTimeLimit } from '@/components/text';
+import type { UniformCardInfo } from '@/models/users';
+import { formatTimeLimitNotation } from '@/utils/format';
+import { MotionBox } from '@/utils/motion';
 
 type Props = BoxProps & {
   text: string;
@@ -15,7 +17,7 @@ type Props = BoxProps & {
   onOpen?: () => void;
 };
 
-const UniformTimeLimitCard: VFC<Props> = ({
+export const UniformTimeLimitCard: VFC<Props> = ({
   text,
   data,
   link,
@@ -79,5 +81,3 @@ const UniformTimeLimitCard: VFC<Props> = ({
     </MotionBox>
   );
 };
-
-export default UniformTimeLimitCard;

@@ -1,5 +1,6 @@
-import { SignIn } from 'components/template/auth';
-import { NextPage } from 'next';
+import type { NextPage } from 'next';
+
+import { SignIn } from '@/components/template/auth';
 
 const SignInPage: NextPage = () => <SignIn />;
 

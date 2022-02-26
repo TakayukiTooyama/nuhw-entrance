@@ -2,14 +2,21 @@
 import { Stack } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDocument } from '@nandorojo/swr-firestore';
-import { FormButton } from 'components/button';
-import { FormRadio, FormText } from 'components/input';
-import { useAuth } from 'context/Auth';
-import { User, UserInfo, UserInfoInForm } from 'models/users';
-import React, { useState, VFC } from 'react';
+import type { VFC } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { blockOptions, genderOptions, gradeOptions } from 'utils/selectOptions';
-import { mixed, object, SchemaOf, string } from 'yup';
+import type { SchemaOf } from 'yup';
+import { mixed, object, string } from 'yup';
+
+import { FormButton } from '@/components/button';
+import { FormRadio, FormText } from '@/components/input';
+import { useAuth } from '@/context/Auth';
+import type { User, UserInfo, UserInfoInForm } from '@/models/users';
+import {
+  blockOptions,
+  genderOptions,
+  gradeOptions,
+} from '@/utils/selectOptions';
 
 type ProfileInput = Omit<UserInfoInForm, 'email' | 'role'>;
 const schema: SchemaOf<ProfileInput> = object().shape({
@@ -40,7 +47,7 @@ type Props = {
   userInfo: UserInfo;
 };
 
-const ProfileChangeForm: VFC<Props> = ({ userInfo }) => {
+export const ProfileChangeForm: VFC<Props> = ({ userInfo }) => {
   const defaultValues: ProfileInput = {
     name: userInfo.name,
     furigana: userInfo.furigana,
@@ -125,5 +132,3 @@ const ProfileChangeForm: VFC<Props> = ({ userInfo }) => {
     </form>
   );
 };
-
-export default ProfileChangeForm;

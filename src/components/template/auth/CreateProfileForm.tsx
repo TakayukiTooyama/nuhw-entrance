@@ -2,20 +2,22 @@
 import { Stack } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDocument } from '@nandorojo/swr-firestore';
-import { FormButton } from 'components/button';
-import { FormRadio, FormText } from 'components/input';
-import { useAuth } from 'context/Auth';
-import { User, UserInfoInForm } from 'models/users';
 import Router from 'next/router';
-import React, { VFC } from 'react';
+import type { VFC } from 'react';
 import { useForm } from 'react-hook-form';
+import type { SchemaOf } from 'yup';
+import { mixed, object, string } from 'yup';
+
+import { FormButton } from '@/components/button';
+import { FormRadio, FormText } from '@/components/input';
+import { useAuth } from '@/context/Auth';
+import type { User, UserInfoInForm } from '@/models/users';
 import {
   blockOptions,
   genderOptions,
   gradeOptions,
   roleOptions,
-} from 'utils/selectOptions';
-import { mixed, object, SchemaOf, string } from 'yup';
+} from '@/utils/selectOptions';
 
 type CreateProfileInput = Omit<UserInfoInForm, 'email'>;
 
@@ -55,7 +57,7 @@ const defaultValues: CreateProfileInput = {
   furigana: '',
 };
 
-const CreateProfileForm: VFC = () => {
+export const CreateProfileForm: VFC = () => {
   const {
     handleSubmit,
     control,
@@ -137,5 +139,3 @@ const CreateProfileForm: VFC = () => {
     </form>
   );
 };
-
-export default CreateProfileForm;

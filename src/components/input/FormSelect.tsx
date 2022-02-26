@@ -1,6 +1,8 @@
-import { Select, SelectProps, Stack, Text } from '@chakra-ui/react';
-import React, { VFC } from 'react';
-import { Control, useController } from 'react-hook-form';
+import type { SelectProps } from '@chakra-ui/react';
+import { Select, Stack, Text } from '@chakra-ui/react';
+import type { VFC } from 'react';
+import type { Control } from 'react-hook-form';
+import { useController } from 'react-hook-form';
 
 type Props = SelectProps & {
   name: string;
@@ -9,7 +11,7 @@ type Props = SelectProps & {
   control: Control<any, object>;
 };
 
-const FormSelect: VFC<Props> = ({
+export const FormSelect: VFC<Props> = ({
   placeholder,
   name,
   label,
@@ -47,5 +49,3 @@ const FormSelect: VFC<Props> = ({
     </Stack>
   );
 };
-
-export default FormSelect;

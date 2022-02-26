@@ -1,17 +1,18 @@
-import { UserAuth } from 'models/users';
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { auth, provider } from 'utils/firebase';
+import { createContext, useContext, useEffect, useState } from 'react';
+
+import type { UserAuth } from '@/models/users';
+import { auth, provider } from '@/utils/firebase';
 
 type AuthContextProps = {
   user: UserAuth | null | undefined;
-  loading: boolean;
+  isLoading: boolean;
   login: () => void;
   logout: () => void;
 };
 
 const AuthContext = createContext<AuthContextProps>({
   user: undefined,
-  loading: true,
+  isLoading: true,
   login: () => undefined,
   logout: () => undefined,
 });
@@ -21,13 +22,11 @@ export const AuthProvider = ({ children }) => {
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 };
 
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+export const useAuth = () => useContext(AuthContext);
 
 const useProvideAuth = () => {
   const [user, setUser] = useState<UserAuth | null | undefined>();
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const login = () => {
     auth.signInWithRedirect(provider);
@@ -43,14 +42,14 @@ const useProvideAuth = () => {
         setUser(user);
       } else {
         setUser(null);
-        setLoading(false);
+        setIsLoading(false);
       }
     });
   }, [user]);
 
   return {
     user,
-    loading,
+    isLoading,
     login,
     logout,
   };

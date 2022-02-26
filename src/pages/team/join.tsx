@@ -1,6 +1,6 @@
-import { TeamJoin } from 'components/template/auth';
-import { NextPage } from 'next';
-import React from 'react';
+import type { NextPage } from 'next';
+
+import { TeamJoin } from '@/components/template/auth';
 
 const TeamJoinPage: NextPage = () => <TeamJoin />;
 
