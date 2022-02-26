@@ -1,7 +1,15 @@
 const withPWA = require('next-pwa');
+const runtimeCaching = require('next-pwa/cache');
 
-module.exports = withPWA({
-  future: { webpack5: true },
+const nextCofig = {
+  reactStrictMode: true,
+  poweredByHeader: false,
+  swcMinify: true,
+  pwa: {
+    disable: process.env.NODE_ENV === 'development',
+    dest: 'public',
+    runtimeCaching,
+  },
   env: {
     FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
     FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
@@ -13,8 +21,6 @@ module.exports = withPWA({
     MICRO_CMS_HOST: process.env.MICRO_CMS_HOST,
     MICRO_CMS_API_KEY: process.env.MICRO_CMS_API_KEY,
   },
-  pwa: {
-    disable: process.env.NODE_ENV === 'development',
-    dest: 'public',
-  },
-});
+};
+
+module.exports = withPWA(nextCofig);

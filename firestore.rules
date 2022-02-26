@@ -23,12 +23,6 @@ service cloud.firestore {
         allow delete: if isAuthenticated()
                       && isUserAuthenticated(userID)
       }
-      match /votes/{voteID} {
-        allow read, write: if true;
-      }
-      match /expenses/{expenseID} {
-        allow read, write: if true;
-      }
       match /orders/{orderID} {
         allow read, write: if true;
       }
@@ -44,9 +38,6 @@ service cloud.firestore {
       match /tournaments/{tournamentID} {
         allow read, write: if isAuthenticated();
       }
-      match /expeditions/{expeditionID} {
-        allow read, write: if true;
-      }
       match /uniforms/{uniformID} {
         allow read, write: if true;
       }
@@ -55,13 +46,7 @@ service cloud.firestore {
       }
     }
 
-
     match /{path=**}/entries/{entryID} {
-      allow read: if isAuthenticated()
-                  && isAdmin(request.auth.uid);
-    }
-
-    match /{path=**}/votes/{voteID} {
       allow read: if isAuthenticated()
                   && isAdmin(request.auth.uid);
     }

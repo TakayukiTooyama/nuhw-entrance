@@ -7,22 +7,17 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "type-check": "tsc --pretty --noEmit",
-    "format": "prettier --write .",
-    "lint": "eslint . --ext ts --ext tsx --ext js",
+    "lint": "next lint --dir src",
+    "lint:eslint": "eslint --cache .",
+    "lint:prettier": "prettier --check .",
+    "fix": "run-s -l -c fix:eslint fix:prettier",
+    "fix:eslint": "yarn lint:eslint --fix",
+    "fix:prettier": "yarn lint:prettier --write",
     "prepare": "husky install"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn run type-check"
-    }
-  },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "yarn lint",
-      "yarn format"
-    ]
+    "*.{js, ts,tsx}": "yarn fix:eslint",
+    "*": "yarn fix:prettier"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.1.1",
@@ -59,15 +54,17 @@
     "@typescript-eslint/eslint-plugin": "^5.9.0",
     "@typescript-eslint/parser": "^5.9.0",
     "eslint": "^8.6.0",
+    "eslint-config-next": "^12.1.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-import-access": "^1.0.1",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
-    "husky": "^7.0.4",
+    "husky": ">=6",
     "identity-obj-proxy": "^3.0.0",
-    "lint-staged": "^12.1.7",
+    "lint-staged": ">=10",
     "prettier": "^2.5.1",
     "typescript": "^4.5.4",
     "webpack": "^5.65.0"

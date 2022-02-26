@@ -1,8 +1,8 @@
 **/node_modules/*
 **/out/*
 **/.next/*
-**/models/*.d.ts
-.eslintrc.js
+/.eslintrc.js
+**/*.d.ts
 
 # PWA
 **/public/precache.*.*.js
