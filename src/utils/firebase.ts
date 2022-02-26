@@ -20,7 +20,4 @@ export const fuego = new Fuego(config);
 export const auth = firebase.auth();
 export const db = firebase.firestore();
 export const provider = new firebase.auth.GoogleAuthProvider();
-export const fb = firebase;
-export const FirebaseFieldValue = firebase.firestore.FieldValue;
 export const FirebaseTimestamp = firebase.firestore.Timestamp;
-export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp();
