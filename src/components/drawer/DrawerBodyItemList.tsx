@@ -10,7 +10,7 @@ import { GiClothes } from 'react-icons/gi';
 import { ImProfile } from 'react-icons/im';
 import { IoIosPeople } from 'react-icons/io';
 import { MdDescription } from 'react-icons/md';
-import { RiLogoutBoxLine, RiQuestionAnswerFill } from 'react-icons/ri';
+import { RiLogoutBoxLine } from 'react-icons/ri';
 import { SiMinutemailer } from 'react-icons/si';
 import { MotionBox } from 'utils/motion';
 import { listVariants } from 'utils/variants';
@@ -53,12 +53,6 @@ const DrawerBodyItemList: VFC = () => {
       onClick: () => Router.push('https://forms.gle/7NfKAdVBseASLbWH6'),
     },
     {
-      icon: RiQuestionAnswerFill,
-      iconColor: 'gray.500',
-      name: 'FAQ',
-      onClick: () => Router.push('/faq'),
-    },
-    {
       icon: MdDescription,
       iconColor: 'gray.500',
       name: '取扱説明書',
@@ -78,9 +72,6 @@ const DrawerBodyItemList: VFC = () => {
   return (
     <MotionBox as={List} spacing={4} variants={listVariants}>
       {bodyItemList.map((item) => {
-        if (item.name === '集金' && userInfo?.role !== '管理者') {
-          return false;
-        }
         if (item.name === '管理者引き継ぎ' && userInfo?.role !== '管理者') {
           return false;
         }

@@ -10,7 +10,6 @@
     "type-check": "tsc --pretty --noEmit",
     "format": "prettier --write .",
     "lint": "eslint . --ext ts --ext tsx --ext js",
-    "api:build": "aspida",
     "prepare": "husky install"
   },
   "husky": {
@@ -26,7 +25,6 @@
     ]
   },
   "dependencies": {
-    "@aspida/fetch": "^1.6.3",
     "@chakra-ui/icons": "^1.1.1",
     "@chakra-ui/react": "^1.7.4",
     "@emotion/react": "^11.7.1",
