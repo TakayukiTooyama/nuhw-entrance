@@ -16,7 +16,9 @@ type Props = {
 
 export const TopHeading: VFC<Props> = ({ title, linkData, adminLink }) => {
   const { user } = useAuth();
-  const { data: userInfo } = useDocument<UserInfo>(`users/${user?.uid}`);
+  const { data: userInfo } = useDocument<UserInfo>(
+    user ? `users/${user?.uid}` : null
+  );
   const router = useRouter();
   const path = router.asPath.split('/')[1];
   const currentPath = router.pathname;

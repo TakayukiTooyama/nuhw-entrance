@@ -12,13 +12,12 @@ import type { Entry, Tournament, User } from '@/models/users';
 import { screenTransition } from '@/utils/firestore/users';
 
 const linkData = [
-  { label: '大会一覧', link: '/' },
+  { label: '大会一覧', link: '/entry' },
   { label: '確認', link: '/entry/confirm' },
 ];
 
 export const Home: NextPage = () => {
   const { user } = useAuth();
-
   const { data: userInfo } = useDocument<User>(
     user ? `users/${user?.uid}` : null
   );
@@ -46,15 +45,16 @@ export const Home: NextPage = () => {
 
   // 期限内の大会
   const filteredTournament = tournaments?.filter((data) => {
-    const tournamentNameArray = entries?.map((entry) => entry.tournamentName);
+    const tournamentIds = entries?.map((entry) => entry.id);
     return (
       data.timeLimit > new Date() &&
       data.view &&
-      !tournamentNameArray?.includes(data.tournamentName)
+      !tournamentIds?.includes(data.id)
     );
   });
 
   tournamentsError && console.error(tournamentsError);
+
   return (
     <Layout title="Home">
       <TopHeading title="エントリー" linkData={linkData} />
@@ -63,12 +63,6 @@ export const Home: NextPage = () => {
         {filteredTournament?.length > 0 && (
           <EntryList tournaments={filteredTournament} />
         )}
-        {/* <Button
-          label="新潟県選手権出場する選手へ"
-          colorScheme="teal"
-          onClick={() => Router.push('/test')}
-          mb={12}
-        /> */}
         {(tournamentsError || filteredTournament?.length === 0) && (
           <Box>
             <Text mb={8}>エントリーできる大会がありません。</Text>

@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 
 import { FormButton } from '@/components/button';
 import { InputText } from '@/components/input';
-import { LinkText } from '@/components/text';
 import { useAuth } from '@/context/Auth';
 import type { TeamInfo, User } from '@/models/users';
 
@@ -76,13 +75,6 @@ export const TeamJoinForm: VFC = () => {
         color="white"
         onClick={userJoinToTeam}
         isLoading={isSubmitting}
-      />
-      <LinkText
-        textAlign="center"
-        link="/team/create"
-        text="チーム作成はこちら"
-        cursor="pointer"
-        _hover={{ opacity: 0.7 }}
       />
     </>
   );

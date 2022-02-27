@@ -1,7 +1,7 @@
 /* eslint-disable no-sparse-arrays */
 import { Box, Heading, Select, Stack, useToast } from '@chakra-ui/react';
 import type { Document } from '@nandorojo/swr-firestore';
-import { useCollection, useDocument } from '@nandorojo/swr-firestore';
+import { useDocument } from '@nandorojo/swr-firestore';
 import type { VFC } from 'react';
 import { useState } from 'react';
 
@@ -15,21 +15,6 @@ import { eventOptions } from '@/utils/selectOptions';
 type Props = {
   entries: Document<Omit<Entry, 'timeLimit'>>[];
   tournamentId: string | string[];
-};
-
-type TestData = {
-  name: string;
-  romaji: string;
-  furigana: string;
-  gender: '男' | '女';
-  rikukyo: string;
-  birthday: string;
-  tournamentData: {
-    type: string;
-    record: string;
-    tournamentName: string;
-    date: string;
-  }[];
 };
 
 export const EntryManagementTableList: VFC<Props> = ({
@@ -47,21 +32,13 @@ export const EntryManagementTableList: VFC<Props> = ({
     }
   );
 
-  const { data: testData } = useCollection<TestData>(
-    `teams/Vwn4SWU3FsqSbqIU7mKy/test`,
-    { orderBy: ['gender', 'desc'] }
-  );
-
   const toast = useToast();
 
   const [isEdit, setIsEdit] = useState(false);
   const [event, setEvent] = useState<Event>();
-  const [isLoading, setIsLoading] = useState(false);
 
   const maleEntryData = entries.filter((data) => data.gender === '男');
   const femaleEntryData = entries.filter((data) => data.gender === '女');
-  const maleData = testData?.filter((data) => data.gender === '男');
-  const femaleData = testData?.filter((data) => data.gender === '女');
 
   const tables = [
     { gender: '男子', entries: maleEntryData },
@@ -100,107 +77,6 @@ export const EntryManagementTableList: VFC<Props> = ({
         isClosable: true,
       });
     });
-  };
-
-  const appendSpreadsheet = async () => {
-    setIsLoading(true);
-
-    try {
-      const manTableAppendData = maleData.flatMap((data, idx) =>
-        data.tournamentData.flatMap((tournament, id) => [
-          [
-            idx + id + 1,
-            '',
-            data.furigana,
-            data.romaji,
-            tournament.type,
-            tournament.record,
-            data.rikukyo,
-            '',
-          ],
-          [, '', data.name, , '', tournament.date, , data.birthday],
-        ])
-      );
-
-      const womanTableAppendData = femaleData.flatMap((data, idx) =>
-        data.tournamentData.flatMap((tournament, id) => [
-          [
-            idx + id + 1,
-            '',
-            data.furigana,
-            data.romaji,
-            tournament.type,
-            tournament.record,
-            data.rikukyo,
-            '',
-          ],
-          [, '', data.name, , '', tournament.date, , data.birthday],
-        ])
-      );
-      const evidenceAppendData = testData?.flatMap((data, idx) =>
-        data.tournamentData.flatMap((tournament, id) => [
-          [
-            idx + id + 1,
-            data.gender,
-            data.name,
-            tournament.type,
-            tournament.record,
-            tournament.date,
-            tournament.tournamentName,
-            '',
-          ],
-        ])
-      );
-
-      const manTableResponse = await fetch(
-        'https://v1.nocodeapi.com/sphacks/google_sheets/rWCufIptQSvrrKkj?tabId=男子申し込み用紙',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(manTableAppendData),
-        }
-      );
-      const wonmanTableResponse = await fetch(
-        'https://v1.nocodeapi.com/sphacks/google_sheets/rWCufIptQSvrrKkj?tabId=女子申し込み用紙',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(womanTableAppendData),
-        }
-      );
-      const evidenceResponse = await fetch(
-        'https://v1.nocodeapi.com/sphacks/google_sheets/rWCufIptQSvrrKkj?tabId=参加標準記録証明文書',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(evidenceAppendData),
-        }
-      );
-      await manTableResponse.json().then(async () => {
-        await wonmanTableResponse.json().then(async () => {
-          await evidenceResponse.json().then(() => {
-            toast({
-              title: '書き込み成功',
-              description: 'スプレッドシートにデータが書き込まれました。',
-              status: 'success',
-              duration: 4000,
-              isClosable: true,
-            });
-            setIsLoading(false);
-          });
-        });
-      });
-      setIsLoading(false);
-    } catch (err) {
-      console.error(err);
-      setIsLoading(false);
-    }
   };
 
   return (
@@ -263,11 +139,6 @@ export const EntryManagementTableList: VFC<Props> = ({
           onClick={() => setIsEdit(true)}
         />
       )}
-      <Button
-        label="県選申し込み作成"
-        onClick={appendSpreadsheet}
-        isLoading={isLoading}
-      />
     </Stack>
   );
 };

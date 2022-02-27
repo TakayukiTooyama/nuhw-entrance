@@ -50,8 +50,6 @@ export const eventOptions: Event[] = [
   'やり投',
   '十種競技',
   '七種競技',
-  '4×100リレー',
-  '4×400リレー',
 ];
 
 export const courseOptions = ['行き', '帰り'];

@@ -11,12 +11,7 @@ import { DatePicker } from '@/components/datepicker';
 import { SuccessDialog } from '@/components/dialog';
 import { FormLabel } from '@/components/form';
 import { FormHeading } from '@/components/heading';
-import {
-  EventCheckbox,
-  FormControl,
-  FormNumber,
-  FormText,
-} from '@/components/input';
+import { EventCheckbox, FormControl, FormText } from '@/components/input';
 import { useAuth } from '@/context/Auth';
 import type {
   CreateEntryFormInput,
@@ -28,8 +23,6 @@ import { eventOptions } from '@/utils/selectOptions';
 
 const schema = yup.object().shape({
   name: yup.string().required('大会名を入力してください。'),
-  individualExpense: yup.number().required(),
-  groupExpense: yup.number().required(),
   startDate: yup.date().required(),
   endDate: yup.date().required(),
   timeLimit: yup.date().required(),
@@ -38,8 +31,6 @@ const schema = yup.object().shape({
 
 const defaultValues: CreateEntryFormInput = {
   name: '',
-  individualExpense: 1000,
-  groupExpense: 500,
   startDate: new Date(),
   endDate: new Date(),
   timeLimit: new Date(),
@@ -74,10 +65,6 @@ export const CreateEntryForm: VFC = () => {
   const createEntryForm = async (data: CreateEntryFormInput) => {
     const newEntryFormData: Tournament = {
       tournamentName: data.name,
-      expense: {
-        individual: data.individualExpense,
-        group: data.groupExpense,
-      },
       startDate: data.startDate,
       endDate: data.endDate,
       timeLimit: data.timeLimit,
@@ -164,26 +151,9 @@ export const CreateEntryForm: VFC = () => {
             />
           </FormControl>
 
-          {/* エントリー費 */}
-          <Stack>
-            <FormLabel label="4. エントリー費" />
-            <FormNumber
-              label="個人種目"
-              name="individualExpense"
-              control={control}
-              unit="円"
-            />
-            <FormNumber
-              label="団体種目"
-              name="groupExpense"
-              control={control}
-              unit="円"
-            />
-          </Stack>
-
           {/* エントリー種目 */}
           <Stack spacing={4}>
-            <FormLabel label="5. エントリー種目" />
+            <FormLabel label="4. エントリー種目" />
             <Button label="全ての種目を選択" onClick={allInput} />
             <EventCheckbox
               name="events"

@@ -106,25 +106,6 @@ export const EntryForm: VFC = () => {
       return;
     }
 
-    const newEventsInfo: EventInfo[] = [];
-    eventsInfo.forEach((event) => {
-      data.events.forEach((name) => {
-        if (event.name === name) {
-          if (event.name === '4×400リレー' || event.name === '4×100リレー') {
-            newEventsInfo.push({
-              ...event,
-              expense: tournamentInfo.expense.group,
-            });
-          } else {
-            newEventsInfo.push({
-              ...event,
-              expense: tournamentInfo.expense.individual,
-            });
-          }
-        }
-      });
-    });
-
     const newEntryData: Omit<Entry, 'timeLimit'> = {
       name: userInfo.name,
       furigana: userInfo.furigana,
@@ -134,7 +115,7 @@ export const EntryForm: VFC = () => {
       tournamentName: tournamentInfo.tournamentName,
       startDate: tournamentInfo.startDate,
       endDate: tournamentInfo.endDate,
-      eventsInfo: newEventsInfo,
+      eventsInfo: eventsInfo,
       addedAt: FirebaseTimestamp.now(),
     };
 

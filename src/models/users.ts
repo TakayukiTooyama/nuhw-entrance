@@ -74,7 +74,6 @@ export type Tournament = {
   endDate: Date;
   timeLimit: Date;
   events: Event[];
-  expense: EventExpense;
   view: boolean;
 } & Pick<TimeStamp, 'createdAt' | 'updatedAt'>;
 
@@ -83,7 +82,6 @@ export type EventInfo = {
   id: number;
   name: Event;
   entryRecord: string;
-  expense: number;
 };
 
 // 大会種目
@@ -112,15 +110,7 @@ export type Event =
   | 'ハンマー投'
   | 'やり投'
   | '十種競技'
-  | '七種競技'
-  | '4×100リレー'
-  | '4×400リレー';
-
-//個人種目と団体種目それぞれの金額
-export type EventExpense = {
-  individual: number;
-  group: number;
-};
+  | '七種競技';
 
 //==============================
 // フォーム
@@ -145,8 +135,6 @@ export type EntryFormInput = {
 // 管理者によるエントリーフォーム作成時の入力項目
 export type CreateEntryFormInput = {
   name: string;
-  individualExpense: number;
-  groupExpense: number;
   startDate: Date;
   endDate: Date;
   timeLimit: Date;

@@ -20,6 +20,9 @@ export const EntryRestore: VFC<Props> = ({ tournaments, teamId }) => {
       .update({ view: true });
   };
 
+  const viewTournaments = tournaments.filter(
+    (tournamnet) => tournamnet.startDate >= new Date()
+  );
   return (
     <Select
       placeholder="大会データ復元"
@@ -27,7 +30,7 @@ export const EntryRestore: VFC<Props> = ({ tournaments, teamId }) => {
       onChange={restore}
       borderRadius="30px"
     >
-      {tournaments.map((tournament: Document<Tournament>) => (
+      {viewTournaments.map((tournament: Document<Tournament>) => (
         <option key={tournament.id} value={tournament.id}>
           {tournament.tournamentName}
         </option>

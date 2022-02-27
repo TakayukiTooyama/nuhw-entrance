@@ -4,7 +4,6 @@ import { FaAddressCard } from 'react-icons/fa';
 import { GiClothes } from 'react-icons/gi';
 
 import { NavTab } from '@/components/layout';
-// import { RiMoneyCnyCircleFill } from 'react-icons/ri';
 
 const navList = [
   { name: 'エントリー', icon: FaAddressCard, link: `/` },
