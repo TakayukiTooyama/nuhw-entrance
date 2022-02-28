@@ -45,7 +45,7 @@ export const Home: NextPage = () => {
 
   // 期限内の大会
   const filteredTournament = tournaments?.filter((data) => {
-    const tournamentIds = entries?.map((entry) => entry.id);
+    const tournamentIds = entries?.map((entry) => entry.tournamentId);
     return (
       data.timeLimit > new Date() &&
       data.view &&
