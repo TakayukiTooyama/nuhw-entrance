@@ -118,11 +118,14 @@ export const FemaleUniformForm: VFC<Props> = ({ id, title, userInfo }) => {
     });
     setOrderList(newOrderList);
 
+    // 全13種類中、必須のユニフォームが9個あるための処理
     const hasUniform =
-      Object.values(inputData).filter((value) => value !== '選択').length > 0;
+      Object.values(inputData).filter((value) => value === '選択').length <= 4;
     hasUniform
       ? onOpen()
-      : setErrorMessage('1つ以上商品を選択してから注文してください。');
+      : setErrorMessage(
+          '必須なものが抜けています。先輩からもらう場合は、「持っている（先輩から譲ってもらう）」を選択してください。'
+        );
   };
 
   const addOrder = () => {
@@ -130,7 +133,11 @@ export const FemaleUniformForm: VFC<Props> = ({ id, title, userInfo }) => {
       return {
         id: idx + 2,
         name: item.name,
-        size: item.size === '選択' ? '' : item.size,
+        size:
+          item.size === '選択' ||
+          item.size === '持っている（先輩から譲ってもらう）'
+            ? ''
+            : item.size,
       };
     });
 
@@ -158,6 +165,23 @@ export const FemaleUniformForm: VFC<Props> = ({ id, title, userInfo }) => {
   return (
     <>
       <FormHeading title={title} />
+      <Stack
+        p={3}
+        mb={4}
+        bg="gray.100"
+        border="2px"
+        borderRadius="10px"
+        borderColor="gray.200"
+      >
+        <Text fontSize="14px">
+          ・先輩などから譲ってもらう場合は、「持っている（先輩から譲ってもらう）」を選択してください。
+        </Text>
+        <Text fontSize="14px">
+          ・「どれか必須」の中で一つは購入してください。
+        </Text>
+        <Text fontSize="14px">・「どれか必須」は色で判断してください。</Text>
+      </Stack>
+
       <form onSubmit={handleSubmit(confirm)}>
         <Stack spacing={8}>
           {femaleUniformData.map((item) => (
@@ -166,9 +190,9 @@ export const FemaleUniformForm: VFC<Props> = ({ id, title, userInfo }) => {
                 <Image
                   src={item.image}
                   layout="responsive"
-                  objectFit="cover"
+                  objectFit="contain"
                   width="100%"
-                  height="auto"
+                  height="80"
                   alt={item.name}
                 />
               </Box>
@@ -181,6 +205,7 @@ export const FemaleUniformForm: VFC<Props> = ({ id, title, userInfo }) => {
                 py={4}
               >
                 <FormSelect
+                  gender={userInfo.gender}
                   name={item.id}
                   label={item.name}
                   selectOptions={sizeOptions}
@@ -221,7 +246,8 @@ export const FemaleUniformForm: VFC<Props> = ({ id, title, userInfo }) => {
           <Tbody>
             {orderList &&
               orderList.map((item) =>
-                item.size !== '選択' ? (
+                item.size !== '選択' &&
+                item.size !== '持っている（先輩から譲ってもらう）' ? (
                   <Tr key={item.name}>
                     <Td>{item.name}</Td>
                     <Td>{item.size}</Td>

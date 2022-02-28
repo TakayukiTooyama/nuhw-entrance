@@ -153,6 +153,7 @@ export type LinkContent = {
 
 export type OrderSize =
   | '選択'
+  | '持っている（先輩から譲ってもらう）'
   | 'XS(SS)'
   | 'S'
   | 'M'
@@ -226,7 +227,7 @@ export type FemaleUniform =
   | CommonUniform
   | 'セパレートトップ'
   | 'セパレートショーツ'
-  | 'タイツ(紺ピンク) 12cm';
+  | 'タイツ(紺ピンク)';
 
 type CommonUniformId =
   | 'windBreakerUp'

@@ -46,7 +46,7 @@ export const UniformManagementTableList: VFC<Props> = ({ orders }) => {
         return [info.name, ...sizeData, info.orderDate];
       });
       const manTableResponse = await fetch(
-        'https://v1.nocodeapi.com/sphacks/google_sheets/rWCufIptQSvrrKkj?tabId=男子',
+        'https://v1.nocodeapi.com/nuhw/google_sheets/cKUJNmTTbvFQpevn?tabId=男子',
         {
           method: 'POST',
           headers: {
@@ -55,8 +55,9 @@ export const UniformManagementTableList: VFC<Props> = ({ orders }) => {
           body: JSON.stringify(manTableAppendData),
         }
       );
+
       const wonmanTableResponse = await fetch(
-        'https://v1.nocodeapi.com/sphacks/google_sheets/rWCufIptQSvrrKkj?tabId=女子',
+        'https://v1.nocodeapi.com/nuhw/google_sheets/cKUJNmTTbvFQpevn?tabId=女子',
         {
           method: 'POST',
           headers: {

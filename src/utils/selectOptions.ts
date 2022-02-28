@@ -56,6 +56,7 @@ export const courseOptions = ['行き', '帰り'];
 
 export const sizeOptions = [
   '選択',
+  '持っている（先輩から譲ってもらう）',
   'XS(SS)',
   'S',
   'M',

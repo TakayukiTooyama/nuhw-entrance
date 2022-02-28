@@ -117,7 +117,7 @@ export const femaleUniformData: FemaleUniformData = [
   },
   {
     id: 'navyPinkTights',
-    name: 'タイツ(紺ピンク) 12cm',
+    name: 'タイツ(紺ピンク)',
     image: '/Images/no-image.png',
   },
   {
