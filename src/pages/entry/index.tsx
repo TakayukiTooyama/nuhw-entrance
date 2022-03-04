@@ -1,4 +1,5 @@
-import { Box, Container, Text } from '@chakra-ui/react';
+import { WarningTwoIcon } from '@chakra-ui/icons';
+import { Box, Container, Flex, Text } from '@chakra-ui/react';
 import { useCollection, useDocument } from '@nandorojo/swr-firestore';
 import type { NextPage } from 'next';
 import Image from 'next/image';
@@ -59,6 +60,26 @@ export const Home: NextPage = () => {
     <Layout title="Home">
       <TopHeading title="エントリー" linkData={linkData} />
       <Container maxW="xl" py={8} align="center">
+        <Flex
+          shadow="inner"
+          px={4}
+          py={4}
+          mb={8}
+          bg="gray.100"
+          textColor="red.500"
+          borderRadius="md"
+          fontWeight="bold"
+          justify="center"
+          align="center"
+        >
+          <WarningTwoIcon w={5} h={5} mr={3} />
+          <Box textAlign="start">
+            <Text fontSize={['14px', '16px']}>
+              4月からの学年に変更してからエントリーしてください。メニューのプロフィール設定から行えます。
+            </Text>
+          </Box>
+        </Flex>
+
         {!filteredTournament && <Spinner />}
         {filteredTournament?.length > 0 && (
           <EntryList tournaments={filteredTournament} />
