@@ -1,16 +1,27 @@
-const withPWA = require('next-pwa');
-const runtimeCaching = require('next-pwa/cache');
-
-const nextCofig = {
-  rewrites: async () => [{ source: '/', destination: '/entry' }],
+/**
+ * @type {import('next').NextConfig}
+ */
+const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   swcMinify: true,
-  pwa: {
-    disable: process.env.NODE_ENV === 'development',
-    dest: 'public',
-    runtimeCaching,
+  async rewrites() {
+    return [
+      {
+        source: '/',
+        destination: '/entry',
+      },
+    ];
   },
 };
 
-module.exports = withPWA(nextCofig);
+const runtimeCaching = require('next-pwa/cache');
+const withPWA = require('next-pwa')({
+  disable: process.env.NODE_ENV === 'development',
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+  runtimeCaching,
+});
+
+module.exports = withPWA(nextConfig);
