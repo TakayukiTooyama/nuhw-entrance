@@ -39,8 +39,8 @@ const EntryManagement: NextPage = () => {
         linkData={linkData}
         adminLink="/entry/management"
       />
-      <Container maxW="xl" py={8} align="center">
-        <Stack align="center" spacing={4}>
+      <Container maxW="xl" py={8} centerContent>
+        <Stack spacing={4} width="100%">
           {!tournaments && <Spinner />}
           {tournaments?.length > 0 && (
             <EntryManagementList

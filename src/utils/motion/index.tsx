@@ -9,6 +9,6 @@ export const MotionBox = motion(
       Object.entries(props).filter(([key]) => !isValidMotionProp(key))
     );
 
-    return <chakra.div ref={ref} {...chakraProps} />;
+    return <chakra.div ref={ref} width="100%" {...chakraProps} />;
   })
 );

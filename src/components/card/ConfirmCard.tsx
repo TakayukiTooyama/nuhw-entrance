@@ -53,7 +53,7 @@ export const ConfirmCard: FC<Props> = ({
       </HStack>
       <HStack spacing={1} color="gray.500" pl={2}>
         <Icon as={IoIosSchool} w={5} h={5} />
-        <Text spacing={4}>学年</Text>
+        <Text>学年</Text>
         <Text>{data.grade}</Text>
       </HStack>
     </Stack>

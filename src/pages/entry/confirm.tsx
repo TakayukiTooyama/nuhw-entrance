@@ -34,11 +34,11 @@ const EntryConfirm: NextPage = () => {
         linkData={linkData}
         adminLink="/entry/management"
       />
-      <Container maxW="xl" py={8} align="center">
+      <Container maxW="xl" py={8} centerContent>
         {!entries && <Spinner />}
         {entries?.length > 0 && <EntryConfirmList entries={entries} />}
         {entries?.length === 0 && (
-          <Box>
+          <Box textAlign="center">
             <Text mb={8}>エントリー済みの大会がありません。</Text>
             <Image
               width={350}

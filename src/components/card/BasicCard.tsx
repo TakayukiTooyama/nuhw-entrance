@@ -16,7 +16,7 @@ export const BasicCard: FC<Props> = ({
   ...props
 }) => (
   <Box w="100%" shadow="base" borderRadius="16px" bg="white" {...props}>
-    <Box maxW={innerWidth} align={align} p={innerPadding}>
+    <Box maxW={innerWidth} alignItems={align} p={innerPadding}>
       {children}
     </Box>
   </Box>

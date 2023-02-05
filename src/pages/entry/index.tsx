@@ -59,7 +59,7 @@ export const Home: NextPage = () => {
   return (
     <Layout title="Home">
       <TopHeading title="エントリー" linkData={linkData} />
-      <Container maxW="xl" py={8} align="center">
+      <Container maxW="xl" py={8} centerContent>
         <Flex
           shadow="inner"
           px={4}

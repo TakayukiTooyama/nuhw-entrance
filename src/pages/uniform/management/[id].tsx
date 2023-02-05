@@ -1,4 +1,4 @@
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Container, Text } from '@chakra-ui/react';
 import { useCollection } from '@nandorojo/swr-firestore';
 import type { NextPage } from 'next';
 import Image from 'next/image';
@@ -31,13 +31,13 @@ const UniformManagementDetail: NextPage = () => {
       prevPageLink="/uniform/management"
       prevPageTitle="ユニフォーム"
     >
-      <Box py={8} px={[4, 4, 8]} align="center">
+      <Container py={8} centerContent maxW="5xl">
         {!selectOrders && <Spinner />}
         {selectOrders?.length > 0 && (
           <UniformManagementTableList orders={selectOrders} />
         )}
         {(ordersError || selectOrders?.length === 0) && (
-          <Box>
+          <Box textAlign="center">
             <Text mb={12}>まだ注文されていません。</Text>
             <Image
               width={300}
@@ -47,7 +47,7 @@ const UniformManagementDetail: NextPage = () => {
             />
           </Box>
         )}
-      </Box>
+      </Container>
     </Layout>
   );
 };

@@ -33,11 +33,11 @@ const UniformConfirm: NextPage = () => {
         linkData={linkData}
         adminLink="/uniform/management"
       />
-      <Container maxW="xl" py={8} align="center">
+      <Container maxW="xl" py={8} centerContent>
         {!orders && <Spinner />}
         {orders?.length > 0 && <UniformConfirmList orders={orders} />}
         {orders?.length === 0 && (
-          <Box>
+          <Box textAlign="center">
             <Text mb={8}>まだ注文がありません。</Text>
             <Image
               width={350}

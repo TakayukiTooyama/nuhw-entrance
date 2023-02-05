@@ -17,7 +17,7 @@ type Props = {
 };
 
 export const UniformManagementList: VFC<Props> = ({ uniforms, userInfo }) => (
-  <Stack spacing={6}>
+  <Stack spacing={6} width="100%">
     {uniforms.length !== 0 ? (
       <MotionBox
         as={List}
@@ -34,7 +34,7 @@ export const UniformManagementList: VFC<Props> = ({ uniforms, userInfo }) => (
         ))}
       </MotionBox>
     ) : (
-      <Box align="center">
+      <Box textAlign="center">
         <Text mb={8}>何も作成されていません。</Text>
         <Image
           width={350}

@@ -32,7 +32,7 @@ const EntryManagementDetail: NextPage = () => {
       prevPageLink="/entry/management"
       prevPageTitle="エントリー管理一覧"
     >
-      <Container maxW="2xl" py={8} align="center">
+      <Container maxW="5xl" py={8} centerContent>
         {!entries && <Spinner />}
         {entries?.length > 0 && (
           <EntryManagementTableList
@@ -41,7 +41,7 @@ const EntryManagementDetail: NextPage = () => {
           />
         )}
         {(entriesError || entries?.length === 0) && (
-          <Box>
+          <Box textAlign="center">
             <Text mb={12}>まだエントリーされていません。</Text>
             <Image
               width={300}

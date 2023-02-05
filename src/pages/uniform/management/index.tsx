@@ -31,7 +31,7 @@ const UniformManagementPage: NextPage = () => {
         linkData={linkData}
         adminLink="/uniform/management"
       />
-      <Container maxW="xl" py={8} align="center">
+      <Container maxW="xl" py={8} centerContent>
         {uniforms ? (
           <UniformManagementList uniforms={uniforms} userInfo={userInfo} />
         ) : (

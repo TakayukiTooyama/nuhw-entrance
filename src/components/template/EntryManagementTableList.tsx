@@ -1,5 +1,5 @@
 /* eslint-disable no-sparse-arrays */
-import { Box, Heading, Select, Stack, useToast } from '@chakra-ui/react';
+import { Heading, Select, Stack, useToast } from '@chakra-ui/react';
 import type { Document } from '@nandorojo/swr-firestore';
 import { useDocument } from '@nandorojo/swr-firestore';
 import type { VFC } from 'react';
@@ -80,14 +80,12 @@ export const EntryManagementTableList: VFC<Props> = ({
   };
 
   return (
-    <Stack spacing={12}>
+    <Stack spacing={12} width="100%" align="center">
       <Heading>{entries[0]?.tournamentName}</Heading>
-      <Box>
-        <EntryCountTable
-          maleCount={maleEntryData.length}
-          femaleCount={femaleEntryData.length}
-        />
-      </Box>
+      <EntryCountTable
+        maleCount={maleEntryData.length}
+        femaleCount={femaleEntryData.length}
+      />
       {tables.map((data) => (
         <EntryManagementTable
           key={data.gender}

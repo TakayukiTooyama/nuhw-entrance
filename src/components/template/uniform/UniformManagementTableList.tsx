@@ -89,7 +89,7 @@ export const UniformManagementTableList: VFC<Props> = ({ orders }) => {
       <Heading as="h1" size="lg" mb={12}>
         {orders[0].title}
       </Heading>
-      <Stack spacing={8}>
+      <Stack spacing={8} width="100%">
         <HStack maxW="xl" mx="auto" w="100%">
           <Button
             label="男子"

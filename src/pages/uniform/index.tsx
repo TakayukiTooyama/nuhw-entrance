@@ -72,7 +72,7 @@ const UniformPage: NextPage = () => {
                 />
               </MotionBox>
             ) : (
-              <Box align="center">
+              <Box textAlign="center">
                 <Text mb={4}>現在採寸は行われていません。</Text>
                 <Image
                   width={350}

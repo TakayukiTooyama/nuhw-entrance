@@ -25,7 +25,7 @@ export const TopHeading: VFC<Props> = ({ title, linkData, adminLink }) => {
 
   return (
     <Box bg="gray.200">
-      <Box align="center" pt={8} pb={4}>
+      <Box textAlign="center" pt={8} pb={4}>
         <Heading pb={4}>{title}</Heading>
         {currentPath !== '/team/management' && currentPath !== '/profile' && (
           <ButtonGroup w="90%" maxW="md" pb={4}>
